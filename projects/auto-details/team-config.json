@@ -1,0 +1,394 @@
+{
+  "projectName": "auto-details",
+  "description": "AI 기반 상세페이지 자동 제작 시스템",
+  "version": "1.0.0",
+  "repository": "https://github.com/YOUR_USERNAME/auto-details",
+  "technology": ["Next.js", "React", "Gemini Vision API", "HuggingFace", "Sharp"],
+
+  "teamAgents": {
+    "core": [
+      {
+        "name": "vision",
+        "role": "이미지 분석 전문가",
+        "source": "oh-my-claudecode",
+        "responsibilities": [
+          "레퍼런스 이미지 초기 분석",
+          "Gemini Vision API 연동",
+          "바운딩 박스 검증",
+          "디자인 요소 인식"
+        ],
+        "priority": "critical",
+        "modelTier": "medium"
+      },
+      {
+        "name": "designer",
+        "role": "UI/UX 디자인 전문가",
+        "source": "oh-my-claudecode",
+        "responsibilities": [
+          "위젯 HTML 생성",
+          "스타일 프리셋 적용",
+          "Tailwind + shadcn/ui 활용",
+          "반응형 디자인"
+        ],
+        "priority": "critical",
+        "modelTier": "medium"
+      },
+      {
+        "name": "executor",
+        "role": "코드 구현 실행자",
+        "source": "oh-my-claudecode",
+        "responsibilities": [
+          "스킬 실행 및 파일 생성",
+          "위젯 파일 작성",
+          "JSON 처리",
+          "자동화 스크립트 실행"
+        ],
+        "priority": "critical",
+        "modelTier": "medium"
+      },
+      {
+        "name": "architect",
+        "role": "시스템 설계자",
+        "source": "oh-my-claudecode",
+        "responsibilities": [
+          "2-Pass Detection 파이프라인 설계",
+          "위젯 시스템 구조화",
+          "데이터 플로우 최적화",
+          "아키텍처 결정"
+        ],
+        "priority": "high",
+        "modelTier": "high"
+      }
+    ],
+    "support": [
+      {
+        "name": "code-reviewer",
+        "role": "코드 품질 검토자",
+        "source": "oh-my-claudecode",
+        "responsibilities": [
+          "생성된 HTML 검증",
+          "시맨틱 HTML 체크",
+          "접근성 검사",
+          "XSS 취약점 검토"
+        ],
+        "priority": "high",
+        "modelTier": "high"
+      },
+      {
+        "name": "qa-tester",
+        "role": "테스트 및 검증",
+        "source": "oh-my-claudecode",
+        "responsibilities": [
+          "위젯 품질 검수",
+          "브라우저 호환성",
+          "시각적 회귀 테스트",
+          "렌더링 검증"
+        ],
+        "priority": "medium",
+        "modelTier": "medium"
+      },
+      {
+        "name": "performance-reviewer",
+        "role": "성능 최적화",
+        "source": "oh-my-claudecode",
+        "responsibilities": [
+          "Sharp 타일링 성능",
+          "API 응답 시간",
+          "번들 사이즈 최적화",
+          "이미지 처리 최적화"
+        ],
+        "priority": "medium",
+        "modelTier": "medium"
+      },
+      {
+        "name": "debugger",
+        "role": "버그 해결사",
+        "source": "oh-my-claudecode",
+        "responsibilities": [
+          "HuggingFace API 오류 해결",
+          "Gemini 프롬프트 개선",
+          "바운딩 박스 정확도 개선",
+          "파이프라인 디버깅"
+        ],
+        "priority": "medium",
+        "modelTier": "high"
+      },
+      {
+        "name": "security-reviewer",
+        "role": "보안 검사",
+        "source": "oh-my-claudecode",
+        "responsibilities": [
+          "HTML 보안 검증",
+          "스크립트 인젝션 방지",
+          "API 키 노출 검사",
+          "안전한 placeholder 처리"
+        ],
+        "priority": "high",
+        "modelTier": "high"
+      }
+    ]
+  },
+
+  "skills": {
+    "essential": [
+      {
+        "name": "ui-designer",
+        "source": "daymade/claude-code-skills",
+        "version": "latest",
+        "description": "레퍼런스 UI 이미지에서 디자인 시스템 추출",
+        "useCases": [
+          "스타일 프리셋 자동 생성",
+          "컬러 팔레트 추출",
+          "타이포그래피 분석"
+        ],
+        "priority": "critical"
+      },
+      {
+        "name": "web-artifacts-builder",
+        "source": "anthropics/skills",
+        "version": "latest",
+        "description": "React + Tailwind + shadcn/ui로 복잡한 HTML 생성",
+        "useCases": [
+          "위젯 HTML 자동 생성",
+          "40+ shadcn/ui 컴포넌트 활용",
+          "단일 HTML 번들링"
+        ],
+        "priority": "critical"
+      },
+      {
+        "name": "playwright",
+        "source": "lackeyjb/playwright-skill",
+        "version": "latest",
+        "description": "Playwright 기반 브라우저 자동화",
+        "useCases": [
+          "Behance 스크래핑 자동화",
+          "동적 콘텐츠 로딩",
+          "스크린샷 자동 캡처"
+        ],
+        "priority": "critical"
+      },
+      {
+        "name": "frontend-design",
+        "source": "anthropics/skills",
+        "version": "latest",
+        "description": "고품질 프론트엔드 디자인 생성",
+        "useCases": [
+          "독창적인 위젯 스타일링",
+          "레퍼런스 기반 디자인 재현",
+          "AI 미학 회피"
+        ],
+        "priority": "critical"
+      }
+    ],
+    "optional": [
+      {
+        "name": "gemini-vision",
+        "source": "community",
+        "version": "latest",
+        "description": "Google Gemini API 이미지 분석",
+        "priority": "medium"
+      },
+      {
+        "name": "code-review-multi-agent",
+        "source": "community",
+        "version": "latest",
+        "description": "3개 서브에이전트 병렬 검증",
+        "priority": "medium"
+      }
+    ]
+  },
+
+  "workflows": [
+    {
+      "name": "reference-to-widgets",
+      "description": "레퍼런스 이미지 → HTML 위젯 추출",
+      "steps": [
+        {
+          "order": 1,
+          "name": "Behance 스크래핑",
+          "agent": "playwright",
+          "skill": "playwright",
+          "input": "Behance URL",
+          "output": "references/ 폴더에 이미지 저장"
+        },
+        {
+          "order": 2,
+          "name": "이미지 초기 분석",
+          "agent": "vision",
+          "skill": null,
+          "input": "레퍼런스 이미지",
+          "output": "바운딩 박스 좌표"
+        },
+        {
+          "order": 3,
+          "name": "디자인 시스템 추출",
+          "agent": "designer",
+          "skill": "ui-designer",
+          "input": "레퍼런스 이미지",
+          "output": "preset--ref-{name}.json"
+        },
+        {
+          "order": 4,
+          "name": "위젯 HTML 생성",
+          "agent": "designer",
+          "skill": "web-artifacts-builder",
+          "input": "디자인 시스템 + 바운딩 박스",
+          "output": "*.widget.html 파일들"
+        },
+        {
+          "order": 5,
+          "name": "품질 검증",
+          "agent": "code-reviewer",
+          "skill": null,
+          "input": "생성된 위젯 HTML",
+          "output": "검증 리포트"
+        },
+        {
+          "order": 6,
+          "name": "레지스트리 업데이트",
+          "agent": "executor",
+          "skill": null,
+          "input": "검증된 위젯",
+          "output": "widgets/_registry.json 업데이트"
+        }
+      ],
+      "estimatedTime": "15-20분",
+      "parallelizable": false
+    },
+    {
+      "name": "product-to-html",
+      "description": "제품 정보 → HTML 상세페이지",
+      "steps": [
+        {
+          "order": 1,
+          "name": "섹션 플래닝",
+          "agent": "architect",
+          "skill": null,
+          "input": "제품 정보",
+          "output": "section-plan.json"
+        },
+        {
+          "order": 2,
+          "name": "위젯 선택",
+          "agent": "designer",
+          "skill": null,
+          "input": "섹션 플랜 + 스타일 선호",
+          "output": "widget-selection.json"
+        },
+        {
+          "order": 3,
+          "name": "HTML 조합",
+          "agent": "executor",
+          "skill": "web-artifacts-builder",
+          "input": "위젯 선택 + 제품 정보",
+          "output": "{product}-detail.html"
+        },
+        {
+          "order": 4,
+          "name": "스타일 품질 개선",
+          "agent": "designer",
+          "skill": "frontend-design",
+          "input": "생성된 HTML",
+          "output": "스타일 개선된 HTML"
+        },
+        {
+          "order": 5,
+          "name": "최종 검증",
+          "agent": "qa-tester",
+          "skill": null,
+          "input": "최종 HTML",
+          "output": "브라우저 테스트 결과"
+        }
+      ],
+      "estimatedTime": "10-15분",
+      "parallelizable": false
+    },
+    {
+      "name": "quality-review",
+      "description": "위젯 품질 검수",
+      "steps": [
+        {
+          "order": 1,
+          "name": "보안 검사",
+          "agent": "security-reviewer",
+          "skill": null,
+          "input": "위젯 HTML",
+          "output": "보안 리포트",
+          "parallel": true
+        },
+        {
+          "order": 1,
+          "name": "성능 검사",
+          "agent": "performance-reviewer",
+          "skill": null,
+          "input": "위젯 HTML",
+          "output": "성능 리포트",
+          "parallel": true
+        },
+        {
+          "order": 1,
+          "name": "코드 품질 검사",
+          "agent": "code-reviewer",
+          "skill": null,
+          "input": "위젯 HTML",
+          "output": "코드 품질 리포트",
+          "parallel": true
+        },
+        {
+          "order": 2,
+          "name": "결과 통합",
+          "agent": "qa-tester",
+          "skill": null,
+          "input": "3개 리포트",
+          "output": "최종 검수 결과"
+        }
+      ],
+      "estimatedTime": "5-8분",
+      "parallelizable": true
+    }
+  ],
+
+  "quickCommands": {
+    "scrape": "/oh-my-claudecode:team 2:vision,executor \"playwright로 Behance URL 스크래핑\"",
+    "extract": "/oh-my-claudecode:team 4:vision,designer,executor \"레퍼런스에서 위젯 추출\"",
+    "generate": "autopilot: 제품 상세페이지 생성",
+    "review": "/oh-my-claudecode:ultrawork \"위젯 품질 검수\"",
+    "optimize": "ralph: 위젯 성능 최적화"
+  },
+
+  "customAgents": {
+    "planned": [
+      {
+        "name": "hf-detection-optimizer",
+        "role": "HuggingFace Detection 전문가",
+        "status": "planned",
+        "priority": "high",
+        "description": "2-Pass Detection 파이프라인 최적화"
+      },
+      {
+        "name": "taxonomy-manager",
+        "role": "섹션 Taxonomy 관리자",
+        "status": "planned",
+        "priority": "medium",
+        "description": "section-taxonomy.json 자동 관리"
+      },
+      {
+        "name": "widget-deduplicator",
+        "role": "위젯 중복 감지 AI",
+        "status": "planned",
+        "priority": "medium",
+        "description": "시각적/구조적 유사도 기반 중복 감지"
+      }
+    ]
+  },
+
+  "metrics": {
+    "totalAgents": 9,
+    "coreAgents": 4,
+    "supportAgents": 5,
+    "totalSkills": 6,
+    "workflows": 3,
+    "estimatedSetupTime": "10분",
+    "lastUpdated": "2026-02-17"
+  }
+}
