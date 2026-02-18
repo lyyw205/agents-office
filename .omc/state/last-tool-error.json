@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"cd /home/lyyw205/repos/agents-office/server && npx tsc --noEmit --project tsconfig.json 2>&1\",\"timeout\":60000,\"description\":\"TypeScript type-check the server\"}",
+  "error": "Exit code 2\nsrc/index.ts(65,33): error TS2339: Property 'getStatus' does not exist on type 'typeof import(\"/home/lyyw205/repos/agents-office/server/src/bridge/index\")'.\nsrc/index.ts(66,29): error TS2339: Property 'getStatus' does not exist on type 'typeof import(\"/home/lyyw205/repos/agents-office/server/src/bridge/index\")'.\nsrc/lib/graceful-shutdown.ts(16,29): error TS2339: Property 'cleanup' does not exist on type 'typeof import(\"/home/lyyw205/repos/agents-office/server/src/bridge/index\")'.\nsrc...",
+  "timestamp": "2026-02-18T17:03:44.105Z",
+  "retry_count": 1
+}

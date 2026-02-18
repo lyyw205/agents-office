@@ -1,0 +1,408 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1771422540477,
+  "projectRoot": "/home/lyyw205/repos/agents-office",
+  "techStack": {
+    "languages": [],
+    "frameworks": [],
+    "packageManager": null,
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "docs",
+      "scripts"
+    ],
+    "gitBranches": {
+      "defaultBranch": "main",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "claudedocs": {
+      "path": "claudedocs",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1771422540470,
+      "keyFiles": [
+        "research_agent_visualization_2026-02-18.md"
+      ]
+    },
+    "dashboard": {
+      "path": "dashboard",
+      "purpose": null,
+      "fileCount": 25,
+      "lastAccessed": 1771422540472,
+      "keyFiles": [
+        "ARCHITECTURE.md",
+        "LICENSE",
+        "README.md",
+        "check4.mjs",
+        "check4b.mjs"
+      ]
+    },
+    "docs": {
+      "path": "docs",
+      "purpose": "Documentation",
+      "fileCount": 1,
+      "lastAccessed": 1771422540474,
+      "keyFiles": [
+        "usage.md"
+      ]
+    },
+    "master-config": {
+      "path": "master-config",
+      "purpose": null,
+      "fileCount": 2,
+      "lastAccessed": 1771422540475,
+      "keyFiles": [
+        "master-agent.md",
+        "master-config.json"
+      ]
+    },
+    "projects": {
+      "path": "projects",
+      "purpose": null,
+      "fileCount": 0,
+      "lastAccessed": 1771422540475,
+      "keyFiles": []
+    },
+    "scripts": {
+      "path": "scripts",
+      "purpose": "Build/utility scripts",
+      "fileCount": 3,
+      "lastAccessed": 1771422540475,
+      "keyFiles": [
+        "install.sh",
+        "setup-project.sh",
+        "sync.sh"
+      ]
+    },
+    "skills": {
+      "path": "skills",
+      "purpose": null,
+      "fileCount": 0,
+      "lastAccessed": 1771422540475,
+      "keyFiles": []
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "",
+      "accessCount": 25,
+      "lastAccessed": 1771434245856,
+      "type": "directory"
+    },
+    {
+      "path": "dashboard/src/types/index.ts",
+      "accessCount": 12,
+      "lastAccessed": 1771430803325,
+      "type": "file"
+    },
+    {
+      "path": "server/src/routes/tasks.ts",
+      "accessCount": 12,
+      "lastAccessed": 1771434416697,
+      "type": "file"
+    },
+    {
+      "path": "dashboard/src/App.tsx",
+      "accessCount": 12,
+      "lastAccessed": 1771434418908,
+      "type": "file"
+    },
+    {
+      "path": "dashboard/src/components/OfficeScene.ts",
+      "accessCount": 11,
+      "lastAccessed": 1771430941884,
+      "type": "file"
+    },
+    {
+      "path": "dashboard/package.json",
+      "accessCount": 11,
+      "lastAccessed": 1771432560512,
+      "type": "file"
+    },
+    {
+      "path": "server/src/index.ts",
+      "accessCount": 11,
+      "lastAccessed": 1771434418510,
+      "type": "file"
+    },
+    {
+      "path": "dashboard/src/components/PhaserGame.tsx",
+      "accessCount": 10,
+      "lastAccessed": 1771432723016,
+      "type": "file"
+    },
+    {
+      "path": "server/src/db/seed.ts",
+      "accessCount": 10,
+      "lastAccessed": 1771432899286,
+      "type": "file"
+    },
+    {
+      "path": "dashboard/src/components/Game.tsx",
+      "accessCount": 8,
+      "lastAccessed": 1771432721727,
+      "type": "file"
+    },
+    {
+      "path": "dashboard/src/store/agentStore.ts",
+      "accessCount": 8,
+      "lastAccessed": 1771434116697,
+      "type": "file"
+    },
+    {
+      "path": "server/src/db/index.ts",
+      "accessCount": 8,
+      "lastAccessed": 1771434140982,
+      "type": "file"
+    },
+    {
+      "path": "dashboard/src/data/configLoader.ts",
+      "accessCount": 7,
+      "lastAccessed": 1771430707983,
+      "type": "file"
+    },
+    {
+      "path": "dashboard/src/store/simulationEngine.ts",
+      "accessCount": 7,
+      "lastAccessed": 1771430815473,
+      "type": "file"
+    },
+    {
+      "path": "dashboard/vite.config.ts",
+      "accessCount": 7,
+      "lastAccessed": 1771434125934,
+      "type": "file"
+    },
+    {
+      "path": "dashboard/src/data/officeMap.ts",
+      "accessCount": 6,
+      "lastAccessed": 1771430826872,
+      "type": "file"
+    },
+    {
+      "path": "server/src/routes/workflows.ts",
+      "accessCount": 6,
+      "lastAccessed": 1771434143114,
+      "type": "file"
+    },
+    {
+      "path": "master-config/master-config.json",
+      "accessCount": 5,
+      "lastAccessed": 1771430170904,
+      "type": "file"
+    },
+    {
+      "path": "projects/auto-details/team-config.json",
+      "accessCount": 5,
+      "lastAccessed": 1771430171340,
+      "type": "file"
+    },
+    {
+      "path": "server/src/db/schema.ts",
+      "accessCount": 5,
+      "lastAccessed": 1771434101371,
+      "type": "file"
+    },
+    {
+      "path": "server/src/middleware/error-handler.ts",
+      "accessCount": 5,
+      "lastAccessed": 1771434134849,
+      "type": "file"
+    },
+    {
+      "path": "server/src/routes/agents.ts",
+      "accessCount": 5,
+      "lastAccessed": 1771434142039,
+      "type": "file"
+    },
+    {
+      "path": "README.md",
+      "accessCount": 4,
+      "lastAccessed": 1771423147555,
+      "type": "file"
+    },
+    {
+      "path": "projects/auto-details/pm.md",
+      "accessCount": 4,
+      "lastAccessed": 1771427605487,
+      "type": "file"
+    },
+    {
+      "path": "claudedocs/research_agent_visualization_2026-02-18.md",
+      "accessCount": 4,
+      "lastAccessed": 1771427605710,
+      "type": "file"
+    },
+    {
+      "path": "dashboard/ARCHITECTURE.md",
+      "accessCount": 4,
+      "lastAccessed": 1771427606013,
+      "type": "file"
+    },
+    {
+      "path": "projects/auto-details/agents-persona.json",
+      "accessCount": 4,
+      "lastAccessed": 1771430175468,
+      "type": "file"
+    },
+    {
+      "path": "server/tsconfig.json",
+      "accessCount": 4,
+      "lastAccessed": 1771434109969,
+      "type": "file"
+    },
+    {
+      "path": "server/src/routes/projects.ts",
+      "accessCount": 4,
+      "lastAccessed": 1771434141812,
+      "type": "file"
+    },
+    {
+      "path": "server/src/routes/sse.ts",
+      "accessCount": 4,
+      "lastAccessed": 1771434426512,
+      "type": "file"
+    },
+    {
+      "path": "master-config/master-agent.md",
+      "accessCount": 3,
+      "lastAccessed": 1771423149203,
+      "type": "file"
+    },
+    {
+      "path": "server/drizzle.config.ts",
+      "accessCount": 3,
+      "lastAccessed": 1771430199101,
+      "type": "file"
+    },
+    {
+      "path": "dashboard/src/data/agentCharacters.ts",
+      "accessCount": 3,
+      "lastAccessed": 1771430717359,
+      "type": "file"
+    },
+    {
+      "path": "server/src/routes/activity.ts",
+      "accessCount": 3,
+      "lastAccessed": 1771433768031,
+      "type": "file"
+    },
+    {
+      "path": "projects/auto-details/workflows.md",
+      "accessCount": 2,
+      "lastAccessed": 1771423150875,
+      "type": "file"
+    },
+    {
+      "path": "dashboard/src/utils/pathfinding.ts",
+      "accessCount": 2,
+      "lastAccessed": 1771423347150,
+      "type": "file"
+    },
+    {
+      "path": "dashboard/tsconfig.json",
+      "accessCount": 2,
+      "lastAccessed": 1771430082942,
+      "type": "file"
+    },
+    {
+      "path": "scripts/install.sh",
+      "accessCount": 2,
+      "lastAccessed": 1771430107276,
+      "type": "file"
+    },
+    {
+      "path": "server/package.json",
+      "accessCount": 2,
+      "lastAccessed": 1771430198674,
+      "type": "file"
+    },
+    {
+      "path": "server/src/db/migrate.ts",
+      "accessCount": 2,
+      "lastAccessed": 1771430447128,
+      "type": "file"
+    },
+    {
+      "path": "server/src/routes/saved-configs.ts",
+      "accessCount": 2,
+      "lastAccessed": 1771434142391,
+      "type": "file"
+    },
+    {
+      "path": "dashboard/README.md",
+      "accessCount": 1,
+      "lastAccessed": 1771422751214,
+      "type": "file"
+    },
+    {
+      "path": "skills/playwright/package.json",
+      "accessCount": 1,
+      "lastAccessed": 1771422770998,
+      "type": "file"
+    },
+    {
+      "path": "docs/usage.md",
+      "accessCount": 1,
+      "lastAccessed": 1771422774046,
+      "type": "file"
+    },
+    {
+      "path": "dashboard/src/components/AgentDetailsPanel.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1771423169973,
+      "type": "file"
+    },
+    {
+      "path": "claudedocs",
+      "accessCount": 1,
+      "lastAccessed": 1771427599787,
+      "type": "directory"
+    },
+    {
+      "path": "master-config",
+      "accessCount": 1,
+      "lastAccessed": 1771427600407,
+      "type": "directory"
+    },
+    {
+      "path": "projects",
+      "accessCount": 1,
+      "lastAccessed": 1771427600859,
+      "type": "directory"
+    },
+    {
+      "path": "package.json",
+      "accessCount": 1,
+      "lastAccessed": 1771430090931,
+      "type": "file"
+    },
+    {
+      "path": "scripts/dev.sh",
+      "accessCount": 1,
+      "lastAccessed": 1771430113486,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}

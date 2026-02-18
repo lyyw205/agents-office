@@ -5,7 +5,41 @@
   "repository": "https://github.com/YOUR_USERNAME/auto-details",
   "technology": ["Next.js", "React", "Gemini Vision API", "HuggingFace", "Sharp"],
 
+  "hierarchy": {
+    "tier": "project",
+    "masterAgent": "master-orchestrator",
+    "pmAgent": {
+      "id": "auto-details-pm",
+      "name": "auto-details 프로젝트 매니저",
+      "role": "auto-details 프로젝트 총괄",
+      "responsibilities": [
+        "전체 워크플로우 조율",
+        "팀 에이전트 작업 할당 및 모니터링",
+        "마스터 에이전트와의 소통",
+        "스케줄 및 리소스 관리"
+      ],
+      "reportsTo": "master-orchestrator",
+      "modelTier": "high"
+    }
+  },
+
   "teamAgents": {
+    "pm": [
+      {
+        "name": "auto-details-pm",
+        "role": "프로젝트 매니저",
+        "source": "oh-my-claudecode",
+        "responsibilities": [
+          "전체 팀 조율",
+          "마스터 에이전트 소통",
+          "워크플로우 모니터링",
+          "팀원 작업 할당"
+        ],
+        "priority": "critical",
+        "modelTier": "high",
+        "reportsTo": "master-orchestrator"
+      }
+    ],
     "core": [
       {
         "name": "vision",
@@ -383,12 +417,13 @@
   },
 
   "metrics": {
-    "totalAgents": 9,
+    "totalAgents": 10,
+    "pmAgents": 1,
     "coreAgents": 4,
     "supportAgents": 5,
     "totalSkills": 6,
     "workflows": 3,
     "estimatedSetupTime": "10분",
-    "lastUpdated": "2026-02-17"
+    "lastUpdated": "2026-02-18"
   }
 }

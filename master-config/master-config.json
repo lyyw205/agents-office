@@ -1,0 +1,56 @@
+{
+  "masterAgent": {
+    "id": "master-orchestrator",
+    "name": "마스터 오케스트레이터",
+    "role": "전체 프로젝트 총괄",
+    "modelTier": "high",
+    "status": "active"
+  },
+
+  "projects": [
+    {
+      "name": "auto-details",
+      "pmAgent": "auto-details-pm",
+      "status": "active",
+      "priority": "high",
+      "totalAgents": 10
+    },
+    {
+      "name": "btc-stacking-bot",
+      "pmAgent": "btc-stacking-bot-pm",
+      "status": "planned",
+      "priority": "medium",
+      "totalAgents": 0
+    },
+    {
+      "name": "convengers",
+      "pmAgent": "convengers-pm",
+      "status": "planned",
+      "priority": "medium",
+      "totalAgents": 0
+    }
+  ],
+
+  "hierarchy": {
+    "tier1": "master-orchestrator",
+    "tier2": ["auto-details-pm", "btc-stacking-bot-pm", "convengers-pm"],
+    "tier3": "각 프로젝트 team-config.json 참조"
+  },
+
+  "sharedResources": {
+    "skills": ["web-artifacts-builder", "frontend-design", "playwright", "ui-designer"],
+    "modelTiers": {
+      "high": "claude-opus-4-6",
+      "medium": "claude-sonnet-4-6",
+      "low": "claude-haiku-4-5"
+    }
+  },
+
+  "metrics": {
+    "totalProjects": 3,
+    "activeProjects": 1,
+    "totalPMAgents": 3,
+    "totalAgents": 10,
+    "lastUpdated": "2026-02-18"
+  }
+}

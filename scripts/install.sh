@@ -58,8 +58,24 @@ done
 
 echo ""
 
-# 2. 프로젝트별 설정 확인
-echo -e "${BLUE}📋 프로젝트 설정 확인...${NC}"
+# 2. Master Agent 설정 확인
+echo -e "${BLUE}👑 Master Agent 설정 확인...${NC}"
+MASTER_DIR="$HUB_DIR/master-config"
+if [ -d "$MASTER_DIR" ]; then
+    if [ -f "$MASTER_DIR/master-config.json" ]; then
+        echo -e "${GREEN}  ✓${NC} master-config.json"
+    fi
+    if [ -f "$MASTER_DIR/master-agent.md" ]; then
+        echo -e "${GREEN}  ✓${NC} master-agent.md"
+    fi
+else
+    echo -e "${YELLOW}  ⚠${NC} master-config 디렉토리 없음"
+fi
+
+echo ""
+
+# 3. 프로젝트별 설정 확인 (3-tier hierarchy)
+echo -e "${BLUE}📋 프로젝트 설정 확인 (3-tier hierarchy)...${NC}"
 PROJECT_DIRS=(
     "auto-details"
     "btc-stacking-bot"
@@ -78,11 +94,27 @@ for project in "${PROJECT_DIRS[@]}"; do
             echo -e "${YELLOW}    - team-config.json 없음${NC}"
         fi
 
+        # pm.md 존재 확인
+        if [ -f "$PROJECT_DIR/pm.md" ]; then
+            echo -e "    - pm.md ✓"
+        else
+            echo -e "${YELLOW}    - pm.md 없음 (PM Agent 미정의)${NC}"
+        fi
+
         # workflows.md 존재 확인
         if [ -f "$PROJECT_DIR/workflows.md" ]; then
             echo -e "    - workflows.md ✓"
         else
             echo -e "${YELLOW}    - workflows.md 없음${NC}"
+        fi
+
+        # hierarchy 필드 확인
+        if [ -f "$PROJECT_DIR/team-config.json" ]; then
+            if grep -q '"hierarchy"' "$PROJECT_DIR/team-config.json" 2>/dev/null; then
+                echo -e "    - hierarchy ✓ (3-tier)"
+            else
+                echo -e "${YELLOW}    - hierarchy 없음 (레거시 구조)${NC}"
+            fi
         fi
     else
         echo -e "${YELLOW}  ⚠${NC} $project (디렉토리 없음)"
