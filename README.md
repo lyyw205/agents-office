@@ -1,127 +1,114 @@
-# Claude Agents Hub 🤖
+# Agents Office
 
-> 중앙화된 AI 팀 에이전트 관리 및 시각화 대시보드
+> AI Agent Team Dashboard - 여러 프로젝트의 AI 에이전트 팀을 하나의 대시보드에서 관리
 
-여러 프로젝트의 Claude Code 팀 에이전트를 하나의 대시보드에서 관리하고, GitHub를 통해 모든 기기에서 동기화할 수 있는 시스템입니다.
+Claude Code 기반의 AI 에이전트 팀을 프로젝트별로 구성하고, 픽셀아트 시각화와 함께 실시간으로 모니터링하는 대시보드입니다.
 
-## 🎯 주요 기능
-
-- **📊 시각화 대시보드**: 모든 프로젝트의 팀 에이전트를 한눈에 확인
-- **🔄 GitHub 동기화**: 설정을 GitHub에 저장하고 다른 기기에서 즉시 사용
-- **🎨 프로젝트별 관리**: 각 프로젝트의 맞춤형 팀 에이전트 구성
-- **📈 워크플로우 시각화**: Mermaid 다이어그램으로 파이프라인 표시
-- **🔍 스킬 라이브러리**: 공유 스킬 중앙 관리
-- **⚡ 빠른 설치**: 원클릭 설치 스크립트
-
-## 📦 구조
+## Architecture
 
 ```
-claude-agents-hub/
-├── dashboard/              # React 대시보드 웹앱
-├── projects/               # 프로젝트별 팀 에이전트 설정
-│   ├── auto-details/      # AI 상세페이지 제작 시스템
-│   ├── btc-stacking-bot/  # 암호화폐 트레이딩 봇
-│   └── convengers/        # 멤버 포털
-├── skills/                 # 공유 스킬 저장소
-├── scripts/               # 설치/동기화 스크립트
-└── docs/                  # 문서
+agents-office/
+├── dashboard/          # React + Vite + Phaser.js (port 5173)
+│   ├── src/
+│   │   ├── components/ # UI 컴포넌트 (agent, task, workflow, phaser)
+│   │   ├── pages/      # Dashboard, Project, Agent 페이지
+│   │   ├── hooks/      # useApi, useSSE, useSimulationTime
+│   │   ├── store/      # Zustand (agentStore, simulationEngine)
+│   │   ├── i18n/       # 한국어/영어 (ko.json, en.json)
+│   │   └── lib/        # API client, utilities
+│   └── public/         # Phaser assets (characters, tilesets, map)
+├── server/             # Hono + SQLite/Drizzle (port 3001)
+│   └── src/
+│       ├── db/         # Schema, migrations, seed
+│       ├── routes/     # REST API (projects, agents, tasks, workflows, activity, sse)
+│       ├── bridge/     # Claude CLI subprocess manager (process-pool, watchdog)
+│       ├── sse/        # Server-Sent Events broadcast
+│       ├── middleware/  # Error handler, request logger
+│       └── lib/        # Graceful shutdown
+├── projects/           # 프로젝트별 에이전트 설정 (JSON)
+├── scripts/            # 설치/설정 스크립트
+└── master-config/      # 공유 설정
 ```
 
-## 🚀 빠른 시작
+## Tech Stack
 
-### 1. 설치
+**Dashboard**
+- React 18, TypeScript, Vite
+- Phaser 3 (픽셀아트 에이전트 시각화)
+- TanStack Query (서버 상태 관리)
+- Zustand (클라이언트 상태)
+- Tailwind CSS
+- react-i18next (한/영 전환)
+- react-router-dom v7
+- react-toastify
+
+**Server**
+- Hono (HTTP framework)
+- better-sqlite3 + Drizzle ORM
+- SSE (Server-Sent Events) 실시간 푸시
+- Agent Bridge (Claude CLI subprocess pool)
+
+## Quick Start
 
 ```bash
-# 저장소 클론
-git clone https://github.com/YOUR_USERNAME/claude-agents-hub.git
-cd claude-agents-hub
+# 1. Install dependencies
+cd server && npm install
+cd ../dashboard && npm install
 
-# 설치 스크립트 실행
-./scripts/install.sh
+# 2. Start server (seeds DB on first run)
+cd server
+npm run db:seed
+npm run dev          # http://localhost:3001
 
-# 대시보드 실행
+# 3. Start dashboard
 cd dashboard
-npm install
-npm run dev
+npm run dev          # http://localhost:5173
 ```
 
-### 2. 프로젝트 추가
+## API Endpoints
 
-```bash
-# 새 프로젝트 팀 에이전트 설정
-./scripts/setup-project.sh my-project
-```
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | `/api/health` | Health check (DB, Bridge, SSE status) |
+| GET | `/api/projects` | List all projects |
+| GET | `/api/projects/:id` | Get project detail |
+| GET | `/api/projects/:id/agents` | List project agents |
+| POST | `/api/projects/:id/agents` | Create agent |
+| GET | `/api/agents/:id` | Get agent detail |
+| PATCH | `/api/agents/:id` | Update agent |
+| DELETE | `/api/agents/:id` | Deactivate agent |
+| POST | `/api/agents/:id/clone` | Clone agent |
+| GET | `/api/tasks` | List tasks (`?project_id=`) |
+| POST | `/api/tasks` | Create task |
+| PATCH | `/api/tasks/:id` | Update task |
+| POST | `/api/tasks/:id/execute` | Execute task via Claude CLI |
+| GET | `/api/workflows` | List workflows (`?project_id=`) |
+| PATCH | `/api/workflows/:id` | Update workflow |
+| GET | `/api/activity` | Recent activity log |
+| GET | `/api/sse/stream` | SSE event stream |
+| GET | `/api/saved-configs` | List saved agent presets |
+| POST | `/api/saved-configs` | Save agent preset |
 
-### 3. GitHub 동기화
+## Features
 
-```bash
-# 변경사항 푸시
-./scripts/sync.sh push
+- **Multi-Project Dashboard**: 여러 프로젝트를 카드 형태로 한눈에 확인
+- **Agent Management**: 에이전트 생성/수정/복제/비활성화, 프리셋 저장
+- **Task Board**: 태스크 생성, 상태 관리, 에이전트 할당, Claude CLI 실행
+- **Workflow Pipeline**: 워크플로우 단계별 진행률 시각화
+- **Activity Feed**: 실시간 활동 로그 (상태 변경, 태스크 이벤트)
+- **SSE Real-Time**: 연결 상태 표시, 이벤트 기반 자동 갱신
+- **Pixel Art Visualization**: Phaser.js 기반 에이전트 캐릭터 시각화
+- **i18n**: 한국어/영어 전환
+- **Agent Bridge**: Claude CLI 서브프로세스 풀 (최대 3개 동시), Watchdog 타임아웃
+- **Graceful Shutdown**: SIGTERM 시 브릿지 정리 + DB 연결 종료
 
-# 다른 기기에서 풀
-./scripts/sync.sh pull
-```
+## Development Progress
 
-## 📊 대시보드 미리보기
+- [x] Phase 1: Foundation (DB, API, Phaser, Routing, Agent CRUD)
+- [x] Phase 2: Task Management, Workflows, Activity Feed
+- [x] Phase 3: Agent Bridge, SSE Real-Time, Error Handling
+- [ ] Phase 4: Polish + Production Hardening
 
-대시보드에서 확인 가능한 정보:
-- ✅ 프로젝트별 팀 에이전트 목록
-- ✅ 워크플로우 시각화 (Mermaid)
-- ✅ 스킬 사용 통계
-- ✅ 에이전트 역할 및 책임
-- ✅ 설치된 스킬 라이브러리
-- ✅ 빠른 실행 명령어
+## License
 
-## 🎨 프로젝트 예시
-
-### auto-details (AI 상세페이지 제작)
-
-**팀 구성**: vision, designer, executor, architect, code-reviewer
-
-**워크플로우**:
-```
-Behance 스크래핑 → 이미지 분석 → 디자인 시스템 추출 → 위젯 생성 → 품질 검증
-```
-
-**핵심 스킬**: ui-designer, web-artifacts-builder, playwright, frontend-design
-
-### btc-stacking-bot (암호화폐 트레이딩)
-
-**팀 구성**: scientist, debugger, test-engineer, performance-reviewer
-
-**워크플로우**:
-```
-데이터 분석 → 전략 백테스팅 → 성능 최적화 → 테스트 자동화
-```
-
-**핵심 스킬**: data-analysis, backtesting, pytest-runner
-
-### convengers (멤버 포털)
-
-**팀 구성**: designer, executor, qa-tester, security-reviewer
-
-**워크플로우**:
-```
-UI 설계 → 컴포넌트 구현 → 테스트 → 보안 검증
-```
-
-**핵심 스킬**: frontend-design, react-best-practices, security-audit
-
-## 📚 문서
-
-- [아키텍처 가이드](docs/architecture.md)
-- [사용법](docs/usage.md)
-- [팀 에이전트 생성 가이드](docs/creating-agents.md)
-- [스킬 추가 가이드](docs/adding-skills.md)
-
-## 🤝 기여
-
-기여는 언제나 환영합니다! Pull Request를 보내주세요.
-
-## 📝 라이선스
-
-MIT License
-
----
-
-**Made with ❤️ for multi-project AI agent orchestration**
+MIT
