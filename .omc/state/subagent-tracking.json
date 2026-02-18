@@ -167,11 +167,13 @@
       "agent_type": "oh-my-claudecode:architect",
       "started_at": "2026-02-18T17:06:41.883Z",
       "parent_mode": "ultrawork",
-      "status": "running"
+      "status": "completed",
+      "completed_at": "2026-02-18T17:08:30.367Z",
+      "duration_ms": 108484
     }
   ],
   "total_spawned": 19,
-  "total_completed": 18,
+  "total_completed": 19,
   "total_failed": 0,
-  "last_updated": "2026-02-18T17:06:41.984Z"
+  "last_updated": "2026-02-18T17:08:30.468Z"
 }
