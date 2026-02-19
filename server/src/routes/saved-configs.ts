@@ -5,6 +5,7 @@ import { nanoid } from 'nanoid';
 import { db } from '../db/index.js';
 import { saved_agent_configs } from '../db/schema.js';
 import { AppError } from '../middleware/error-handler.js';
+import { optionalJsonString } from '../lib/validation.js';
 
 export const savedConfigRoutes = new Hono();
 
@@ -15,9 +16,9 @@ const createConfigSchema = z.object({
   role: z.string().min(1),
   department: z.string().optional(),
   model_tier: z.enum(['low', 'medium', 'high']).optional(),
-  persona_json: z.string().optional(),
-  skills_json: z.string().optional(),
-  config_json: z.string().optional(),
+  persona_json: optionalJsonString,
+  skills_json: optionalJsonString,
+  config_json: optionalJsonString,
   source_agent_id: z.string().optional(),
 });
 

@@ -21,6 +21,7 @@ export const sqlite: DatabaseType = new Database(dbPath);
 
 sqlite.pragma('journal_mode = WAL');
 sqlite.pragma('busy_timeout = 5000');
+sqlite.pragma('foreign_keys = ON');
 
 // Auto-create tables if they don't exist
 sqlite.exec(`

@@ -1,4 +1,5 @@
 import { serve } from '@hono/node-server';
+import { serveStatic } from '@hono/node-server/serve-static';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { projectRoutes } from './routes/projects.js';
@@ -10,6 +11,7 @@ import { sseRoutes } from './routes/sse.js';
 import { savedConfigRoutes } from './routes/saved-configs.js';
 import { errorHandler } from './middleware/error-handler.js';
 import { requestLogger } from './middleware/request-logger.js';
+import { rateLimiter } from './middleware/rate-limiter.js';
 import { getClientCount } from './sse/broadcast.js';
 import { sqlite } from './db/index.js';
 import { setupGracefulShutdown } from './lib/graceful-shutdown.js';
@@ -18,13 +20,20 @@ const startTime = Date.now();
 
 const app = new Hono();
 
+const allowedOrigins = process.env['CORS_ORIGINS']
+  ? process.env['CORS_ORIGINS'].split(',').map(s => s.trim())
+  : ['http://localhost:5173', 'http://localhost:3000'];
+
 // Middleware
 app.use('*', requestLogger);
 app.use('*', cors({
-  origin: ['http://localhost:5173', 'http://localhost:3000'],
+  origin: allowedOrigins,
   allowMethods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
   allowHeaders: ['Content-Type'],
 }));
+app.use('/api/*', rateLimiter({ windowMs: 60_000, max: 200 }));
+// Stricter limit on write operations
+app.use('/api/tasks/*/execute', rateLimiter({ windowMs: 60_000, max: 10 }));
 
 // API Routes
 app.route('/api/projects', projectRoutes);
@@ -97,11 +106,16 @@ app.get('/api/health', async (c) => {
   });
 });
 
+// Serve dashboard static files in production
+if (process.env['NODE_ENV'] === 'production') {
+  app.use('/*', serveStatic({ root: './dashboard/dist' }));
+}
+
 // Error handler
 app.onError(errorHandler);
 
 // Start server
-const port = 3001;
+const port = parseInt(process.env['PORT'] ?? '', 10) || 3001;
 console.log(`[server] Agents Office API running on http://localhost:${port}`);
 
 serve({

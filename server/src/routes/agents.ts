@@ -6,6 +6,7 @@ import { db } from '../db/index.js';
 import { agents, tasks, activity_log } from '../db/schema.js';
 import { AppError } from '../middleware/error-handler.js';
 import { broadcast } from '../sse/broadcast.js';
+import { optionalJsonString } from '../lib/validation.js';
 
 export const agentRoutes = new Hono();
 
@@ -16,9 +17,9 @@ const updateAgentSchema = z.object({
   status: z.enum(['inactive', 'idle', 'working', 'completed', 'failed']).optional(),
   model_tier: z.enum(['low', 'medium', 'high']).optional(),
   emoji: z.string().optional(),
-  persona_json: z.string().optional(),
-  skills_json: z.string().optional(),
-  config_json: z.string().optional(),
+  persona_json: optionalJsonString,
+  skills_json: optionalJsonString,
+  config_json: optionalJsonString,
   sprite_key: z.string().optional(),
 });
 
@@ -30,9 +31,9 @@ const cloneAgentSchema = z.object({
   parent_id: z.string().optional(),
   model_tier: z.enum(['low', 'medium', 'high']).optional(),
   emoji: z.string().optional(),
-  persona_json: z.string().optional(),
-  skills_json: z.string().optional(),
-  config_json: z.string().optional(),
+  persona_json: optionalJsonString,
+  skills_json: optionalJsonString,
+  config_json: optionalJsonString,
   sprite_key: z.string().optional(),
 });
 

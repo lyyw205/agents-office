@@ -5,6 +5,7 @@ import { nanoid } from 'nanoid';
 import { db } from '../db/index.js';
 import { workflows, tasks, activity_log } from '../db/schema.js';
 import { AppError } from '../middleware/error-handler.js';
+import { jsonString, optionalJsonString } from '../lib/validation.js';
 
 export const workflowRoutes = new Hono();
 
@@ -12,14 +13,14 @@ const createWorkflowSchema = z.object({
   project_id: z.string().min(1),
   name: z.string().min(1),
   description: z.string().optional(),
-  steps_json: z.string().min(1),
+  steps_json: jsonString,
   estimated_time: z.string().optional(),
 });
 
 const updateWorkflowSchema = z.object({
   name: z.string().min(1).optional(),
   description: z.string().optional(),
-  steps_json: z.string().optional(),
+  steps_json: optionalJsonString,
   estimated_time: z.string().optional(),
   status: z.enum(['idle', 'running', 'completed', 'failed', 'paused']).optional(),
   current_step: z.number().int().min(0).optional(),

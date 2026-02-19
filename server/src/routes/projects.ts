@@ -5,6 +5,7 @@ import { nanoid } from 'nanoid';
 import { db } from '../db/index.js';
 import { projects, agents, tasks, activity_log } from '../db/schema.js';
 import { AppError } from '../middleware/error-handler.js';
+import { optionalJsonString } from '../lib/validation.js';
 
 export const projectRoutes = new Hono();
 
@@ -13,8 +14,8 @@ const createProjectSchema = z.object({
   display_name: z.string().min(1),
   description: z.string().optional(),
   priority: z.enum(['low', 'medium', 'high']).optional(),
-  config_json: z.string().optional(),
-  scene_config: z.string().optional(),
+  config_json: optionalJsonString,
+  scene_config: optionalJsonString,
 });
 
 const updateProjectSchema = z.object({
@@ -22,8 +23,8 @@ const updateProjectSchema = z.object({
   description: z.string().optional(),
   status: z.enum(['active', 'archived', 'completed']).optional(),
   priority: z.enum(['low', 'medium', 'high']).optional(),
-  config_json: z.string().optional(),
-  scene_config: z.string().optional(),
+  config_json: optionalJsonString,
+  scene_config: optionalJsonString,
 });
 
 const createAgentSchema = z.object({
@@ -34,9 +35,9 @@ const createAgentSchema = z.object({
   parent_id: z.string().optional(),
   model_tier: z.enum(['low', 'medium', 'high']).optional(),
   emoji: z.string().optional(),
-  persona_json: z.string().optional(),
-  skills_json: z.string().optional(),
-  config_json: z.string().optional(),
+  persona_json: optionalJsonString,
+  skills_json: optionalJsonString,
+  config_json: optionalJsonString,
   sprite_key: z.string().optional(),
 });
 

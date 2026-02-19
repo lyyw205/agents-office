@@ -4,6 +4,7 @@ import { eq, and, desc } from 'drizzle-orm';
 import { nanoid } from 'nanoid';
 import { db } from '../db/index.js';
 import { tasks, agents, activity_log } from '../db/schema.js';
+import { optionalJsonString } from '../lib/validation.js';
 import { AppError } from '../middleware/error-handler.js';
 import { broadcast } from '../sse/broadcast.js';
 import { bridge } from '../bridge/index.js';
@@ -17,7 +18,7 @@ const createTaskSchema = z.object({
   workflow_id: z.string().optional(),
   description: z.string().optional(),
   priority: z.enum(['low', 'medium', 'high']).optional(),
-  input_json: z.string().optional(),
+  input_json: optionalJsonString,
 });
 
 const updateTaskSchema = z.object({
@@ -28,8 +29,8 @@ const updateTaskSchema = z.object({
     .optional(),
   agent_id: z.string().nullable().optional(),
   priority: z.enum(['low', 'medium', 'high']).optional(),
-  output_json: z.string().optional(),
-  error_json: z.string().optional(),
+  output_json: optionalJsonString,
+  error_json: optionalJsonString,
   started_at: z.string().optional(),
   completed_at: z.string().optional(),
 });
@@ -195,4 +196,56 @@ taskRoutes.post('/:id/execute', async (c) => {
     },
     202
   );
+});
+
+// POST /:id/cancel - Cancel a running task
+taskRoutes.post('/:id/cancel', (c) => {
+  const id = c.req.param('id');
+  const task = db.select().from(tasks).where(eq(tasks.id, id)).get();
+  if (!task) throw new AppError('Task not found', 404, 'NOT_FOUND');
+
+  if (task.status !== 'in_progress' && task.status !== 'pending') {
+    throw new AppError(
+      `Task cannot be cancelled in status '${task.status}'`,
+      409,
+      'INVALID_STATUS'
+    );
+  }
+
+  const now = new Date().toISOString();
+
+  // Cancel via bridge if in_progress
+  if (task.status === 'in_progress') {
+    bridge.cancelTask(id);
+  }
+
+  // Update task status
+  db.update(tasks)
+    .set({ status: 'cancelled', completed_at: now })
+    .where(eq(tasks.id, id))
+    .run();
+
+  // Reset agent status if assigned
+  if (task.agent_id) {
+    db.update(agents)
+      .set({ status: 'idle', updated_at: now })
+      .where(eq(agents.id, task.agent_id))
+      .run();
+    broadcast('agent_status', JSON.stringify({ agentId: task.agent_id, status: 'idle', taskId: id }));
+  }
+
+  db.insert(activity_log)
+    .values({
+      id: nanoid(),
+      agent_id: task.agent_id,
+      project_id: task.project_id,
+      task_id: id,
+      action: 'task_cancelled',
+      details_json: JSON.stringify({ taskId: id }),
+    })
+    .run();
+
+  broadcast('task_updated', JSON.stringify({ ...task, status: 'cancelled', completed_at: now }));
+
+  return c.json({ success: true, taskId: id });
 });
