@@ -1,3 +1,5 @@
+import type Phaser from 'phaser';
+
 export type TileCategory = 'floor' | 'wall' | 'furniture' | 'decoration';
 
 export interface TilesetMeta {
@@ -7,19 +9,19 @@ export interface TilesetMeta {
   cols: number;
   rows: number;
   category: TileCategory;
+  /** Replace near-black pixels with transparent (RPG Maker autotile convention) */
+  alphaBlack?: boolean;
+  /** Make the bottom N pixels of each tile transparent (wall cutout) */
+  maskBottomPx?: number;
 }
 
 export const TILESETS: TilesetMeta[] = [
-  // Floor (A5 series: 384×768 = 8 cols × 16 rows)
-  { key: 'floor_modern', label: 'Modern Floor', src: '/tilesets/A5_Modern_Rasak.png', cols: 8, rows: 16, category: 'floor' },
-  { key: 'floor_fabric', label: 'Fabric Floor', src: '/tilesets/A5_ModernFabric_Rasak.png', cols: 8, rows: 16, category: 'floor' },
-  { key: 'floor_street', label: 'Street', src: '/tilesets/A5_Street_Rasak.png', cols: 8, rows: 16, category: 'floor' },
+  // Floor (custom tiles)
+  { key: 'floor_fabric_custom', label: 'Fabric Floor (Custom)', src: '/tilesets/custom_fabric_floor.png', cols: 7, rows: 1, category: 'floor' },
+  { key: 'floor_carpet_custom', label: 'Carpet Floor (Custom)', src: '/tilesets/custom_carpet_floor.png', cols: 7, rows: 1, category: 'floor' },
 
-  // Wall (A2/A3/A4 series)
-  { key: 'wall_modern_a2', label: 'Modern (A2)', src: '/tilesets/A2_Modern_Rasak.png', cols: 16, rows: 12, category: 'wall' },
-  { key: 'wall_buildings', label: 'Buildings', src: '/tilesets/A3_Buildings_Rasak.png', cols: 14, rows: 8, category: 'wall' },
-  { key: 'wall_fabric', label: 'Fabric Wall', src: '/tilesets/A4_Fabric_Rasak.png', cols: 16, rows: 15, category: 'wall' },
-  { key: 'wall_modern', label: 'Modern House', src: '/tilesets/A4_ModernHouse_Rasak.png', cols: 16, rows: 15, category: 'wall' },
+  // Wall (custom gray tiles: corners/edges/center)
+  { key: 'wall_gray_custom', label: 'Gray Wall (Custom)', src: '/tilesets/custom_gray_walls.png', cols: 3, rows: 21, category: 'wall' },
 
   // Furniture (Tileset series: 768×768 = 16 cols × 16 rows)
   { key: 'furn_office', label: 'Office', src: '/tilesets/Tileset_ModernHouse_StorageOffice_Rasak.png', cols: 16, rows: 16, category: 'furniture' },
@@ -31,6 +33,7 @@ export const TILESETS: TilesetMeta[] = [
   { key: 'furn_stage', label: 'Stage', src: '/tilesets/Tileset_ModernStage_Rasak.png', cols: 16, rows: 16, category: 'furniture' },
   { key: 'furn_hydro', label: 'Hydroponics', src: '/tilesets/Tileset_Hydroponics_Rasak.png', cols: 16, rows: 16, category: 'furniture' },
   { key: 'furn_japanese', label: 'Japanese', src: '/tilesets/Tileset_Japanese_Inside_Rasak.png', cols: 16, rows: 16, category: 'furniture' },
+  { key: 'furn_hospital', label: 'Hospital', src: '/tilesets/tilesetHospital/tilesethospital-4.png', cols: 16, rows: 16, category: 'furniture' },
 
   // Decoration (Tileset series: 768×768 = 16 cols × 16 rows)
   { key: 'deco_items', label: 'Decorations', src: '/tilesets/Tileset_ModernHouse_Decoration_Rasak.png', cols: 16, rows: 16, category: 'decoration' },
@@ -66,3 +69,74 @@ export const CATEGORY_TO_LAYER: Record<TileCategory, string> = {
   furniture: 'furniture',
   decoration: 'decoration',
 };
+
+/**
+ * Process tilesets flagged with `alphaBlack` to replace near-black pixels
+ * with transparency. This matches RPG Maker behaviour where black in A4
+ * autotile templates means "show the layer below".
+ *
+ * Call once at the start of a Phaser Scene's `create()`, before rendering.
+ */
+export function processAlphaBlackTextures(
+  textures: Phaser.Textures.TextureManager,
+  tileSize: number,
+) {
+  const BLACK_THRESHOLD = 20;
+
+  for (const ts of TILESETS) {
+    const cutout = ts.maskBottomPx ?? 0;
+    if (!ts.alphaBlack && cutout <= 0) continue;
+    if (!textures.exists(ts.key)) continue;
+
+    const texture = textures.get(ts.key);
+    const source = texture.getSourceImage() as HTMLImageElement;
+
+    // Draw original image onto a canvas
+    const canvas = document.createElement('canvas');
+    canvas.width = source.width;
+    canvas.height = source.height;
+    const ctx = canvas.getContext('2d')!;
+    ctx.drawImage(source, 0, 0);
+
+    // Replace near-black pixels with transparent
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const d = imageData.data;
+    const w = canvas.width;
+    const h = canvas.height;
+    const maxCutout = Math.max(0, Math.min(cutout, tileSize));
+    for (let y = 0; y < h; y++) {
+      const yInTile = y % tileSize;
+      const inCutout = maxCutout > 0 && yInTile >= tileSize - maxCutout;
+      for (let x = 0; x < w; x++) {
+        const i = (y * w + x) * 4;
+        if (ts.alphaBlack) {
+          if (
+            d[i] < BLACK_THRESHOLD &&
+            d[i + 1] < BLACK_THRESHOLD &&
+            d[i + 2] < BLACK_THRESHOLD
+          ) {
+            d[i + 3] = 0;
+            continue;
+          }
+        }
+        if (inCutout) {
+          d[i + 3] = 0;
+        }
+      }
+    }
+    ctx.putImageData(imageData, 0, 0);
+
+    // Replace the Phaser texture with the processed canvas
+    textures.remove(ts.key);
+    const canvasTex = textures.addCanvas(ts.key, canvas);
+
+    // Re-create spritesheet frames manually
+    let idx = 0;
+    for (let row = 0; row < ts.rows; row++) {
+      for (let col = 0; col < ts.cols; col++) {
+        canvasTex.add(idx, 0, col * tileSize, row * tileSize, tileSize, tileSize);
+        idx++;
+      }
+    }
+  }
+}

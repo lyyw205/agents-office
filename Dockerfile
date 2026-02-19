@@ -26,9 +26,8 @@ COPY --from=deps /app/server/node_modules ./server/node_modules
 COPY --from=server-build /app/server/dist ./server/dist
 COPY --from=dashboard-build /app/dashboard/dist ./dashboard/dist
 COPY server/package.json server/
+COPY server/seed-data/ server/seed-data/
 COPY package.json ./
-COPY master-config/ master-config/
-COPY projects/ projects/
 
 # Create data directory for SQLite
 RUN mkdir -p /app/data

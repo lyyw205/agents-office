@@ -40,6 +40,7 @@ export const api = {
     request<{ success: boolean }>(`/projects/${id}`, { method: 'DELETE' }),
 
   // Agents
+  getAllAgents: () => request<{ data: Agent[]; total: number }>('/agents'),
   getProjectAgents: (projectId: string) =>
     request<{ data: Agent[]; total: number }>(`/projects/${projectId}/agents`),
   getAgent: (id: string) => request<AgentDetail>(`/agents/${id}`),

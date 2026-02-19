@@ -6,22 +6,22 @@ import { db } from './index.js'; // index.js auto-creates tables on import
 import { projects, agents, workflows, activity_log } from './schema.js';
 
 // ---------------------------------------------------------------------------
-// JSON file paths
+// JSON file paths (seed data lives in server/seed-data/)
 // ---------------------------------------------------------------------------
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const ROOT = resolve(__dirname, '../../..');
+const SEED_DATA = resolve(__dirname, '../../seed-data');
 
 const masterConfig = JSON.parse(
-  readFileSync(resolve(ROOT, 'master-config/master-config.json'), 'utf-8')
+  readFileSync(resolve(SEED_DATA, 'master-config.json'), 'utf-8')
 );
 
 const teamConfig = JSON.parse(
-  readFileSync(resolve(ROOT, 'projects/auto-details/team-config.json'), 'utf-8')
+  readFileSync(resolve(SEED_DATA, 'team-config.json'), 'utf-8')
 );
 
 const personaConfig = JSON.parse(
-  readFileSync(resolve(ROOT, 'projects/auto-details/agents-persona.json'), 'utf-8')
+  readFileSync(resolve(SEED_DATA, 'agents-persona.json'), 'utf-8')
 );
 
 // ---------------------------------------------------------------------------

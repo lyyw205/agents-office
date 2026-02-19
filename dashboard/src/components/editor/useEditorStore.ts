@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { TilePlacement, TilemapData, LayerName, SceneConfig } from '../../types/tilemap';
+import type { TilePlacement, TilemapData, LayerName, SceneConfig, TileLayer, TileLayerStack } from '../../types/tilemap';
 
 export type EditorTool = 'paint' | 'erase' | 'select' | 'agent';
 
@@ -14,6 +14,11 @@ interface EditorState {
   showGrid: boolean;
   layerVisibility: Record<LayerName, boolean>;
 
+  // Camera
+  zoom: number;
+  /** Increment to signal EditorScene to reset camera position and zoom */
+  resetViewFlag: number;
+
   // Undo/Redo
   history: TilemapData[];
   historyIndex: number;
@@ -26,6 +31,8 @@ interface EditorState {
   setSelectedTile: (tile: TilePlacement | null) => void;
   setShowGrid: (show: boolean) => void;
   toggleLayerVisibility: (layer: LayerName) => void;
+  setZoom: (zoom: number) => void;
+  resetView: () => void;
   paintTile: (x: number, y: number) => void;
   eraseTile: (x: number, y: number) => void;
   assignAgent: (agentId: string, x: number, y: number) => void;
@@ -59,15 +66,38 @@ function tileKey(x: number, y: number): string {
   return `${x},${y}`;
 }
 
+function normalizeLayer(layer?: TileLayer): TileLayerStack {
+  const out: TileLayerStack = {};
+  if (!layer) return out;
+  for (const [key, entry] of Object.entries(layer)) {
+    const stack = Array.isArray(entry) ? entry : [entry];
+    if (stack.length === 0) continue;
+    out[key] = stack.map((p) => ({ ...p }));
+  }
+  return out;
+}
+
+function normalizeTilemap(tm: TilemapData): TilemapData {
+  return {
+    ...tm,
+    layers: {
+      floor: normalizeLayer(tm.layers?.floor),
+      walls: normalizeLayer(tm.layers?.walls),
+      furniture: normalizeLayer(tm.layers?.furniture),
+      decoration: normalizeLayer(tm.layers?.decoration),
+    },
+  };
+}
+
 function cloneTilemap(tm: TilemapData): TilemapData {
   return {
     ...tm,
     tilesets: [...tm.tilesets],
     layers: {
-      floor: { ...tm.layers.floor },
-      walls: { ...tm.layers.walls },
-      furniture: { ...tm.layers.furniture },
-      decoration: { ...tm.layers.decoration },
+      floor: normalizeLayer(tm.layers.floor),
+      walls: normalizeLayer(tm.layers.walls),
+      furniture: normalizeLayer(tm.layers.furniture),
+      decoration: normalizeLayer(tm.layers.decoration),
     },
     agentDesks: tm.agentDesks.map((d) => ({ ...d })),
   };
@@ -96,6 +126,8 @@ export const useEditorStore = create<EditorState>((set, get) => ({
   dirty: false,
   showGrid: true,
   layerVisibility: { floor: true, walls: true, furniture: true, decoration: true },
+  zoom: 1,
+  resetViewFlag: 0,
   history: [],
   historyIndex: -1,
   canUndo: false,
@@ -105,6 +137,8 @@ export const useEditorStore = create<EditorState>((set, get) => ({
   setActiveLayer: (activeLayer) => set({ activeLayer }),
   setSelectedTile: (selectedTile) => set({ selectedTile }),
   setShowGrid: (showGrid) => set({ showGrid }),
+  setZoom: (zoom) => set({ zoom }),
+  resetView: () => set((s) => ({ zoom: 1, resetViewFlag: s.resetViewFlag + 1 })),
 
   toggleLayerVisibility: (layer) =>
     set((s) => ({
@@ -120,15 +154,17 @@ export const useEditorStore = create<EditorState>((set, get) => ({
 
     // Skip if same tile already placed at this position on this layer
     const existing = tilemap.layers[activeLayer][key];
-    if (existing && existing.ts === selectedTile.ts && existing.f === selectedTile.f) return;
+    const stack = Array.isArray(existing)
+      ? [...existing]
+      : existing
+        ? [{ ...existing }]
+        : [];
+    const top = stack[stack.length - 1];
+    if (top && top.ts === selectedTile.ts && top.f === selectedTile.f) return;
 
-    const newLayers = {
-      floor: { ...tilemap.layers.floor },
-      walls: { ...tilemap.layers.walls },
-      furniture: { ...tilemap.layers.furniture },
-      decoration: { ...tilemap.layers.decoration },
-    };
-    newLayers[activeLayer][key] = selectedTile;
+    stack.push({ ...selectedTile });
+    const newLayer = { ...tilemap.layers[activeLayer], [key]: stack };
+    const newLayers = { ...tilemap.layers, [activeLayer]: newLayer };
 
     const usedTilesets = new Set(tilemap.tilesets);
     usedTilesets.add(selectedTile.ts);
@@ -148,15 +184,20 @@ export const useEditorStore = create<EditorState>((set, get) => ({
     const key = tileKey(x, y);
 
     // Skip if nothing to erase on this layer
-    if (!tilemap.layers[activeLayer][key]) return;
+    const existing = tilemap.layers[activeLayer][key];
+    if (!existing) return;
 
-    const newLayers = {
-      floor: { ...tilemap.layers.floor },
-      walls: { ...tilemap.layers.walls },
-      furniture: { ...tilemap.layers.furniture },
-      decoration: { ...tilemap.layers.decoration },
-    };
-    delete newLayers[activeLayer][key];
+    const stack = Array.isArray(existing)
+      ? [...existing]
+      : [{ ...existing }];
+    stack.pop();
+    const newLayer = { ...tilemap.layers[activeLayer] };
+    if (stack.length === 0) {
+      delete newLayer[key];
+    } else {
+      newLayer[key] = stack;
+    }
+    const newLayers = { ...tilemap.layers, [activeLayer]: newLayer };
 
     const newTilemap: TilemapData = {
       ...tilemap,
@@ -221,7 +262,7 @@ export const useEditorStore = create<EditorState>((set, get) => ({
       try {
         const parsed = JSON.parse(sceneConfig) as SceneConfig;
         if (parsed.tilemap) {
-          tilemap = parsed.tilemap;
+          tilemap = normalizeTilemap(parsed.tilemap);
         } else if (parsed.deskMap && agents) {
           const desks: Array<{ agentId: string; x: number; y: number }> = [];
           for (const agent of agents) {
@@ -270,6 +311,8 @@ export const useEditorStore = create<EditorState>((set, get) => ({
       dirty: false,
       showGrid: true,
       layerVisibility: { floor: true, walls: true, furniture: true, decoration: true },
+      zoom: 1,
+      resetViewFlag: 0,
       history: [],
       historyIndex: -1,
       canUndo: false,

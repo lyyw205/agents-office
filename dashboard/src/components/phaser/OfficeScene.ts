@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import type { TilemapData, LayerName } from '../../types/tilemap';
-import { TILESET_MAP } from '../editor/tile-registry';
+import { TILESET_MAP, processAlphaBlackTextures } from '../editor/tile-registry';
 
 interface AgentSprite {
   sprite: Phaser.GameObjects.Sprite;
@@ -102,7 +102,8 @@ export class OfficeScene extends Phaser.Scene {
       for (const tsKey of this.tilemapData.tilesets) {
         const meta = TILESET_MAP.get(tsKey);
         if (meta) {
-          this.load.spritesheet(tsKey, meta.src, {
+          const src = encodeURI(meta.src);
+          this.load.spritesheet(tsKey, src, {
             frameWidth: TILE,
             frameHeight: TILE,
           });
@@ -121,6 +122,9 @@ export class OfficeScene extends Phaser.Scene {
   }
 
   create() {
+    // Make black pixels transparent on A4 wall tilesets (RPG Maker convention)
+    processAlphaBlackTextures(this.textures, TILE);
+
     this.createAnimations();
 
     const initData = (window as any).__officeSceneData as {
@@ -171,14 +175,17 @@ export class OfficeScene extends Phaser.Scene {
         const x = parseInt(xStr, 10);
         const y = parseInt(yStr, 10);
 
-        if (!this.textures.exists(placement.ts)) continue;
-
-        this.add.sprite(
-          x * TILE + TILE / 2,
-          y * TILE + TILE / 2,
-          placement.ts,
-          placement.f,
-        ).setDepth(depth);
+        const stack = Array.isArray(placement) ? placement : [placement];
+        for (let i = 0; i < stack.length; i++) {
+          const entry = stack[i];
+          if (!this.textures.exists(entry.ts)) continue;
+          this.add.sprite(
+            x * TILE + TILE / 2,
+            y * TILE + TILE / 2,
+            entry.ts,
+            entry.f,
+          ).setDepth(depth + i * 0.01);
+        }
       }
     }
   }

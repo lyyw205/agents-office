@@ -89,19 +89,26 @@ export function MapEditorPage() {
   // Handle HTML5 drag-and-drop for agents onto the Phaser canvas
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
-    const agentId = e.dataTransfer.getData('application/agent-id');
+    const agentId =
+      e.dataTransfer.getData('application/agent-id') ||
+      e.dataTransfer.getData('text/plain');
     if (!agentId || !sceneRef.current || !containerRef.current) return;
 
     const canvas = containerRef.current.querySelector('canvas');
     if (!canvas) return;
 
+    // Convert browser coords → game coords (accounting for Scale.FIT)
     const rect = canvas.getBoundingClientRect();
     const scaleX = GAME_W / rect.width;
     const scaleY = GAME_H / rect.height;
-    const worldX = (e.clientX - rect.left) * scaleX;
-    const worldY = (e.clientY - rect.top) * scaleY;
+    const screenX = (e.clientX - rect.left) * scaleX;
+    const screenY = (e.clientY - rect.top) * scaleY;
 
-    sceneRef.current.handleAgentDrop(agentId, worldX, worldY);
+    // Convert game coords → world coords (accounting for camera zoom/scroll)
+    const camera = sceneRef.current.cameras.main;
+    const worldPoint = camera.getWorldPoint(screenX, screenY);
+
+    sceneRef.current.handleAgentDrop(agentId, worldPoint.x, worldPoint.y);
   }, []);
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
@@ -201,6 +208,7 @@ export function MapEditorPage() {
           className="flex-1 bg-gray-950 flex items-center justify-center overflow-hidden"
           onDrop={handleDrop}
           onDragOver={handleDragOver}
+          onContextMenu={(e) => e.preventDefault()}
         >
           <div
             ref={containerRef}

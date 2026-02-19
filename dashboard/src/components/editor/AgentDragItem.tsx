@@ -11,6 +11,7 @@ export function AgentDragItem({ agent, isPlaced }: AgentDragItemProps) {
       draggable
       onDragStart={(e) => {
         e.dataTransfer.setData('application/agent-id', agent.id);
+        e.dataTransfer.setData('text/plain', agent.id);
         e.dataTransfer.effectAllowed = 'move';
       }}
       className={`flex items-center gap-2 p-2 rounded cursor-grab active:cursor-grabbing border transition-colors ${

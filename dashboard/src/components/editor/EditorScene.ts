@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { TILESETS, TILESET_MAP } from './tile-registry';
+import { TILESETS, TILESET_MAP, processAlphaBlackTextures } from './tile-registry';
 import { useEditorStore } from './useEditorStore';
 import type { LayerName, DeskAssignment } from '../../types/tilemap';
 
@@ -21,6 +21,10 @@ export class EditorScene extends Phaser.Scene {
   private hoverGraphics!: Phaser.GameObjects.Graphics;
   private agentMarkers = new Map<string, AgentMarker>();
   private isPainting = false;
+  private isPanning = false;
+  private isSpaceDown = false;
+  private panStartScrollX = 0;
+  private panStartScrollY = 0;
   private unsubscribe?: () => void;
   private mapWidth = 18;
   private mapHeight = 13;
@@ -32,7 +36,8 @@ export class EditorScene extends Phaser.Scene {
   preload() {
     // Load all tilesets as spritesheets
     for (const ts of TILESETS) {
-      this.load.spritesheet(ts.key, ts.src, {
+      const src = encodeURI(ts.src);
+      this.load.spritesheet(ts.key, src, {
         frameWidth: TILE,
         frameHeight: TILE,
       });
@@ -49,6 +54,9 @@ export class EditorScene extends Phaser.Scene {
   }
 
   create() {
+    // Make black pixels transparent on A4 wall tilesets (RPG Maker convention)
+    processAlphaBlackTextures(this.textures, TILE);
+
     const store = useEditorStore.getState();
     this.mapWidth = store.tilemap.width;
     this.mapHeight = store.tilemap.height;
@@ -89,25 +97,69 @@ export class EditorScene extends Phaser.Scene {
     this.renderAllLayers();
     this.renderAgentMarkers(store.tilemap.agentDesks);
 
-    // Pointer events
+    // --- Camera zoom / pan ---
+    const camera = this.cameras.main;
+
+    // Wheel zoom (zoom towards cursor)
+    this.input.on('wheel', (pointer: Phaser.Input.Pointer, _go: any[], _dx: number, dy: number) => {
+      const oldZoom = camera.zoom;
+      const newZoom = Phaser.Math.Clamp(oldZoom * (1 - dy * 0.001), 0.25, 4);
+      // Keep the world point under cursor fixed
+      camera.scrollX += pointer.x * (1 / oldZoom - 1 / newZoom);
+      camera.scrollY += pointer.y * (1 / oldZoom - 1 / newZoom);
+      camera.setZoom(newZoom);
+      useEditorStore.getState().setZoom(newZoom);
+    });
+
+    // Space key toggles pan mode
+    this.input.keyboard?.on('keydown-SPACE', (event: KeyboardEvent) => {
+      event.preventDefault();
+      this.isSpaceDown = true;
+      this.sys.canvas.style.cursor = 'grab';
+    });
+    this.input.keyboard?.on('keyup-SPACE', () => {
+      this.isSpaceDown = false;
+      if (!this.isPanning) {
+        this.sys.canvas.style.cursor = 'default';
+      }
+    });
+
+    // Pointer events (paint / pan)
     this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
-      this.isPainting = true;
-      this.handlePointer(pointer);
+      if (pointer.middleButtonDown() || this.isSpaceDown) {
+        this.isPanning = true;
+        this.panStartScrollX = camera.scrollX;
+        this.panStartScrollY = camera.scrollY;
+        this.sys.canvas.style.cursor = 'grabbing';
+      } else if (pointer.leftButtonDown()) {
+        this.isPainting = true;
+        this.handlePointer(pointer);
+      }
     });
 
     this.input.on('pointermove', (pointer: Phaser.Input.Pointer) => {
-      this.updateHover(pointer);
-      if (this.isPainting) {
-        this.handlePointer(pointer);
+      if (this.isPanning) {
+        camera.scrollX = this.panStartScrollX + (pointer.downX - pointer.x) / camera.zoom;
+        camera.scrollY = this.panStartScrollY + (pointer.downY - pointer.y) / camera.zoom;
+      } else {
+        this.updateHover(pointer);
+        if (this.isPainting) {
+          this.handlePointer(pointer);
+        }
       }
     });
 
     this.input.on('pointerup', () => {
       this.isPainting = false;
+      if (this.isPanning) {
+        this.isPanning = false;
+        this.sys.canvas.style.cursor = this.isSpaceDown ? 'grab' : 'default';
+      }
     });
 
     this.input.on('pointerout', () => {
       this.isPainting = false;
+      this.isPanning = false;
       this.hoverGraphics.clear();
     });
 
@@ -138,6 +190,20 @@ export class EditorScene extends Phaser.Scene {
       if (state.tilemap !== prevState.tilemap) {
         this.renderAllLayers();
         this.renderAgentMarkers(state.tilemap.agentDesks);
+      }
+      if (state.resetViewFlag !== prevState.resetViewFlag) {
+        camera.setZoom(1);
+        camera.scrollX = 0;
+        camera.scrollY = 0;
+      } else if (state.zoom !== prevState.zoom && Math.abs(state.zoom - camera.zoom) > 0.001) {
+        // Toolbar zoom buttons → zoom towards center of view
+        const oldZoom = camera.zoom;
+        const newZoom = state.zoom;
+        const cx = camera.width / 2;
+        const cy = camera.height / 2;
+        camera.scrollX += cx * (1 / oldZoom - 1 / newZoom);
+        camera.scrollY += cy * (1 / oldZoom - 1 / newZoom);
+        camera.setZoom(newZoom);
       }
     });
   }
@@ -202,19 +268,22 @@ export class EditorScene extends Phaser.Scene {
         const [xStr, yStr] = key.split(',');
         const x = parseInt(xStr, 10);
         const y = parseInt(yStr, 10);
-        const tsMeta = TILESET_MAP.get(placement.ts);
-        if (!tsMeta) continue;
+        const stack = Array.isArray(placement) ? placement : [placement];
+        for (const entry of stack) {
+          const tsMeta = TILESET_MAP.get(entry.ts);
+          if (!tsMeta) continue;
 
-        // Check if tileset texture is loaded
-        if (!this.textures.exists(placement.ts)) continue;
+          // Check if tileset texture is loaded
+          if (!this.textures.exists(entry.ts)) continue;
 
-        const sprite = this.add.sprite(
-          x * TILE + TILE / 2,
-          y * TILE + TILE / 2,
-          placement.ts,
-          placement.f,
-        );
-        container.add(sprite);
+          const sprite = this.add.sprite(
+            x * TILE + TILE / 2,
+            y * TILE + TILE / 2,
+            entry.ts,
+            entry.f,
+          );
+          container.add(sprite);
+        }
       }
 
       container.setVisible(store.layerVisibility[layer]);

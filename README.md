@@ -10,24 +10,24 @@ Claude Code 기반의 AI 에이전트 팀을 프로젝트별로 구성하고, �
 agents-office/
 ├── dashboard/          # React + Vite + Phaser.js (port 5173)
 │   ├── src/
-│   │   ├── components/ # UI 컴포넌트 (agent, task, workflow, phaser)
-│   │   ├── pages/      # Dashboard, Project, Agent 페이지
-│   │   ├── hooks/      # useApi, useSSE, useSimulationTime
-│   │   ├── store/      # Zustand (agentStore, simulationEngine)
+│   │   ├── components/ # UI 컴포넌트 (Layout, Phaser office)
+│   │   ├── pages/      # Dashboard, Project, Agent, Tasks, Activity
+│   │   ├── hooks/      # useSSE (real-time updates)
+│   │   ├── store/      # Zustand (app state)
 │   │   ├── i18n/       # 한국어/영어 (ko.json, en.json)
-│   │   └── lib/        # API client, utilities
-│   └── public/         # Phaser assets (characters, tilesets, map)
+│   │   └── lib/        # API client
+│   └── public/
 ├── server/             # Hono + SQLite/Drizzle (port 3001)
-│   └── src/
-│       ├── db/         # Schema, migrations, seed
-│       ├── routes/     # REST API (projects, agents, tasks, workflows, activity, sse)
-│       ├── bridge/     # Claude CLI subprocess manager (process-pool, watchdog)
-│       ├── sse/        # Server-Sent Events broadcast
-│       ├── middleware/  # Error handler, request logger
-│       └── lib/        # Graceful shutdown
-├── projects/           # 프로젝트별 에이전트 설정 (JSON)
-├── scripts/            # 설치/설정 스크립트
-└── master-config/      # 공유 설정
+│   ├── src/
+│   │   ├── db/         # Schema, migrations, seed
+│   │   ├── routes/     # REST API (projects, agents, tasks, workflows, activity, sse)
+│   │   ├── bridge/     # Claude CLI subprocess manager (process-pool, watchdog)
+│   │   ├── sse/        # Server-Sent Events broadcast
+│   │   ├── middleware/  # Error handler, request logger, rate limiter
+│   │   └── lib/        # Graceful shutdown, validation
+│   └── seed-data/      # DB seed JSON (master-config, team-config, agents-persona)
+├── scripts/            # dev.sh (concurrently start both servers)
+└── data/               # SQLite database (gitignored)
 ```
 
 ## Tech Stack
@@ -52,17 +52,15 @@ agents-office/
 
 ```bash
 # 1. Install dependencies
-cd server && npm install
-cd ../dashboard && npm install
+npm install
 
-# 2. Start server (seeds DB on first run)
-cd server
+# 2. Seed the database
 npm run db:seed
-npm run dev          # http://localhost:3001
 
-# 3. Start dashboard
-cd dashboard
-npm run dev          # http://localhost:5173
+# 3. Start both servers (dashboard + API)
+npm run dev
+# Dashboard: http://localhost:5173
+# API:       http://localhost:3001
 ```
 
 ## API Endpoints
@@ -101,13 +99,6 @@ npm run dev          # http://localhost:5173
 - **i18n**: 한국어/영어 전환
 - **Agent Bridge**: Claude CLI 서브프로세스 풀 (최대 3개 동시), Watchdog 타임아웃
 - **Graceful Shutdown**: SIGTERM 시 브릿지 정리 + DB 연결 종료
-
-## Development Progress
-
-- [x] Phase 1: Foundation (DB, API, Phaser, Routing, Agent CRUD)
-- [x] Phase 2: Task Management, Workflows, Activity Feed
-- [x] Phase 3: Agent Bridge, SSE Real-Time, Error Handling
-- [x] Phase 4: Polish + Production Hardening
 
 ## License
 

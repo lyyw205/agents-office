@@ -21,7 +21,7 @@ interface EditorToolbarProps {
 }
 
 export function EditorToolbar({ onSave, onCancel, saving }: EditorToolbarProps) {
-  const { tool, setTool, activeLayer, setActiveLayer, showGrid, setShowGrid, dirty, canUndo, canRedo, undo, redo } =
+  const { tool, setTool, activeLayer, setActiveLayer, showGrid, setShowGrid, dirty, canUndo, canRedo, undo, redo, zoom, setZoom, resetView } =
     useEditorStore();
 
   return (
@@ -78,6 +78,34 @@ export function EditorToolbar({ onSave, onCancel, saving }: EditorToolbarProps) 
       >
         Grid
       </button>
+
+      {/* Separator */}
+      <div className="w-px h-6 bg-gray-700" />
+
+      {/* Zoom controls */}
+      <div className="flex items-center gap-1">
+        <button
+          className="px-1.5 py-1.5 text-xs bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-gray-200 rounded transition-colors"
+          onClick={() => setZoom(Math.min(4, Math.max(0.25, zoom * 0.8)))}
+          title="Zoom Out"
+        >
+          &minus;
+        </button>
+        <button
+          className="px-2 py-1.5 text-xs bg-gray-800 text-gray-300 hover:bg-gray-700 rounded transition-colors tabular-nums min-w-[3.5rem] text-center"
+          onClick={resetView}
+          title="Reset View"
+        >
+          {Math.round(zoom * 100)}%
+        </button>
+        <button
+          className="px-1.5 py-1.5 text-xs bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-gray-200 rounded transition-colors"
+          onClick={() => setZoom(Math.min(4, Math.max(0.25, zoom * 1.25)))}
+          title="Zoom In"
+        >
+          +
+        </button>
+      </div>
 
       {/* Separator */}
       <div className="w-px h-6 bg-gray-700" />

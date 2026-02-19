@@ -1,14 +1,91 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useEditorStore } from './useEditorStore';
 import { getTilesetsByCategory, CATEGORY_LABELS, CATEGORY_TO_LAYER, type TileCategory, type TilesetMeta } from './tile-registry';
 import type { LayerName } from '../../types/tilemap';
 
 const CATEGORIES: TileCategory[] = ['floor', 'wall', 'furniture', 'decoration'];
 const TILE = 48;
+const VISIBILITY_CACHE = new Map<string, boolean[]>();
+
+function computeTileVisibility(image: HTMLImageElement, cols: number, rows: number): boolean[] {
+  const canvas = document.createElement('canvas');
+  canvas.width = image.width;
+  canvas.height = image.height;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) {
+    return new Array(cols * rows).fill(true);
+  }
+  ctx.drawImage(image, 0, 0);
+
+  const visibility: boolean[] = [];
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      const data = ctx.getImageData(col * TILE, row * TILE, TILE, TILE).data;
+      let visible = false;
+      for (let i = 3; i < data.length; i += 4) {
+        if (data[i] !== 0) {
+          visible = true;
+          break;
+        }
+      }
+      visibility.push(visible);
+    }
+  }
+  return visibility;
+}
 
 function TilesetGrid({ tileset }: { tileset: TilesetMeta }) {
   const { selectedTile, setSelectedTile, setActiveLayer } = useEditorStore();
   const totalFrames = tileset.cols * tileset.rows;
+  const [visibility, setVisibility] = useState<boolean[] | null>(
+    VISIBILITY_CACHE.get(tileset.key) ?? null,
+  );
+
+  useEffect(() => {
+    const cached = VISIBILITY_CACHE.get(tileset.key);
+    if (cached) {
+      setVisibility(cached);
+      return;
+    }
+
+    let cancelled = false;
+    const image = new Image();
+    image.onload = () => {
+      if (cancelled) return;
+      const mask = computeTileVisibility(image, tileset.cols, tileset.rows);
+      VISIBILITY_CACHE.set(tileset.key, mask);
+      setVisibility(mask);
+    };
+    image.onerror = () => {
+      if (cancelled) return;
+      const fallback = new Array(totalFrames).fill(true);
+      VISIBILITY_CACHE.set(tileset.key, fallback);
+      setVisibility(fallback);
+    };
+    image.src = encodeURI(tileset.src);
+
+    return () => {
+      cancelled = true;
+    };
+  }, [tileset.key, tileset.src, tileset.cols, tileset.rows, totalFrames]);
+
+  useEffect(() => {
+    if (!visibility || !selectedTile) return;
+    if (selectedTile.ts !== tileset.key) return;
+    const idx = selectedTile.f;
+    if (idx >= 0 && idx < visibility.length && !visibility[idx]) {
+      setSelectedTile(null);
+    }
+  }, [visibility, selectedTile, setSelectedTile, tileset.key]);
+
+  if (!visibility) {
+    return (
+      <div className="mb-3">
+        <p className="text-xs text-gray-400 mb-1 px-1">{tileset.label}</p>
+        <p className="text-[10px] text-gray-500 px-1">Loading tiles...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="mb-3">
@@ -18,6 +95,7 @@ function TilesetGrid({ tileset }: { tileset: TilesetMeta }) {
         style={{ gridTemplateColumns: `repeat(${Math.min(tileset.cols, 6)}, ${TILE}px)` }}
       >
         {Array.from({ length: totalFrames }, (_, i) => {
+          if (!visibility[i]) return null;
           const col = i % tileset.cols;
           const row = Math.floor(i / tileset.cols);
           const isSelected = selectedTile?.ts === tileset.key && selectedTile?.f === i;
@@ -30,12 +108,22 @@ function TilesetGrid({ tileset }: { tileset: TilesetMeta }) {
                   ? 'border-blue-500 bg-blue-500/20'
                   : 'border-gray-700 hover:border-gray-500'
               }`}
-              style={{
-                backgroundImage: `url(${tileset.src})`,
-                backgroundPosition: `-${col * TILE}px -${row * TILE}px`,
-                backgroundSize: `${tileset.cols * TILE}px ${tileset.rows * TILE}px`,
-                imageRendering: 'pixelated',
-              }}
+              style={
+                tileset.alphaBlack
+                  ? {
+                      backgroundImage: `url("${encodeURI(tileset.src)}"), repeating-conic-gradient(#404040 0% 25%, #303030 0% 50%)`,
+                      backgroundPosition: `-${col * TILE}px -${row * TILE}px, 0 0`,
+                      backgroundSize: `${tileset.cols * TILE}px ${tileset.rows * TILE}px, 8px 8px`,
+                      backgroundBlendMode: 'screen',
+                      imageRendering: 'pixelated',
+                    }
+                  : {
+                      backgroundImage: `url("${encodeURI(tileset.src)}")`,
+                      backgroundPosition: `-${col * TILE}px -${row * TILE}px`,
+                      backgroundSize: `${tileset.cols * TILE}px ${tileset.rows * TILE}px`,
+                      imageRendering: 'pixelated',
+                    }
+              }
               onClick={() => {
                 setSelectedTile({ ts: tileset.key, f: i });
                 // Auto-switch layer to match category

@@ -4,8 +4,14 @@ export interface TilePlacement {
   f: number;
 }
 
+/** Layer entry can be a single placement (legacy) or a stack (new) */
+export type TileLayerEntry = TilePlacement | TilePlacement[];
+
 /** Layer: "x,y" -> TilePlacement (sparse map) */
-export type TileLayer = Record<string, TilePlacement>;
+export type TileLayer = Record<string, TileLayerEntry>;
+
+/** Normalized layer: "x,y" -> stack of placements */
+export type TileLayerStack = Record<string, TilePlacement[]>;
 
 /** Agent desk assignment on the tilemap */
 export interface DeskAssignment {

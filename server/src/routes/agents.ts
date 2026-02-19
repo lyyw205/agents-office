@@ -37,6 +37,12 @@ const cloneAgentSchema = z.object({
   sprite_key: z.string().optional(),
 });
 
+// GET / - List all agents
+agentRoutes.get('/', (c) => {
+  const rows = db.select().from(agents).orderBy(desc(agents.created_at)).all();
+  return c.json({ data: rows, total: rows.length });
+});
+
 // GET /:id - Get agent detail with tasks and recent activity
 agentRoutes.get('/:id', (c) => {
   const id = c.req.param('id');
