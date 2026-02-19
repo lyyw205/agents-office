@@ -1,0 +1,14 @@
+services:
+  app:
+    build: .
+    ports:
+      - "${PORT:-3001}:3001"
+    volumes:
+      - ./data:/app/data
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      - CORS_ORIGINS=${CORS_ORIGINS:-http://localhost:3001}
+      - MAX_CONCURRENT_AGENTS=${MAX_CONCURRENT_AGENTS:-3}
+      - TASK_TIMEOUT_MS=${TASK_TIMEOUT_MS:-300000}
+    restart: unless-stopped

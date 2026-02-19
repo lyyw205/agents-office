@@ -1,0 +1,41 @@
+# HANDOFF
+
+## Current [1771466942]
+- **Task**: Phase 4 - Polish + Production Hardening
+- **Completed**:
+  - Dashboard recreated from scratch (React 18 + Vite + TypeScript + Tailwind CSS v4)
+  - TanStack Query v5 + Zustand + react-router-dom v7 + react-i18next (ko/en)
+  - 5 pages: Dashboard, Project, Agent, Tasks, Activity
+  - API client with full type safety for all server endpoints
+  - SSE hook for real-time updates (fixed endpoint path /api/sse)
+  - Phaser.js pixel-art office visualization (zones, desks, agent emojis, status indicators, working animation)
+  - Server hardening: PORT/CORS_ORIGINS env vars, rate limiting middleware, JSON field validation, foreign key enforcement
+  - Task cancel endpoint (POST /tasks/:id/cancel)
+  - .env.example created
+  - Dockerfile (multi-stage) + docker-compose.yml
+  - Static file serving for production mode
+  - React 19 duplicate instance fix (npm overrides + vite resolve.dedupe)
+  - Broken git submodule replaced with regular directory
+- **Next Steps**:
+  - Verify Phaser office visualization renders correctly in browser
+  - Add Phaser scene to Dashboard main page (small overview)
+  - Add task creation/execution UI forms
+  - Add agent creation modal
+  - Add error boundaries for React components
+  - Write integration tests (server API + dashboard)
+  - CI/CD pipeline (.github/workflows)
+- **Blockers**: None
+- **Related Files**:
+  - dashboard/src/components/phaser/OfficeScene.ts
+  - dashboard/src/components/phaser/PhaserOffice.tsx
+  - dashboard/src/pages/ProjectPage.tsx
+  - dashboard/src/hooks/useSSE.ts
+  - dashboard/src/lib/api.ts
+  - dashboard/src/types/index.ts
+  - server/src/index.ts
+  - server/src/middleware/rate-limiter.ts
+  - server/src/lib/validation.ts
+  - server/src/routes/tasks.ts
+  - Dockerfile
+  - docker-compose.yml
+  - .env.example

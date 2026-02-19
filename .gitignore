@@ -1,6 +1,14 @@
-node_modules
+node_modules/
+**/node_modules/
 .omc/
 **/dist/
 *.db
 *.db-wal
 *.db-shm
+
+# Docker
+docker-compose.override.yml
+
+# Environment
+.env
+.env.local

@@ -107,7 +107,7 @@ npm run dev          # http://localhost:5173
 - [x] Phase 1: Foundation (DB, API, Phaser, Routing, Agent CRUD)
 - [x] Phase 2: Task Management, Workflows, Activity Feed
 - [x] Phase 3: Agent Bridge, SSE Real-Time, Error Handling
-- [ ] Phase 4: Polish + Production Hardening
+- [x] Phase 4: Polish + Production Hardening
 
 ## License
 
