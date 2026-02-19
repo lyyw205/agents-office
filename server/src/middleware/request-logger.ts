@@ -1,11 +1,5 @@
 import type { MiddlewareHandler } from 'hono';
 
-let requestCount = 0;
-
-export function getRequestCount(): number {
-  return requestCount;
-}
-
 export const requestLogger: MiddlewareHandler = async (c, next) => {
   const start = Date.now();
   const method = c.req.method;

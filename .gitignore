@@ -1,10 +1,14 @@
 node_modules/
 **/node_modules/
 .omc/
+.claude/
 **/dist/
+.next/
+data/
 *.db
 *.db-wal
 *.db-shm
+*.tsbuildinfo
 
 # Docker
 docker-compose.override.yml
@@ -12,4 +16,14 @@ docker-compose.override.yml
 # Environment
 .env
 .env.local
+.env.production
+.env.staging
+
+# IDE
+.idea/
+.vscode/
+*.sw?
+
+# OS
+.DS_Store
 *:Zone.Identifier
