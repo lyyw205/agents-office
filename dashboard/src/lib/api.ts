@@ -9,6 +9,9 @@ import type {
   Activity,
   HealthStatus,
   SavedConfig,
+  DiscoveredProject,
+  SyncResult,
+  SyncStatus,
   CreateProject,
   CreateAgent,
   CreateTask,
@@ -85,4 +88,19 @@ export const api = {
 
   // Saved Configs
   getSavedConfigs: () => request<{ data: SavedConfig[]; total: number }>('/saved-configs'),
+
+  // Sync
+  discoverProjects: (scanPaths?: string[]) =>
+    request<{ discovered: DiscoveredProject[] }>('/sync/discover', {
+      method: 'POST',
+      body: JSON.stringify(scanPaths ? { scan_paths: scanPaths } : {}),
+    }),
+  syncProjects: (paths?: string[]) =>
+    request<{ synced: SyncResult[] }>('/sync/projects', {
+      method: 'POST',
+      body: JSON.stringify(paths ? { paths } : {}),
+    }),
+  syncProject: (projectId: string) =>
+    request<SyncResult>(`/sync/projects/${projectId}`, { method: 'POST' }),
+  getSyncStatus: () => request<SyncStatus>('/sync/status'),
 };

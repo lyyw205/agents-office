@@ -1,7 +1,8 @@
 import { nanoid } from 'nanoid';
 import { eq } from 'drizzle-orm';
+import { existsSync, statSync } from 'fs';
 import { db } from '../db/index.js';
-import { tasks, agents, activity_log } from '../db/schema.js';
+import { tasks, agents, projects, activity_log } from '../db/schema.js';
 import { broadcast } from '../sse/broadcast.js';
 import { ProcessPool } from './process-pool.js';
 
@@ -18,6 +19,17 @@ class AgentBridge {
     if (!task) throw new Error(`Task ${taskId} not found`);
 
     const agentId = task.agent_id;
+
+    // Look up project cwd for synced projects
+    const project = db.select().from(projects).where(eq(projects.id, task.project_id)).get();
+    const cwd = project?.cwd ?? undefined;
+
+    // Validate cwd exists before spawn
+    if (cwd) {
+      if (!existsSync(cwd) || !statSync(cwd).isDirectory()) {
+        throw new Error(`Project directory not found: ${cwd}`);
+      }
+    }
 
     // Build prompt from task fields
     const prompt = [
@@ -36,6 +48,7 @@ class AgentBridge {
     const result = this.pool.spawn(taskId, {
       prompt,
       modelTier,
+      cwd,
       onData: (chunk) => {
         broadcast('task_progress', JSON.stringify({ taskId, agentId, chunk }));
       },

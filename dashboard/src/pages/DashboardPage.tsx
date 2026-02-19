@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import { api } from '../lib/api';
 import { PhaserOffice } from '../components/phaser/PhaserOffice';
+import { SyncPanel } from '../components/SyncPanel';
 import type { Project } from '../types';
 import type { SceneConfig } from '../types/tilemap';
 
@@ -261,6 +262,11 @@ export function DashboardPage() {
             {projects.length === 0 && (
               <p className="text-gray-500 col-span-full">{t('noData')}</p>
             )}
+          </div>
+
+          {/* Project Sync */}
+          <div className="mb-8">
+            <SyncPanel />
           </div>
 
           {/* Tasks & Activity side by side */}

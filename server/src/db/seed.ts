@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import { nanoid } from 'nanoid';
 import { db } from './index.js'; // index.js auto-creates tables on import
 import { projects, agents, workflows, activity_log } from './schema.js';
+import { sql } from 'drizzle-orm';
 
 // ---------------------------------------------------------------------------
 // JSON file paths (seed data lives in server/seed-data/)
@@ -124,12 +125,16 @@ async function seed() {
       priority: p.priority,
       config_json: null,
       scene_config: p.name === 'auto-details' ? JSON.stringify(autoDetailsSceneConfig) : null,
+      source: 'seed',
     })
   );
 
   for (const row of projectRows) {
     db.insert(projects).values(row).onConflictDoNothing().run();
   }
+
+  // Backfill: mark existing projects without a source as 'seed'
+  db.run(sql`UPDATE projects SET source = 'seed' WHERE source IS NULL`);
 
   console.log(`Inserted ${projectRows.length} projects`);
 

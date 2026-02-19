@@ -5,8 +5,6 @@ export const requestLogger: MiddlewareHandler = async (c, next) => {
   const method = c.req.method;
   const path = c.req.path;
 
-  requestCount++;
-
   await next();
 
   const duration = Date.now() - start;

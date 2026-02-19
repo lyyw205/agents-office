@@ -1,5 +1,6 @@
 import Database, { type Database as DatabaseType } from 'better-sqlite3';
 import { drizzle } from 'drizzle-orm/better-sqlite3';
+import { migrate } from 'drizzle-orm/better-sqlite3/migrator';
 import * as schema from './schema.js';
 import { existsSync, mkdirSync } from 'fs';
 import { resolve, dirname } from 'path';
@@ -23,88 +24,26 @@ sqlite.pragma('journal_mode = WAL');
 sqlite.pragma('busy_timeout = 5000');
 sqlite.pragma('foreign_keys = ON');
 
-// Auto-create tables if they don't exist
-sqlite.exec(`
-  CREATE TABLE IF NOT EXISTS projects (
-    id TEXT PRIMARY KEY,
-    name TEXT NOT NULL UNIQUE,
-    display_name TEXT NOT NULL,
-    description TEXT,
-    status TEXT DEFAULT 'active',
-    priority TEXT DEFAULT 'medium',
-    config_json TEXT,
-    scene_config TEXT,
-    created_at TEXT DEFAULT (datetime('now')),
-    updated_at TEXT DEFAULT (datetime('now'))
-  );
-  CREATE TABLE IF NOT EXISTS agents (
-    id TEXT PRIMARY KEY,
-    project_id TEXT REFERENCES projects(id),
-    parent_id TEXT,
-    name TEXT NOT NULL,
-    agent_type TEXT NOT NULL,
-    role TEXT NOT NULL,
-    department TEXT,
-    status TEXT DEFAULT 'inactive',
-    model_tier TEXT DEFAULT 'medium',
-    emoji TEXT,
-    persona_json TEXT,
-    skills_json TEXT,
-    config_json TEXT,
-    sprite_key TEXT,
-    created_at TEXT DEFAULT (datetime('now')),
-    updated_at TEXT DEFAULT (datetime('now'))
-  );
-  CREATE TABLE IF NOT EXISTS workflows (
-    id TEXT PRIMARY KEY,
-    project_id TEXT NOT NULL REFERENCES projects(id),
-    name TEXT NOT NULL,
-    description TEXT,
-    steps_json TEXT NOT NULL,
-    estimated_time TEXT,
-    status TEXT DEFAULT 'idle',
-    current_step INTEGER DEFAULT 0,
-    created_at TEXT DEFAULT (datetime('now'))
-  );
-  CREATE TABLE IF NOT EXISTS tasks (
-    id TEXT PRIMARY KEY,
-    project_id TEXT NOT NULL REFERENCES projects(id),
-    agent_id TEXT REFERENCES agents(id),
-    workflow_id TEXT REFERENCES workflows(id),
-    title TEXT NOT NULL,
-    description TEXT,
-    status TEXT DEFAULT 'pending',
-    priority TEXT DEFAULT 'medium',
-    input_json TEXT,
-    output_json TEXT,
-    error_json TEXT,
-    started_at TEXT,
-    completed_at TEXT,
-    created_at TEXT DEFAULT (datetime('now'))
-  );
-  CREATE TABLE IF NOT EXISTS activity_log (
-    id TEXT PRIMARY KEY,
-    agent_id TEXT REFERENCES agents(id),
-    project_id TEXT REFERENCES projects(id),
-    task_id TEXT REFERENCES tasks(id),
-    action TEXT NOT NULL,
-    details_json TEXT,
-    created_at TEXT DEFAULT (datetime('now'))
-  );
-  CREATE TABLE IF NOT EXISTS saved_agent_configs (
-    id TEXT PRIMARY KEY,
-    name TEXT NOT NULL,
-    description TEXT,
-    agent_type TEXT NOT NULL,
-    role TEXT NOT NULL,
-    department TEXT,
-    model_tier TEXT DEFAULT 'medium',
-    persona_json TEXT,
-    skills_json TEXT,
-    config_json TEXT,
-    source_agent_id TEXT REFERENCES agents(id),
-    created_at TEXT DEFAULT (datetime('now'))
-  );
-`);
+// Bootstrap: add new columns for legacy DBs that were created with raw SQL
+const newColumns = [
+  { table: 'projects', column: 'cwd', type: 'text' },
+  { table: 'projects', column: 'source', type: "text DEFAULT 'manual'" },
+  { table: 'projects', column: 'last_synced_at', type: 'text' },
+  { table: 'projects', column: 'sync_hash', type: 'text' },
+];
 
+for (const { table, column, type } of newColumns) {
+  try {
+    sqlite.exec(`ALTER TABLE ${table} ADD COLUMN ${column} ${type}`);
+  } catch {
+    // Column already exists — expected on fresh DBs or repeat runs
+  }
+}
+
+// Run Drizzle Kit managed migrations (single source of truth: schema.ts)
+const migrationsFolder = resolve(__dirname, '../../drizzle');
 export const db = drizzle(sqlite, { schema });
+
+if (existsSync(migrationsFolder)) {
+  migrate(db, { migrationsFolder });
+}

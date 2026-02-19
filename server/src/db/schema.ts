@@ -1,4 +1,4 @@
-import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core';
+import { sqliteTable, text, integer, uniqueIndex } from 'drizzle-orm/sqlite-core';
 import { sql } from 'drizzle-orm';
 
 export const projects = sqliteTable('projects', {
@@ -10,6 +10,10 @@ export const projects = sqliteTable('projects', {
   priority: text('priority').default('medium'),
   config_json: text('config_json'),
   scene_config: text('scene_config'),
+  cwd: text('cwd'),
+  source: text('source').default('manual'), // 'manual' | 'synced' | 'seed'
+  last_synced_at: text('last_synced_at'),
+  sync_hash: text('sync_hash'),
   created_at: text('created_at').default(sql`(datetime('now'))`),
   updated_at: text('updated_at').default(sql`(datetime('now'))`),
 });
@@ -31,7 +35,9 @@ export const agents = sqliteTable('agents', {
   sprite_key: text('sprite_key'),
   created_at: text('created_at').default(sql`(datetime('now'))`),
   updated_at: text('updated_at').default(sql`(datetime('now'))`),
-});
+}, (table) => ({
+  projectNameUnique: uniqueIndex('idx_agents_project_name').on(table.project_id, table.name),
+}));
 
 export const workflows = sqliteTable('workflows', {
   id: text('id').primaryKey(),
@@ -43,7 +49,9 @@ export const workflows = sqliteTable('workflows', {
   status: text('status').default('idle'),
   current_step: integer('current_step').default(0),
   created_at: text('created_at').default(sql`(datetime('now'))`),
-});
+}, (table) => ({
+  projectNameUnique: uniqueIndex('idx_workflows_project_name').on(table.project_id, table.name),
+}));
 
 export const tasks = sqliteTable('tasks', {
   id: text('id').primaryKey(),

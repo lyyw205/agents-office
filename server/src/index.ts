@@ -44,6 +44,11 @@ app.route('/api/activity', activityRoutes);
 app.route('/api/saved-configs', savedConfigRoutes);
 app.route('/api/sse', sseRoutes);
 
+// Sync routes (stricter rate limit: 5/min)
+import { syncRoutes } from './routes/sync.js';
+app.use('/api/sync/*', rateLimiter({ windowMs: 60_000, max: 5 }));
+app.route('/api/sync', syncRoutes);
+
 // Health check
 app.get('/api/health', async (c) => {
   const uptime = Math.floor((Date.now() - startTime) / 1000);
@@ -122,6 +127,19 @@ serve({
   fetch: app.fetch,
   port,
 });
+
+// Auto-sync on startup
+(async () => {
+  try {
+    const { ProjectSyncService } = await import('./services/sync.js');
+    const { getScanPaths } = await import('./lib/config.js');
+    const service = new ProjectSyncService(getScanPaths());
+    const results = service.syncAll();
+    console.log(`[sync] Startup sync complete: ${results.length} projects synced`);
+  } catch (err) {
+    console.warn('[sync] Startup sync failed:', err);
+  }
+})();
 
 // Graceful shutdown
 setupGracefulShutdown(sqlite);

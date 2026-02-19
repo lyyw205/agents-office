@@ -3,14 +3,39 @@ export interface Project {
   name: string;
   display_name: string;
   description: string | null;
-  status: 'active' | 'archived' | 'completed';
+  status: 'active' | 'planned' | 'archived' | 'completed';
   priority: 'low' | 'medium' | 'high';
   config_json: string | null;
   scene_config: string | null;
+  cwd: string | null;
+  source: 'manual' | 'synced' | 'seed' | null;
+  last_synced_at: string | null;
+  sync_hash: string | null;
   created_at: string;
   updated_at: string;
   agent_count?: number;
   task_count?: number;
+}
+
+export interface DiscoveredProject {
+  path: string;
+  project_name: string;
+  has_team_config: boolean;
+  has_persona: boolean;
+}
+
+export interface SyncResult {
+  project_id: string;
+  name: string;
+  agents_count: number;
+  workflows_count: number;
+  status: 'created' | 'updated' | 'unchanged';
+}
+
+export interface SyncStatus {
+  last_run: string | null;
+  synced_projects: number;
+  scan_paths: string[];
 }
 
 export interface ProjectDetail extends Project {

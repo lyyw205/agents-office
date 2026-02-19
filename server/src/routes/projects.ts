@@ -21,7 +21,7 @@ const createProjectSchema = z.object({
 const updateProjectSchema = z.object({
   display_name: z.string().min(1).optional(),
   description: z.string().optional(),
-  status: z.enum(['active', 'archived', 'completed']).optional(),
+  status: z.enum(['active', 'planned', 'archived', 'completed']).optional(),
   priority: z.enum(['low', 'medium', 'high']).optional(),
   config_json: optionalJsonString,
   scene_config: optionalJsonString,
