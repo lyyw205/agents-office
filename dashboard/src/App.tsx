@@ -5,10 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import './i18n';
 import { Layout } from './components/common/Layout';
 import { DashboardPage } from './pages/DashboardPage';
-import { ProjectPage } from './pages/ProjectPage';
 import { AgentPage } from './pages/AgentPage';
-import { TasksPage } from './pages/TasksPage';
-import { ActivityPage } from './pages/ActivityPage';
+import { MapEditorPage } from './components/editor/MapEditorPage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -23,11 +21,8 @@ export default function App() {
         <Routes>
           <Route element={<Layout />}>
             <Route index element={<DashboardPage />} />
-            <Route path="projects/:id" element={<ProjectPage />} />
+            <Route path="projects/:id/editor" element={<MapEditorPage />} />
             <Route path="agents/:id" element={<AgentPage />} />
-            <Route path="tasks" element={<TasksPage />} />
-            <Route path="workflows" element={<DashboardPage />} />
-            <Route path="activity" element={<ActivityPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

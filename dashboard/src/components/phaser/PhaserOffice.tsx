@@ -8,32 +8,35 @@ interface PhaserOfficeProps {
   sceneConfig?: string | null;
 }
 
+import type { TilemapData } from '../../types/tilemap';
+
 interface ParsedSceneConfig {
   zones?: Array<{ id: string; label: string; x: number; y: number; w: number; h: number; color: string }>;
   deskMap?: Record<string, { zone: string; x: number; y: number }>;
+  tilemap?: TilemapData;
 }
 
+// New layout: 18 cols × 13 rows (864 × 624)
+const GAME_W = 18 * 48;
+const GAME_H = 13 * 48;
+
 const DEFAULT_ZONES: ParsedSceneConfig['zones'] = [
-  { id: 'entrance', label: 'Entrance', x: 0, y: 0, w: 4, h: 2, color: '#94A3B8' },
-  { id: 'rd', label: 'R&D', x: 0, y: 2, w: 4, h: 3, color: '#3B82F6' },
-  { id: 'design', label: 'Design', x: 4, y: 2, w: 4, h: 3, color: '#8B5CF6' },
-  { id: 'engineering', label: 'Engineering', x: 0, y: 5, w: 4, h: 3, color: '#10B981' },
-  { id: 'qa', label: 'QA', x: 4, y: 5, w: 4, h: 3, color: '#F59E0B' },
-  { id: 'architecture', label: 'Architecture', x: 0, y: 8, w: 4, h: 3, color: '#EF4444' },
-  { id: 'security', label: 'Security', x: 4, y: 8, w: 4, h: 3, color: '#6B7280' },
-  { id: 'pm_office', label: 'PM Office', x: 4, y: 0, w: 4, h: 2, color: '#F97316' },
+  { id: 'pm_office', label: 'PM Office', x: 1, y: 1, w: 4, h: 3, color: '#F97316' },
+  { id: 'meeting', label: 'Meeting Room', x: 10, y: 1, w: 7, h: 3, color: '#8B5CF6' },
+  { id: 'workspace', label: 'Workspace', x: 1, y: 5, w: 12, h: 8, color: '#3B82F6' },
+  { id: 'breakroom', label: 'Break Room', x: 13, y: 7, w: 4, h: 5, color: '#10B981' },
 ];
 
 const DEFAULT_DESK_MAP: NonNullable<ParsedSceneConfig['deskMap']> = {
-  A1: { zone: 'rd', x: 1, y: 3 },
-  B2: { zone: 'design', x: 5, y: 4 },
-  C1: { zone: 'engineering', x: 1, y: 6 },
-  D3: { zone: 'architecture', x: 2, y: 9 },
-  E1: { zone: 'qa', x: 5, y: 6 },
-  F2: { zone: 'qa', x: 6, y: 7 },
-  G1: { zone: 'engineering', x: 2, y: 6 },
-  H3: { zone: 'engineering', x: 3, y: 7 },
-  I1: { zone: 'security', x: 5, y: 9 },
+  A1: { zone: 'workspace', x: 2, y: 7 },
+  B2: { zone: 'workspace', x: 5, y: 7 },
+  C1: { zone: 'workspace', x: 8, y: 7 },
+  D3: { zone: 'workspace', x: 2, y: 10 },
+  E1: { zone: 'workspace', x: 5, y: 10 },
+  F2: { zone: 'workspace', x: 8, y: 10 },
+  G1: { zone: 'workspace', x: 2, y: 12 },
+  H3: { zone: 'workspace', x: 5, y: 12 },
+  I1: { zone: 'workspace', x: 8, y: 12 },
 };
 
 function parseSceneConfig(sceneConfig?: string | null): ParsedSceneConfig {
@@ -71,19 +74,19 @@ export function PhaserOffice({ agents, sceneConfig }: PhaserOfficeProps) {
     status: a.status,
     desk: agentDesk(a),
     role: a.role,
+    department: a.department,
   }));
 
   useEffect(() => {
     if (!containerRef.current || gameRef.current) return;
 
-    // Store agent data on window so the scene can access it after creation
-    (window as any).__officeSceneData = { zones, deskMap, agents: agentData };
+    (window as any).__officeSceneData = { zones, deskMap, agents: agentData, tilemap: parsed.tilemap };
 
     const game = new Phaser.Game({
       type: Phaser.AUTO,
       parent: containerRef.current,
-      width: 8 * 48,
-      height: 11 * 48,
+      width: GAME_W,
+      height: GAME_H,
       backgroundColor: '#1a1a2e',
       scene: [OfficeScene],
       scale: {
@@ -98,7 +101,6 @@ export function PhaserOffice({ agents, sceneConfig }: PhaserOfficeProps) {
 
     gameRef.current = game;
 
-    // Get the actual scene instance after Phaser creates it
     game.events.once('ready', () => {
       const scene = game.scene.getScene('OfficeScene') as OfficeScene;
       sceneRef.current = scene;
@@ -143,7 +145,7 @@ export function PhaserOffice({ agents, sceneConfig }: PhaserOfficeProps) {
           </span>
         </div>
       </div>
-      <div ref={containerRef} className="w-full aspect-[384/528]" />
+      <div ref={containerRef} className="w-full" style={{ aspectRatio: `${GAME_W} / ${GAME_H}` }} />
     </div>
   );
 }

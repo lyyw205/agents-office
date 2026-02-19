@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { api } from '../lib/api';
 import { PhaserOffice } from '../components/phaser/PhaserOffice';
@@ -15,6 +15,7 @@ const statusColors: Record<string, string> = {
 export function ProjectPage() {
   const { id } = useParams<{ id: string }>();
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const { data: project, isLoading } = useQuery({
     queryKey: ['projects', id],
@@ -40,6 +41,15 @@ export function ProjectPage() {
 
       {/* Office Visualization */}
       <div className="mb-8">
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-sm font-medium text-gray-300">Office View</span>
+          <button
+            className="px-3 py-1.5 text-xs bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white rounded border border-gray-700 transition-colors"
+            onClick={() => navigate(`/projects/${id}/editor`)}
+          >
+            Customize Office
+          </button>
+        </div>
         <PhaserOffice agents={project.agents} sceneConfig={project.scene_config} />
       </div>
 
