@@ -148,11 +148,11 @@ export class OfficeScene extends Phaser.Scene {
     // Zone labels
     for (const zone of this.zones) {
       this.add.text(zone.x * TILE + 6, zone.y * TILE + 6, zone.label, {
-        fontSize: '9px',
+        fontSize: '12px',
         color: '#ffffff',
-        fontFamily: 'monospace',
+        fontFamily: 'system-ui, -apple-system, sans-serif',
         backgroundColor: '#00000088',
-        padding: { x: 3, y: 2 },
+        padding: { x: 4, y: 2 },
       }).setAlpha(0.9).setDepth(1);
     }
 
@@ -301,12 +301,12 @@ export class OfficeScene extends Phaser.Scene {
 
         const status = this.add.circle(cx + 16, cy - 16, 4, STATUS_COLORS[agent.status] ?? 0x6b7280).setDepth(11);
 
-        const nameLabel = this.add.text(cx, cy + 24, '', {
-          fontSize: '8px',
+        const nameLabel = this.add.text(cx, cy + 28, '', {
+          fontSize: '11px',
           color: '#ffffff',
-          fontFamily: 'monospace',
+          fontFamily: 'system-ui, -apple-system, sans-serif',
           backgroundColor: '#00000099',
-          padding: { x: 2, y: 1 },
+          padding: { x: 4, y: 2 },
         }).setOrigin(0.5).setDepth(12).setVisible(false);
 
         sprite.on('pointerover', () => {

@@ -94,9 +94,10 @@ export function PhaserOffice({ agents, sceneConfig }: PhaserOfficeProps) {
         autoCenter: Phaser.Scale.CENTER_BOTH,
       },
       render: {
-        pixelArt: true,
-        antialias: false,
+        pixelArt: false,
+        antialias: true,
       },
+      autoRound: false,
     });
 
     gameRef.current = game;
