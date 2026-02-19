@@ -129,6 +129,7 @@ export function processAlphaBlackTextures(
     // Replace the Phaser texture with the processed canvas
     textures.remove(ts.key);
     const canvasTex = textures.addCanvas(ts.key, canvas);
+    if (!canvasTex) continue;
 
     // Re-create spritesheet frames manually
     let idx = 0;
