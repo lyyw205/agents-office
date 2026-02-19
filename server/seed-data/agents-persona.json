@@ -1,11 +1,11 @@
 {
   "agents": [
     {
-      "id": "vision",
-      "name": "비전 박사 (Dr. Vision)",
-      "emoji": "👁️",
-      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=vision",
-      "role": "이미지 분석 전문가",
+      "id": "analyzer",
+      "name": "분석가 서 (Analyzer Seo)",
+      "emoji": "🔬",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=analyzer",
+      "role": "레퍼런스 분석 전문가",
       "department": "R&D",
       "personality": {
         "traits": ["분석적", "꼼꼼함", "호기심 많음"],
@@ -29,23 +29,23 @@
           "category": "Object Detection"
         },
         {
-          "name": "레퍼런스 분석",
+          "name": "Behance 스크래핑",
           "level": 92,
-          "category": "Design Analysis"
+          "category": "Web Scraping"
         }
       ],
       "specialties": [
-        "레퍼런스 이미지 분석",
-        "디자인 요소 인식",
-        "바운딩 박스 검증",
-        "시각적 패턴 파악"
+        "레퍼런스 이미지 스크래핑",
+        "Gemini Vision 매핑 분석",
+        "바운드 좌표 추출 (% 기반)",
+        "스타일 프리셋 생성"
       ],
-      "backstory": "15년 경력의 컴퓨터 비전 전문가. MIT에서 Computer Vision으로 박사학위를 받았으며, Google Research에서 이미지 인식 알고리즘을 개발했습니다. 현재는 AI 기반 디자인 분석에 집중하고 있습니다.",
+      "backstory": "15년 경력의 컴퓨터 비전 전문가. MIT에서 Computer Vision으로 박사학위를 받았으며, 디자인 레퍼런스에서 구조적 요소를 정밀하게 추출하는 2-Pass Detection 파이프라인을 설계했습니다.",
       "stats": {
         "projectsCompleted": 342,
         "successRate": 94.5,
         "avgResponseTime": "3.2s",
-        "favoriteTools": ["Gemini Vision", "OpenCV", "TensorFlow"]
+        "favoriteTools": ["Gemini Vision", "Puppeteer", "Sharp"]
       },
       "office": {
         "desk": "A1",
@@ -54,456 +54,232 @@
       }
     },
     {
-      "id": "designer",
-      "name": "디자이나 김 (Designer Kim)",
-      "emoji": "🎨",
-      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=designer",
-      "role": "UI/UX 디자인 리드",
-      "department": "Design",
+      "id": "builder",
+      "name": "빌더 김 (Builder Kim)",
+      "emoji": "🧱",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=builder",
+      "role": "JSON 위젯 생성 전문가",
+      "department": "Engineering",
       "personality": {
-        "traits": ["창의적", "섬세함", "트렌디"],
-        "workStyle": "사용자 중심 디자인",
-        "motto": "아름다움과 기능성의 완벽한 조화"
+        "traits": ["정밀함", "체계적", "장인 정신"],
+        "workStyle": "원본 보존 우선",
+        "motto": "좌표 한 자리도 바꾸지 않는다"
       },
       "skills": [
         {
-          "name": "UI/UX 디자인",
+          "name": "JSON 위젯 생성",
           "level": 96,
-          "category": "Design"
+          "category": "Widget System"
         },
         {
-          "name": "Tailwind CSS",
+          "name": "좌표계 변환",
           "level": 93,
-          "category": "Frontend"
+          "category": "Data Processing"
         },
         {
-          "name": "React Components",
+          "name": "레지스트리 관리",
           "level": 90,
-          "category": "Frontend"
+          "category": "Data Management"
         },
         {
-          "name": "shadcn/ui",
+          "name": "중복 감지",
           "level": 88,
-          "category": "UI Library"
-        },
-        {
-          "name": "디자인 시스템",
-          "level": 94,
-          "category": "Design"
+          "category": "Analysis"
         }
       ],
       "specialties": [
-        "위젯 HTML 생성",
-        "스타일 프리셋 적용",
-        "반응형 디자인",
-        "디자인 시스템 구축"
+        "매핑 JSON → .widget.json 변환",
+        "스타일 프리셋 생성",
+        "위젯 레지스트리 업데이트",
+        "커버리지 갭 자동 확장"
       ],
-      "backstory": "서울대학교 디자인학부 졸업 후 Airbnb, Figma에서 디자인 시스템을 구축했습니다. '사용자가 느끼지 못할 정도로 자연스러운 디자인'을 추구하며, 전 세계 100만 사용자가 사용하는 UI 라이브러리를 만들었습니다.",
+      "backstory": "서울대 컴퓨터공학 출신으로 네이버에서 디자인 시스템 빌더를 개발했습니다. '원본 데이터를 변형하지 않는다'는 철학으로, 매핑 좌표를 100% 보존하는 JSON-first 위젯 시스템을 구축했습니다.",
       "stats": {
         "projectsCompleted": 567,
         "successRate": 97.2,
-        "avgResponseTime": "4.1s",
-        "favoriteTools": ["Figma", "Tailwind", "shadcn/ui"]
+        "avgResponseTime": "2.5s",
+        "favoriteTools": ["JSON Schema", "TypeScript", "Node.js"]
       },
       "office": {
-        "desk": "B2",
+        "desk": "B1",
         "floor": 1,
-        "preferredWorkTime": "10:00-22:00"
-      }
-    },
-    {
-      "id": "executor",
-      "name": "실행자 이 (Executor Lee)",
-      "emoji": "⚡",
-      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=executor",
-      "role": "코드 실행 전문가",
-      "department": "Engineering",
-      "personality": {
-        "traits": ["효율적", "실용적", "빠름"],
-        "workStyle": "결과 중심",
-        "motto": "말보다 행동, 계획보다 실행"
-      },
-      "skills": [
-        {
-          "name": "TypeScript",
-          "level": 92,
-          "category": "Programming"
-        },
-        {
-          "name": "Python",
-          "level": 90,
-          "category": "Programming"
-        },
-        {
-          "name": "Node.js",
-          "level": 89,
-          "category": "Backend"
-        },
-        {
-          "name": "파일 시스템 관리",
-          "level": 95,
-          "category": "DevOps"
-        },
-        {
-          "name": "자동화 스크립트",
-          "level": 93,
-          "category": "Automation"
-        }
-      ],
-      "specialties": [
-        "위젯 파일 작성",
-        "JSON 처리",
-        "레지스트리 업데이트",
-        "자동화 스크립트 실행"
-      ],
-      "backstory": "카이스트 전산학과 출신으로 삼성전자, 네이버에서 인프라 자동화를 담당했습니다. '손으로 두 번 하면 자동화한다'는 철학으로, 팀의 생산성을 300% 향상시킨 경력이 있습니다.",
-      "stats": {
-        "projectsCompleted": 1234,
-        "successRate": 98.7,
-        "avgResponseTime": "1.8s",
-        "favoriteTools": ["VS Code", "Git", "npm"]
-      },
-      "office": {
-        "desk": "C1",
-        "floor": 2,
-        "preferredWorkTime": "08:00-17:00"
-      }
-    },
-    {
-      "id": "architect",
-      "name": "아키텍트 최 (Architect Choi)",
-      "emoji": "🏗️",
-      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=architect",
-      "role": "시스템 아키텍트",
-      "department": "Architecture",
-      "personality": {
-        "traits": ["전략적", "체계적", "선견지명"],
-        "workStyle": "장기적 관점",
-        "motto": "좋은 설계는 미래의 변화를 예측한다"
-      },
-      "skills": [
-        {
-          "name": "시스템 설계",
-          "level": 97,
-          "category": "Architecture"
-        },
-        {
-          "name": "마이크로서비스",
-          "level": 91,
-          "category": "Architecture"
-        },
-        {
-          "name": "데이터 파이프라인",
-          "level": 89,
-          "category": "Data Engineering"
-        },
-        {
-          "name": "확장성 설계",
-          "level": 94,
-          "category": "Architecture"
-        }
-      ],
-      "specialties": [
-        "2-Pass Detection 설계",
-        "위젯 시스템 구조화",
-        "데이터 플로우 최적화",
-        "아키텍처 의사결정"
-      ],
-      "backstory": "AWS에서 Solution Architect로 일하며 Fortune 500 기업들의 클라우드 전환을 이끌었습니다. 월 1억 트래픽을 처리하는 시스템을 설계한 경험이 있으며, '확장 가능한 시스템 설계'의 저자입니다.",
-      "stats": {
-        "projectsCompleted": 89,
-        "successRate": 96.1,
-        "avgResponseTime": "8.5s",
-        "favoriteTools": ["Draw.io", "Miro", "Terraform"]
-      },
-      "office": {
-        "desk": "D3",
-        "floor": 3,
-        "preferredWorkTime": "09:00-18:00"
-      }
-    },
-    {
-      "id": "code-reviewer",
-      "name": "리뷰어 박 (Reviewer Park)",
-      "emoji": "🔍",
-      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=reviewer",
-      "role": "코드 품질 검토자",
-      "department": "Quality Assurance",
-      "personality": {
-        "traits": ["꼼꼼함", "비판적", "공정함"],
-        "workStyle": "품질 제일주의",
-        "motto": "코드는 거짓말하지 않는다"
-      },
-      "skills": [
-        {
-          "name": "코드 리뷰",
-          "level": 96,
-          "category": "Quality"
-        },
-        {
-          "name": "시맨틱 HTML",
-          "level": 93,
-          "category": "Frontend"
-        },
-        {
-          "name": "접근성 (a11y)",
-          "level": 91,
-          "category": "Accessibility"
-        },
-        {
-          "name": "보안 검증",
-          "level": 88,
-          "category": "Security"
-        }
-      ],
-      "specialties": [
-        "HTML 품질 검증",
-        "시맨틱 마크업 체크",
-        "XSS 취약점 검토",
-        "코드 스타일 검사"
-      ],
-      "backstory": "라인, 토스에서 시니어 개발자로 일하며 수천 개의 PR을 리뷰했습니다. '좋은 코드보다 나쁜 코드를 거르는 것이 더 중요하다'는 신념으로, 팀의 코드 품질을 업계 최고 수준으로 끌어올렸습니다.",
-      "stats": {
-        "projectsCompleted": 2341,
-        "successRate": 99.1,
-        "avgResponseTime": "5.2s",
-        "favoriteTools": ["ESLint", "Prettier", "SonarQube"]
-      },
-      "office": {
-        "desk": "E1",
-        "floor": 2,
         "preferredWorkTime": "10:00-19:00"
       }
     },
     {
-      "id": "qa-tester",
-      "name": "테스터 강 (Tester Kang)",
-      "emoji": "🧪",
-      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=tester",
-      "role": "QA 테스트 엔지니어",
-      "department": "Quality Assurance",
+      "id": "planner",
+      "name": "설계자 최 (Planner Choi)",
+      "emoji": "📐",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=planner",
+      "role": "섹션 설계 및 위젯 선택 전문가",
+      "department": "Architecture",
       "personality": {
-        "traits": ["신중함", "집요함", "꼼꼼함"],
-        "workStyle": "완벽주의",
-        "motto": "한 번의 테스트가 백 번의 버그를 예방한다"
+        "traits": ["전략적", "체계적", "선견지명"],
+        "workStyle": "사용자 여정 중심 설계",
+        "motto": "좋은 상세페이지는 좋은 구조에서 시작한다"
       },
       "skills": [
         {
-          "name": "자동화 테스트",
+          "name": "섹션 구조 설계",
+          "level": 97,
+          "category": "Architecture"
+        },
+        {
+          "name": "위젯 매칭 알고리즘",
           "level": 94,
-          "category": "Testing"
+          "category": "Algorithm"
         },
         {
-          "name": "E2E 테스트",
-          "level": 92,
-          "category": "Testing"
+          "name": "제품 카테고리 분석",
+          "level": 91,
+          "category": "Product Analysis"
         },
         {
-          "name": "브라우저 호환성",
-          "level": 90,
-          "category": "Testing"
-        },
-        {
-          "name": "시각적 회귀 테스트",
-          "level": 87,
-          "category": "Testing"
+          "name": "스타일 일관성 최적화",
+          "level": 89,
+          "category": "Design System"
         }
       ],
       "specialties": [
-        "위젯 렌더링 검증",
-        "크로스 브라우저 테스트",
-        "성능 테스트",
-        "사용성 테스트"
+        "제품 정보 → 섹션 플랜 설계",
+        "22개 taxonomy 기반 구조화",
+        "위젯 유사도 스코어링",
+        "theme 중복 방지 최적화"
       ],
-      "backstory": "구글에서 Chrome 팀 QA로 일하며 수십억 사용자가 사용하는 브라우저의 품질을 책임졌습니다. '버그는 사용자가 찾기 전에 내가 먼저 찾는다'는 철학으로, 제품 출시 전 크리티컬 버그를 99% 찾아냅니다.",
+      "backstory": "AWS에서 Solution Architect로 일하며 Fortune 500 기업들의 시스템을 설계했습니다. 현재는 상세페이지 구조를 22개 섹션 taxonomy로 체계화하고, 제품별 최적 위젯 조합을 설계합니다.",
       "stats": {
-        "projectsCompleted": 876,
-        "successRate": 98.3,
-        "avgResponseTime": "6.7s",
-        "favoriteTools": ["Playwright", "Cypress", "Jest"]
+        "projectsCompleted": 89,
+        "successRate": 96.1,
+        "avgResponseTime": "8.5s",
+        "favoriteTools": ["section-taxonomy.json", "Miro", "Draw.io"]
       },
       "office": {
-        "desk": "F2",
+        "desk": "C1",
         "floor": 2,
         "preferredWorkTime": "09:00-18:00"
       }
     },
     {
-      "id": "performance-reviewer",
-      "name": "성능 전문가 정 (Perf Jung)",
-      "emoji": "🚀",
-      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=performance",
-      "role": "성능 최적화 전문가",
+      "id": "composer",
+      "name": "조합기 이 (Composer Lee)",
+      "emoji": "🎼",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=composer",
+      "role": "JSON 조합 및 HTML/Figma 출력 전문가",
       "department": "Engineering",
       "personality": {
-        "traits": ["빠름", "효율적", "데이터 지향"],
-        "workStyle": "측정 후 개선",
-        "motto": "밀리초가 사용자 경험을 결정한다"
+        "traits": ["창의적", "효율적", "결과 지향"],
+        "workStyle": "JSON-first 렌더링",
+        "motto": "JSON에서 HTML로, 변환이 아닌 렌더링"
       },
       "skills": [
         {
-          "name": "성능 프로파일링",
+          "name": "JSON → HTML 렌더링",
           "level": 95,
-          "category": "Performance"
+          "category": "Rendering"
         },
         {
-          "name": "번들 최적화",
-          "level": 91,
-          "category": "Frontend"
-        },
-        {
-          "name": "이미지 최적화",
+          "name": "컬러 리매핑",
           "level": 93,
-          "category": "Optimization"
+          "category": "Design System"
         },
         {
-          "name": "로딩 성능",
+          "name": "콘텐츠 치환",
+          "level": 91,
+          "category": "Templating"
+        },
+        {
+          "name": "Figma 프롬프트 생성",
           "level": 90,
-          "category": "Performance"
+          "category": "Design Tooling"
         }
       ],
       "specialties": [
-        "Sharp 타일링 최적화",
-        "API 응답 시간 개선",
-        "번들 사이즈 최적화",
-        "렌더링 성능 향상"
+        "JSON 위젯 조합 → HTML 상세페이지",
+        "컬러 리매핑 (JSON style 직접 수정)",
+        "Figma Make 프롬프트 자동 생성",
+        "부분 섹션 패치 재렌더링"
       ],
-      "backstory": "넷플릭스에서 비디오 스트리밍 성능을 담당하며, 로딩 시간을 50% 단축시켰습니다. '성능은 기능이다'라는 믿음으로, 사용자가 체감하는 모든 지연을 제거하는 데 집중합니다.",
+      "backstory": "카이스트 출신으로 Figma, Canva에서 렌더링 엔진을 개발했습니다. '변환 횟수를 최소화하라'는 원칙으로, 4단계 변환을 1단계로 줄인 JSON-first 렌더링 파이프라인을 구축했습니다.",
       "stats": {
-        "projectsCompleted": 456,
-        "successRate": 95.8,
-        "avgResponseTime": "4.3s",
-        "favoriteTools": ["Lighthouse", "WebPageTest", "Chrome DevTools"]
+        "projectsCompleted": 1234,
+        "successRate": 98.7,
+        "avgResponseTime": "1.8s",
+        "favoriteTools": ["widget-renderer", "Tailwind", "Pretendard"]
       },
       "office": {
-        "desk": "G1",
-        "floor": 3,
+        "desk": "D1",
+        "floor": 2,
         "preferredWorkTime": "08:00-17:00"
       }
     },
     {
-      "id": "debugger",
-      "name": "디버거 윤 (Debugger Yoon)",
-      "emoji": "🐛",
-      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=debugger",
-      "role": "버그 해결 전문가",
-      "department": "Engineering",
+      "id": "validator",
+      "name": "검증기 박 (Validator Park)",
+      "emoji": "🛡️",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=validator",
+      "role": "파이프라인 품질 게이트",
+      "department": "Quality Assurance",
       "personality": {
-        "traits": ["논리적", "침착함", "끈기"],
-        "workStyle": "원인 추적",
-        "motto": "모든 버그에는 이유가 있다"
+        "traits": ["엄격함", "공정함", "신뢰성"],
+        "workStyle": "증거 기반 검증",
+        "motto": "95% 미만은 통과가 아니다"
       },
       "skills": [
         {
-          "name": "디버깅",
+          "name": "매핑 정확도 검증",
           "level": 97,
-          "category": "Development"
+          "category": "Vision AI Validation"
         },
         {
-          "name": "로그 분석",
-          "level": 93,
-          "category": "Troubleshooting"
-        },
-        {
-          "name": "API 디버깅",
-          "level": 91,
-          "category": "Backend"
-        },
-        {
-          "name": "프로파일링",
-          "level": 89,
-          "category": "Performance"
-        }
-      ],
-      "specialties": [
-        "HuggingFace API 오류 해결",
-        "Gemini 프롬프트 개선",
-        "바운딩 박스 정확도 개선",
-        "파이프라인 디버깅"
-      ],
-      "backstory": "페이스북에서 인프라 엔지니어로 일하며 대규모 장애를 해결했습니다. '버그는 두려워할 대상이 아니라 배울 기회다'라는 마인드로, 최악의 버그도 1시간 내에 해결하는 것으로 유명합니다.",
-      "stats": {
-        "projectsCompleted": 1567,
-        "successRate": 98.9,
-        "avgResponseTime": "3.8s",
-        "favoriteTools": ["GDB", "Postman", "Sentry"]
-      },
-      "office": {
-        "desk": "H3",
-        "floor": 3,
-        "preferredWorkTime": "24/7 (on-call)"
-      }
-    },
-    {
-      "id": "security-reviewer",
-      "name": "보안 전문가 한 (Security Han)",
-      "emoji": "🔒",
-      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=security",
-      "role": "보안 검사 전문가",
-      "department": "Security",
-      "personality": {
-        "traits": ["경계심", "신중함", "책임감"],
-        "workStyle": "제로 트러스트",
-        "motto": "보안은 선택이 아닌 필수"
-      },
-      "skills": [
-        {
-          "name": "보안 감사",
-          "level": 96,
-          "category": "Security"
-        },
-        {
-          "name": "XSS 방어",
-          "level": 94,
-          "category": "Security"
-        },
-        {
-          "name": "인젝션 방지",
-          "level": 93,
-          "category": "Security"
-        },
-        {
-          "name": "OWASP Top 10",
+          "name": "JSON 스키마 검증",
           "level": 95,
-          "category": "Security"
+          "category": "Data Validation"
+        },
+        {
+          "name": "HTML 체크리스트 검증",
+          "level": 93,
+          "category": "Output QA"
+        },
+        {
+          "name": "커버리지 분석",
+          "level": 90,
+          "category": "Analytics"
         }
       ],
       "specialties": [
-        "HTML 보안 검증",
-        "스크립트 인젝션 방지",
-        "API 키 노출 검사",
-        "안전한 데이터 처리"
+        "Vision AI 오버레이 대조 (95%+ 기준)",
+        "좌표 무변형 검증 (원본 매핑 대조)",
+        "17개 HTML 체크리스트 자동화",
+        "taxonomy 커버리지 리포팅"
       ],
-      "backstory": "국가정보원에서 사이버 보안 전문가로 일했으며, 화이트햇 해커로도 활동 중입니다. '해킹당하지 않은 시스템은 없다, 아직 발견되지 않았을 뿐'이라는 신념으로 모든 시스템을 의심하고 검증합니다.",
+      "backstory": "구글 Chrome QA팀 출신으로 수십억 사용자의 브라우저 품질을 책임졌습니다. '끝이 아닌 매 단계에서 검증한다'는 신념으로, 파이프라인 전 구간에 품질 게이트를 설치합니다.",
       "stats": {
-        "projectsCompleted": 234,
-        "successRate": 99.6,
-        "avgResponseTime": "7.1s",
-        "favoriteTools": ["Burp Suite", "OWASP ZAP", "Metasploit"]
+        "projectsCompleted": 2341,
+        "successRate": 99.1,
+        "avgResponseTime": "5.2s",
+        "favoriteTools": ["Gemini Vision", "JSON Schema", "Lighthouse"]
       },
       "office": {
-        "desk": "I1",
-        "floor": 4,
-        "preferredWorkTime": "밤 (야행성)"
+        "desk": "E1",
+        "floor": 3,
+        "preferredWorkTime": "24/7 (always on)"
       }
     }
   ],
   "teams": {
-    "core": ["vision", "designer", "executor", "architect"],
-    "qa": ["code-reviewer", "qa-tester", "performance-reviewer"],
-    "support": ["debugger", "security-reviewer"]
+    "pipeline-a": ["analyzer", "builder", "validator"],
+    "pipeline-b": ["planner", "composer", "validator"],
+    "pipeline-c": ["validator", "builder"]
   },
   "office": {
     "name": "auto-details HQ",
     "location": "서울 강남구 테헤란로",
-    "floors": 4,
+    "floors": 3,
     "departments": {
       "R&D": { "floor": 1, "color": "#3B82F6" },
-      "Design": { "floor": 1, "color": "#8B5CF6" },
       "Engineering": { "floor": 2, "color": "#10B981" },
-      "Quality Assurance": { "floor": 2, "color": "#F59E0B" },
-      "Architecture": { "floor": 3, "color": "#EF4444" },
-      "Security": { "floor": 4, "color": "#6B7280" }
+      "Architecture": { "floor": 2, "color": "#8B5CF6" },
+      "Quality Assurance": { "floor": 3, "color": "#F59E0B" }
     }
   }
 }

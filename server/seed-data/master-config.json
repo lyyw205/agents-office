@@ -13,7 +13,7 @@
       "pmAgent": "auto-details-pm",
       "status": "active",
       "priority": "high",
-      "totalAgents": 10
+      "totalAgents": 5
     },
     {
       "name": "btc-stacking-bot",
@@ -38,7 +38,7 @@
   },
 
   "sharedResources": {
-    "skills": ["web-artifacts-builder", "frontend-design", "playwright", "ui-designer"],
+    "skills": ["scrape-reference", "map-reference", "build-widgets", "compose-page", "validate-mapping"],
     "modelTiers": {
       "high": "claude-opus-4-6",
       "medium": "claude-sonnet-4-6",
@@ -50,7 +50,7 @@
     "totalProjects": 3,
     "activeProjects": 1,
     "totalPMAgents": 3,
-    "totalAgents": 10,
-    "lastUpdated": "2026-02-18"
+    "totalAgents": 5,
+    "lastUpdated": "2026-02-20"
   }
 }
