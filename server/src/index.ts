@@ -9,12 +9,13 @@ import { workflowRoutes } from './routes/workflows.js';
 import { activityRoutes } from './routes/activity.js';
 import { sseRoutes } from './routes/sse.js';
 import { savedConfigRoutes } from './routes/saved-configs.js';
+import { hookRoutes, startSessionTimeoutChecker } from './routes/hooks.js';
 import { errorHandler } from './middleware/error-handler.js';
 import { requestLogger } from './middleware/request-logger.js';
 import { rateLimiter } from './middleware/rate-limiter.js';
-import { getClientCount } from './sse/broadcast.js';
+import { getClientCount, broadcast } from './sse/broadcast.js';
 import { sqlite } from './db/index.js';
-import { setupGracefulShutdown } from './lib/graceful-shutdown.js';
+import { setupGracefulShutdown, registerInterval } from './lib/graceful-shutdown.js';
 
 const startTime = Date.now();
 
@@ -31,7 +32,13 @@ app.use('*', cors({
   allowMethods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
   allowHeaders: ['Content-Type'],
 }));
-app.use('/api/*', rateLimiter({ windowMs: 60_000, max: 200 }));
+// Rate limiter: exclude /api/hooks/* (localhost-only, high-frequency hook events)
+app.use('/api/*', async (c, next) => {
+  if (c.req.path.startsWith('/api/hooks')) {
+    return next();
+  }
+  return rateLimiter({ windowMs: 60_000, max: 200 })(c, next);
+});
 // Stricter limit on write operations
 app.use('/api/tasks/*/execute', rateLimiter({ windowMs: 60_000, max: 10 }));
 
@@ -43,11 +50,8 @@ app.route('/api/workflows', workflowRoutes);
 app.route('/api/activity', activityRoutes);
 app.route('/api/saved-configs', savedConfigRoutes);
 app.route('/api/sse', sseRoutes);
+app.route('/api/hooks', hookRoutes);
 
-// Sync routes (stricter rate limit: 5/min)
-import { syncRoutes } from './routes/sync.js';
-app.use('/api/sync/*', rateLimiter({ windowMs: 60_000, max: 5 }));
-app.route('/api/sync', syncRoutes);
 
 // Health check
 app.get('/api/health', async (c) => {
@@ -108,6 +112,15 @@ app.get('/api/health', async (c) => {
     sse: {
       connectedClients: getClientCount(),
     },
+    memory: (() => {
+      const mem = process.memoryUsage();
+      return {
+        rss_mb: Math.round(mem.rss / 1024 / 1024),
+        heap_used_mb: Math.round(mem.heapUsed / 1024 / 1024),
+        heap_total_mb: Math.round(mem.heapTotal / 1024 / 1024),
+        external_mb: Math.round(mem.external / 1024 / 1024),
+      };
+    })(),
   });
 });
 
@@ -128,18 +141,22 @@ serve({
   port,
 });
 
-// Auto-sync on startup
-(async () => {
+
+// Session timeout checker for hook-based activity detection
+const sessionTimeoutInterval = startSessionTimeoutChecker();
+registerInterval(sessionTimeoutInterval);
+
+// Periodic DB maintenance: prune old activity logs + WAL checkpoint (every 24h)
+const maintenanceInterval = setInterval(() => {
   try {
-    const { ProjectSyncService } = await import('./services/sync.js');
-    const { getScanPaths } = await import('./lib/config.js');
-    const service = new ProjectSyncService(getScanPaths());
-    const results = service.syncAll();
-    console.log(`[sync] Startup sync complete: ${results.length} projects synced`);
+    sqlite.exec(`DELETE FROM activity_log WHERE created_at < datetime('now', '-30 days')`);
+    sqlite.exec(`DELETE FROM agent_communications WHERE created_at < datetime('now', '-30 days')`);
+    sqlite.pragma('wal_checkpoint(TRUNCATE)');
   } catch (err) {
-    console.warn('[sync] Startup sync failed:', err);
+    console.warn('[db] Maintenance failed:', err);
   }
-})();
+}, 24 * 60 * 60_000);
+registerInterval(maintenanceInterval);
 
 // Graceful shutdown
 setupGracefulShutdown(sqlite);

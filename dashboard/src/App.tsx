@@ -10,7 +10,7 @@ import { MapEditorPage } from './components/editor/MapEditorPage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
-    queries: { staleTime: 10_000, retry: 1 },
+    queries: { staleTime: 10_000, retry: 1, refetchOnWindowFocus: false },
   },
 });
 

@@ -7,11 +7,9 @@ import type {
   Workflow,
   WorkflowDetail,
   Activity,
+  AgentCommunication,
   HealthStatus,
   SavedConfig,
-  DiscoveredProject,
-  SyncResult,
-  SyncStatus,
   CreateProject,
   CreateAgent,
   CreateTask,
@@ -89,18 +87,11 @@ export const api = {
   // Saved Configs
   getSavedConfigs: () => request<{ data: SavedConfig[]; total: number }>('/saved-configs'),
 
-  // Sync
-  discoverProjects: (scanPaths?: string[]) =>
-    request<{ discovered: DiscoveredProject[] }>('/sync/discover', {
-      method: 'POST',
-      body: JSON.stringify(scanPaths ? { scan_paths: scanPaths } : {}),
-    }),
-  syncProjects: (paths?: string[]) =>
-    request<{ synced: SyncResult[] }>('/sync/projects', {
-      method: 'POST',
-      body: JSON.stringify(paths ? { paths } : {}),
-    }),
-  syncProject: (projectId: string) =>
-    request<SyncResult>(`/sync/projects/${projectId}`, { method: 'POST' }),
-  getSyncStatus: () => request<SyncStatus>('/sync/status'),
+  // Communications
+  getCommunications: (params?: { limit?: number; activity_type?: string }) => {
+    const qs = new URLSearchParams(
+      Object.fromEntries(Object.entries(params ?? {}).filter(([, v]) => v != null).map(([k, v]) => [k, String(v)])),
+    ).toString();
+    return request<{ data: AgentCommunication[]; total: number }>(`/activity/communications${qs ? `?${qs}` : ''}`);
+  },
 };

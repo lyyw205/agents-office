@@ -13,27 +13,14 @@
       "pmAgent": "auto-details-pm",
       "status": "active",
       "priority": "high",
-      "totalAgents": 5
-    },
-    {
-      "name": "btc-stacking-bot",
-      "pmAgent": "btc-stacking-bot-pm",
-      "status": "planned",
-      "priority": "medium",
-      "totalAgents": 0
-    },
-    {
-      "name": "convengers",
-      "pmAgent": "convengers-pm",
-      "status": "planned",
-      "priority": "medium",
-      "totalAgents": 0
+      "totalAgents": 5,
+      "cwd": "/home/iamooo/repos/auto-details"
     }
   ],
 
   "hierarchy": {
     "tier1": "master-orchestrator",
-    "tier2": ["auto-details-pm", "btc-stacking-bot-pm", "convengers-pm"],
+    "tier2": ["auto-details-pm"],
     "tier3": "각 프로젝트 team-config.json 참조"
   },
 
@@ -47,10 +34,32 @@
   },
 
   "metrics": {
-    "totalProjects": 3,
+    "totalProjects": 1,
     "activeProjects": 1,
-    "totalPMAgents": 3,
+    "totalPMAgents": 1,
     "totalAgents": 5,
     "lastUpdated": "2026-02-20"
+  },
+
+  "agentAliases": {
+    "executor": "builder",
+    "deep-executor": "builder",
+    "architect": "planner",
+    "planner": "planner",
+    "designer": "composer",
+    "explorer": "analyzer",
+    "explore": "analyzer",
+    "analyst": "analyzer",
+    "verifier": "validator",
+    "test-engineer": "validator",
+    "quality-reviewer": "validator",
+    "security-reviewer": "validator",
+    "code-reviewer": "validator",
+    "debugger": "analyzer",
+    "build-fixer": "builder",
+    "writer": "composer",
+    "product-manager": "auto-details-pm",
+    "critic": "planner",
+    "style-reviewer": "composer"
   }
 }

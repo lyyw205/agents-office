@@ -2,9 +2,11 @@ import { readFileSync } from 'fs';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { nanoid } from 'nanoid';
+import { eq } from 'drizzle-orm';
 import { db } from './index.js'; // index.js auto-creates tables on import
 import { projects, agents, workflows, activity_log } from './schema.js';
 import { sql } from 'drizzle-orm';
+import { loadSceneConfig, loadAgentOverrides } from '../lib/dashboard-export.js';
 
 // ---------------------------------------------------------------------------
 // JSON file paths (seed data lives in server/seed-data/)
@@ -24,30 +26,6 @@ const teamConfig = JSON.parse(
 const personaConfig = JSON.parse(
   readFileSync(resolve(SEED_DATA, 'agents-persona.json'), 'utf-8')
 );
-
-// ---------------------------------------------------------------------------
-// Scene config for auto-details (building zones)
-// ---------------------------------------------------------------------------
-const autoDetailsSceneConfig = {
-  mapKey: 'auto-details',
-  tileSize: 32,
-  zones: [
-    { id: 'entrance', label: 'Entrance', x: 0, y: 0, w: 5, h: 2, color: '#94A3B8' },
-    { id: 'pm_office', label: 'PM Office', x: 13, y: 0, w: 5, h: 3, color: '#F97316' },
-    { id: 'rd', label: 'R&D', x: 0, y: 2, w: 6, h: 4, color: '#3B82F6' },
-    { id: 'engineering', label: 'Engineering', x: 6, y: 2, w: 7, h: 4, color: '#10B981' },
-    { id: 'architecture', label: 'Architecture', x: 0, y: 6, w: 6, h: 4, color: '#8B5CF6' },
-    { id: 'qa', label: 'Quality Assurance', x: 6, y: 6, w: 7, h: 4, color: '#F59E0B' },
-    { id: 'breakroom', label: 'Break Room', x: 13, y: 5, w: 5, h: 8, color: '#6EE7B7' },
-  ],
-  deskMap: {
-    A1: { zone: 'rd', x: 2, y: 4 },
-    B1: { zone: 'engineering', x: 8, y: 4 },
-    C1: { zone: 'architecture', x: 2, y: 8 },
-    D1: { zone: 'engineering', x: 8, y: 8 },
-    E1: { zone: 'qa', x: 10, y: 8 },
-  },
-};
 
 // ---------------------------------------------------------------------------
 // Build lookup: team-config agent name -> responsibilities + modelTier
@@ -94,24 +72,18 @@ async function seed() {
   // -------------------------------------------------------------------------
   const projectStatusMap: Record<string, string> = {
     'auto-details': 'active',
-    'btc-stacking-bot': 'planned',
-    'convengers': 'planned',
   };
 
   const projectDisplayNames: Record<string, string> = {
     'auto-details': 'Auto Details',
-    'btc-stacking-bot': 'BTC Stacking Bot',
-    'convengers': 'Convengers',
   };
 
   const projectDescriptions: Record<string, string> = {
     'auto-details': teamConfig.description ?? 'AI 기반 상세페이지 자동 제작 시스템',
-    'btc-stacking-bot': 'Bitcoin stacking automation bot',
-    'convengers': 'Convengers multi-agent platform',
   };
 
   const projectRows: (typeof projects.$inferInsert)[] = masterConfig.projects.map(
-    (p: { name: string; status: string; priority: string }) => ({
+    (p: { name: string; status: string; priority: string; cwd?: string }) => ({
       id: nanoid(),
       name: p.name,
       display_name: projectDisplayNames[p.name] ?? p.name,
@@ -119,12 +91,19 @@ async function seed() {
       status: projectStatusMap[p.name] ?? p.status,
       priority: p.priority,
       config_json: null,
-      scene_config: p.name === 'auto-details' ? JSON.stringify(autoDetailsSceneConfig) : null,
+      scene_config: null,
+      cwd: p.cwd ?? null,
       source: 'seed',
     })
   );
 
   for (const row of projectRows) {
+    // Apply exported scene_config if available
+    const exportedScene = loadSceneConfig(row.name);
+    if (exportedScene) {
+      row.scene_config = exportedScene;
+      console.log(`  [seed] Applied exported scene_config for ${row.name}`);
+    }
     db.insert(projects).values(row).onConflictDoNothing().run();
   }
 
@@ -161,7 +140,7 @@ async function seed() {
     status: master.status === 'active' ? 'idle' : 'inactive',
     model_tier: master.modelTier ?? 'high',
     emoji: '🎯',
-    persona_json: null,
+    persona_json: JSON.stringify({ office: { desk: 'F2' } }),
     skills_json: null,
     config_json: JSON.stringify({ original_id: master.id }),
     sprite_key: 'master-orchestrator',
@@ -189,7 +168,7 @@ async function seed() {
     status: 'idle',
     model_tier: pmDef.modelTier ?? 'high',
     emoji: '📋',
-    persona_json: null,
+    persona_json: JSON.stringify({ office: { desk: 'G1' } }),
     skills_json: pmTeamEntry
       ? JSON.stringify(pmTeamEntry.responsibilities.map((r: string) => ({ name: r })))
       : null,
@@ -262,6 +241,53 @@ async function seed() {
   }
 
   console.log(`Inserted ${agentInsertCount} team agents`);
+
+  // -------------------------------------------------------------------------
+  // 4b. Apply exported agent overrides (display_alias, desk, name, role, etc.)
+  // -------------------------------------------------------------------------
+  for (const p of projectRows) {
+    const overrides = loadAgentOverrides(p.name);
+    if (Object.keys(overrides).length === 0) continue;
+
+    const projectRow = db.select().from(projects).all().find((pr) => pr.name === p.name);
+    if (!projectRow) continue;
+
+    const projectAgents = db.select().from(agents).where(eq(agents.project_id, projectRow.id)).all();
+
+    for (const agent of projectAgents) {
+      const cfg = agent.config_json ? JSON.parse(agent.config_json) as Record<string, unknown> : {};
+      const originalId = (cfg.original_id as string) ?? agent.name;
+      const override = overrides[originalId];
+      if (!override) continue;
+
+      const updates: Record<string, unknown> = {};
+
+      if (override.name) updates.name = override.name;
+      if (override.role) updates.role = override.role;
+      if (override.department !== undefined) updates.department = override.department;
+      if (override.emoji !== undefined) updates.emoji = override.emoji;
+
+      // Merge display_alias into config_json
+      if (override.display_alias) {
+        cfg.display_alias = override.display_alias;
+        updates.config_json = JSON.stringify(cfg);
+      }
+
+      // Merge desk into persona_json
+      if (override.desk) {
+        const persona = agent.persona_json ? JSON.parse(agent.persona_json) as Record<string, unknown> : {};
+        const office = (persona.office as Record<string, unknown>) ?? {};
+        office.desk = override.desk;
+        persona.office = office;
+        updates.persona_json = JSON.stringify(persona);
+      }
+
+      if (Object.keys(updates).length > 0) {
+        db.update(agents).set(updates).where(eq(agents.id, agent.id)).run();
+        console.log(`  [seed] Applied overrides for agent ${originalId}`);
+      }
+    }
+  }
 
   // -------------------------------------------------------------------------
   // 5. Workflows from team-config

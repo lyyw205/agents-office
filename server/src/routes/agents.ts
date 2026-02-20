@@ -7,6 +7,8 @@ import { agents, tasks, activity_log } from '../db/schema.js';
 import { AppError } from '../middleware/error-handler.js';
 import { broadcast } from '../sse/broadcast.js';
 import { optionalJsonString } from '../lib/validation.js';
+import { exportAgentOverride } from '../lib/dashboard-export.js';
+import { projects } from '../db/schema.js';
 
 export const agentRoutes = new Hono();
 
@@ -97,8 +99,27 @@ agentRoutes.patch('/:id', async (c) => {
     })
     .run();
 
-  const updated = db.select().from(agents).where(eq(agents.id, id)).get();
+  const updated = db.select().from(agents).where(eq(agents.id, id)).get()!;
   broadcast('agent_status', JSON.stringify(updated));
+
+  // Auto-export agent customizations to seed-data for git portability
+  if (updated.project_id) {
+    const project = db.select().from(projects).where(eq(projects.id, updated.project_id)).get();
+    if (project) {
+      const cfg = updated.config_json ? JSON.parse(updated.config_json) as Record<string, unknown> : {};
+      const persona = updated.persona_json ? JSON.parse(updated.persona_json) as Record<string, unknown> : {};
+      const originalId = (cfg.original_id as string) ?? updated.name;
+      exportAgentOverride(project.name, originalId, {
+        name: updated.name,
+        role: updated.role,
+        department: updated.department,
+        emoji: updated.emoji,
+        display_alias: (cfg.display_alias as string) ?? undefined,
+        desk: ((persona.office as Record<string, unknown>)?.desk as string) ?? undefined,
+      });
+    }
+  }
+
   return c.json(updated);
 });
 

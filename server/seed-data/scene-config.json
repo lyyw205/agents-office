@@ -1,0 +1,2634 @@
+{
+  "auto-details": {
+    "deskMap": {},
+    "tilemap": {
+      "version": 1,
+      "width": 18,
+      "height": 13,
+      "tileSize": 48,
+      "tilesets": [
+        "floor_carpet_custom",
+        "wall_gray_custom",
+        "furn_office"
+      ],
+      "layers": {
+        "floor": {
+          "0,0": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "1,0": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "1,1": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "1,2": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "2,0": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "3,0": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "4,0": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "5,0": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "6,0": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 0
+            }
+          ],
+          "7,0": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "8,0": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "9,0": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "10,0": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "11,0": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "12,0": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "13,0": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "14,0": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "15,0": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "16,0": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "17,0": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "17,1": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "16,1": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "15,2": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "14,2": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "13,2": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "12,1": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "11,1": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "10,1": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "9,1": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "8,1": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "7,2": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "5,2": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "4,2": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "3,2": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "2,2": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "0,2": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "6,2": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 0
+            }
+          ],
+          "5,1": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "3,1": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "2,1": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "0,1": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "6,1": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 0
+            }
+          ],
+          "7,1": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "4,1": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "13,1": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "14,1": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "8,2": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "10,2": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "11,2": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "12,2": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "9,2": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "16,2": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "16,3": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "15,3": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "14,3": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "13,3": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "12,3": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "11,3": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "17,3": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "17,2": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "12,4": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 0
+            }
+          ],
+          "10,4": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 0
+            }
+          ],
+          "8,4": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 0
+            }
+          ],
+          "7,4": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 0
+            }
+          ],
+          "8,3": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "9,3": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "15,1": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "10,3": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "7,3": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "6,3": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 0
+            }
+          ],
+          "5,3": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "4,3": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "3,3": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "2,3": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "1,3": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "1,4": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 0
+            }
+          ],
+          "0,4": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 0
+            }
+          ],
+          "0,3": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "2,4": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 0
+            }
+          ],
+          "3,4": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 0
+            }
+          ],
+          "4,4": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 0
+            }
+          ],
+          "5,4": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 0
+            }
+          ],
+          "6,4": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 0
+            }
+          ],
+          "9,4": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 0
+            }
+          ],
+          "11,4": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 0
+            }
+          ],
+          "13,4": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 0
+            }
+          ],
+          "14,4": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 0
+            }
+          ],
+          "15,4": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 0
+            }
+          ],
+          "16,4": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 0
+            }
+          ],
+          "17,4": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 0
+            }
+          ],
+          "17,5": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "16,5": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "15,5": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "14,5": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "13,5": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "12,5": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "11,5": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "10,5": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "9,5": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "8,5": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "7,5": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "6,5": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "5,5": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "4,5": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "3,5": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "2,5": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "1,5": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "0,5": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "0,6": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "1,6": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "2,6": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "3,6": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "4,6": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "5,6": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "6,6": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "7,6": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "8,6": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "9,6": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "10,6": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "11,6": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "12,6": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "13,6": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "14,6": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "15,6": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "16,6": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "17,6": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "17,7": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "16,7": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "15,7": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "14,7": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "13,7": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "12,7": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "11,7": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "10,7": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "9,7": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "8,7": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "7,7": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "6,7": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "5,7": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "4,7": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "3,7": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "2,7": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "1,7": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "0,7": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "0,8": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "1,8": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "2,8": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "3,8": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "4,8": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "5,8": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "6,8": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "7,8": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "8,8": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "9,8": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "10,8": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "11,8": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "12,8": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "13,8": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "14,8": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "15,8": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "16,8": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "17,8": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "0,9": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "1,9": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "2,9": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "3,9": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "4,9": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "5,9": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "6,9": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "7,9": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "8,9": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "9,9": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "10,9": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "11,9": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "12,9": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "13,9": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "14,9": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "15,9": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "16,9": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "17,9": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "17,10": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "16,10": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "15,10": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "14,10": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "13,10": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "12,10": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "11,10": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "10,10": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "9,10": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "8,10": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "7,10": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "6,10": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "5,10": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "4,10": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "3,10": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "2,10": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "1,10": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "0,10": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "0,11": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "1,11": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "2,11": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "3,11": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "4,11": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "5,11": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "6,11": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "7,11": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "8,11": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "9,11": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "10,11": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "11,11": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "12,11": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "13,11": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "14,11": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "15,11": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "16,11": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "17,11": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "17,12": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "16,12": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "15,12": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "14,12": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "13,12": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "12,12": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "11,12": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "10,12": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "9,12": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "8,12": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "7,12": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "6,12": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "5,12": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "4,12": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "3,12": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "2,12": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ],
+          "1,12": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            },
+            {
+              "ts": "floor_carpet_custom",
+              "f": 2
+            }
+          ],
+          "0,12": [
+            {
+              "ts": "floor_carpet_custom",
+              "f": 1
+            }
+          ]
+        },
+        "walls": {
+          "0,5": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 0
+            },
+            {
+              "ts": "wall_gray_custom",
+              "f": 27
+            }
+          ],
+          "1,5": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 28
+            }
+          ],
+          "3,5": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 28
+            }
+          ],
+          "4,5": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 28
+            }
+          ],
+          "5,5": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 28
+            }
+          ],
+          "6,5": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 28
+            }
+          ],
+          "7,5": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 28
+            }
+          ],
+          "10,5": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 28
+            }
+          ],
+          "11,5": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 28
+            }
+          ],
+          "12,5": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 28
+            }
+          ],
+          "13,5": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 28
+            }
+          ],
+          "14,5": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 28
+            }
+          ],
+          "16,5": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 28
+            }
+          ],
+          "17,5": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 29
+            }
+          ],
+          "0,6": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 30
+            }
+          ],
+          "0,8": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 30
+            }
+          ],
+          "0,9": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 30
+            }
+          ],
+          "0,10": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 30
+            }
+          ],
+          "0,11": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 30
+            }
+          ],
+          "0,7": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 30
+            }
+          ],
+          "17,12": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 35
+            }
+          ],
+          "0,12": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 33
+            }
+          ],
+          "1,12": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "2,12": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "3,12": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "4,12": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "5,12": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "6,12": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "7,12": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "8,12": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "9,12": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "10,12": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "11,12": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "12,12": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "14,12": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            },
+            {
+              "ts": "wall_gray_custom",
+              "f": 30
+            }
+          ],
+          "15,12": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "16,12": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "17,6": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 32
+            }
+          ],
+          "17,7": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 32
+            }
+          ],
+          "17,8": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 32
+            },
+            {
+              "ts": "wall_gray_custom",
+              "f": 29
+            }
+          ],
+          "17,9": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 32
+            }
+          ],
+          "17,10": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 32
+            }
+          ],
+          "17,11": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 32
+            }
+          ],
+          "13,12": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "14,9": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 30
+            }
+          ],
+          "14,10": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 30
+            }
+          ],
+          "14,11": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 30
+            }
+          ],
+          "14,8": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 27
+            }
+          ],
+          "17,0": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 29
+            },
+            {
+              "ts": "wall_gray_custom",
+              "f": 28
+            }
+          ],
+          "0,0": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 27
+            }
+          ],
+          "1,0": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 28
+            }
+          ],
+          "2,0": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 28
+            }
+          ],
+          "3,0": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 28
+            }
+          ],
+          "4,0": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 28
+            }
+          ],
+          "5,0": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 28
+            },
+            {
+              "ts": "wall_gray_custom",
+              "f": 32
+            }
+          ],
+          "6,0": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 28
+            }
+          ],
+          "9,0": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 28
+            }
+          ],
+          "10,0": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 28
+            }
+          ],
+          "12,0": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 28
+            }
+          ],
+          "13,0": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 28
+            }
+          ],
+          "14,0": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 28
+            }
+          ],
+          "15,0": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 28
+            }
+          ],
+          "16,0": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 28
+            }
+          ],
+          "11,0": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 28
+            }
+          ],
+          "8,0": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 28
+            }
+          ],
+          "7,0": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 28
+            },
+            {
+              "ts": "wall_gray_custom",
+              "f": 30
+            }
+          ],
+          "11,3": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "12,3": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "13,3": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "14,3": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "0,3": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 33
+            }
+          ],
+          "0,1": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 30
+            }
+          ],
+          "0,2": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 30
+            }
+          ],
+          "17,1": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 32
+            }
+          ],
+          "17,2": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 32
+            }
+          ],
+          "17,3": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 35
+            }
+          ],
+          "16,3": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "15,3": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "7,3": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 33
+            }
+          ],
+          "10,3": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "7,2": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 30
+            }
+          ],
+          "5,2": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 32
+            }
+          ],
+          "5,3": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 35
+            }
+          ],
+          "3,3": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "4,3": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "1,3": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "8,5": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 28
+            }
+          ],
+          "8,3": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "5,1": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 32
+            }
+          ],
+          "7,1": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 30
+            }
+          ]
+        },
+        "furniture": {
+          "0,0": [
+            {
+              "ts": "furn_office",
+              "f": 196
+            }
+          ],
+          "1,0": [
+            {
+              "ts": "furn_office",
+              "f": 197
+            }
+          ],
+          "2,0": [
+            {
+              "ts": "furn_office",
+              "f": 198
+            }
+          ],
+          "3,0": [
+            {
+              "ts": "furn_office",
+              "f": 186
+            }
+          ],
+          "4,0": [
+            {
+              "ts": "furn_office",
+              "f": 187
+            }
+          ],
+          "5,0": [
+            {
+              "ts": "furn_office",
+              "f": 188
+            }
+          ],
+          "3,1": [
+            {
+              "ts": "furn_office",
+              "f": 202
+            }
+          ],
+          "4,1": [
+            {
+              "ts": "furn_office",
+              "f": 203
+            }
+          ],
+          "5,1": [
+            {
+              "ts": "furn_office",
+              "f": 204
+            },
+            {
+              "ts": "furn_office",
+              "f": 58
+            }
+          ],
+          "0,1": [
+            {
+              "ts": "furn_office",
+              "f": 212
+            },
+            {
+              "ts": "furn_office",
+              "f": 5
+            }
+          ],
+          "1,1": [
+            {
+              "ts": "furn_office",
+              "f": 213
+            }
+          ],
+          "2,1": [
+            {
+              "ts": "furn_office",
+              "f": 214
+            },
+            {
+              "ts": "furn_office",
+              "f": 144
+            }
+          ]
+        },
+        "decoration": {}
+      },
+      "agentDesks": []
+    }
+  }
+}

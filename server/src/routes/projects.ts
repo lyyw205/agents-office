@@ -6,6 +6,7 @@ import { db } from '../db/index.js';
 import { projects, agents, tasks, activity_log } from '../db/schema.js';
 import { AppError } from '../middleware/error-handler.js';
 import { optionalJsonString } from '../lib/validation.js';
+import { exportSceneConfig } from '../lib/dashboard-export.js';
 
 export const projectRoutes = new Hono();
 
@@ -150,6 +151,11 @@ projectRoutes.patch('/:id', async (c) => {
       details_json: JSON.stringify(parsed.data),
     })
     .run();
+
+  // Auto-export scene_config to seed-data for git portability
+  if (parsed.data.scene_config !== undefined) {
+    exportSceneConfig(project.name, parsed.data.scene_config ?? project.scene_config);
+  }
 
   const updated = db.select().from(projects).where(eq(projects.id, id)).get();
   return c.json(updated);

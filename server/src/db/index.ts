@@ -40,6 +40,28 @@ for (const { table, column, type } of newColumns) {
   }
 }
 
+// Bootstrap: create agent_communications table if missing
+try {
+  sqlite.exec(`
+    CREATE TABLE IF NOT EXISTS agent_communications (
+      id TEXT PRIMARY KEY,
+      project_id TEXT REFERENCES projects(id),
+      session_id TEXT NOT NULL,
+      activity_type TEXT NOT NULL,
+      sender_raw_name TEXT,
+      recipient_raw_name TEXT,
+      sender_agent_id TEXT REFERENCES agents(id),
+      recipient_agent_id TEXT REFERENCES agents(id),
+      summary TEXT NOT NULL,
+      details_json TEXT,
+      tool_name TEXT,
+      created_at TEXT DEFAULT (datetime('now'))
+    )
+  `);
+} catch {
+  // Table already exists
+}
+
 // Run Drizzle Kit managed migrations (single source of truth: schema.ts)
 const migrationsFolder = resolve(__dirname, '../../drizzle');
 export const db = drizzle(sqlite, { schema });
@@ -47,3 +69,15 @@ export const db = drizzle(sqlite, { schema });
 if (existsSync(migrationsFolder)) {
   migrate(db, { migrationsFolder });
 }
+
+// Indexes for query performance
+sqlite.exec(`CREATE INDEX IF NOT EXISTS idx_activity_log_created_at ON activity_log (created_at)`);
+sqlite.exec(`CREATE INDEX IF NOT EXISTS idx_agent_comms_created_at ON agent_communications (created_at)`);
+sqlite.exec(`CREATE INDEX IF NOT EXISTS idx_agent_comms_session ON agent_communications (session_id)`);
+sqlite.exec(`CREATE INDEX IF NOT EXISTS idx_agent_comms_project ON agent_communications (project_id, created_at)`);
+
+// Retention: prune activity_log entries older than 30 days on startup
+sqlite.exec(`DELETE FROM activity_log WHERE created_at < datetime('now', '-30 days')`);
+
+// WAL checkpoint to reclaim disk space
+sqlite.pragma('wal_checkpoint(TRUNCATE)');

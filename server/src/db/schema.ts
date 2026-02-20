@@ -94,3 +94,18 @@ export const saved_agent_configs = sqliteTable('saved_agent_configs', {
   source_agent_id: text('source_agent_id').references(() => agents.id),
   created_at: text('created_at').default(sql`(datetime('now'))`),
 });
+
+export const agent_communications = sqliteTable('agent_communications', {
+  id: text('id').primaryKey(),
+  project_id: text('project_id').references(() => projects.id),
+  session_id: text('session_id').notNull(),
+  activity_type: text('activity_type').notNull(),
+  sender_raw_name: text('sender_raw_name'),
+  recipient_raw_name: text('recipient_raw_name'),
+  sender_agent_id: text('sender_agent_id').references(() => agents.id),
+  recipient_agent_id: text('recipient_agent_id').references(() => agents.id),
+  summary: text('summary').notNull(),
+  details_json: text('details_json'),
+  tool_name: text('tool_name'),
+  created_at: text('created_at').default(sql`(datetime('now'))`),
+});

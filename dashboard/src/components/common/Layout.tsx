@@ -2,10 +2,15 @@ import { Outlet, Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useSSE } from '../../hooks/useSSE';
 import { useAppStore } from '../../store';
+import type { RealtimeComm } from '../../hooks/useSSE';
+
+export interface LayoutContext {
+  communications: RealtimeComm[];
+}
 
 export function Layout() {
   const { t, i18n } = useTranslation();
-  const { connected } = useSSE();
+  const { connected, communications } = useSSE();
   const { locale, setLocale } = useAppStore();
   const location = useLocation();
 
@@ -38,7 +43,7 @@ export function Layout() {
         </button>
       </header>
       <main className="flex-1 overflow-auto">
-        <Outlet />
+        <Outlet context={{ communications } satisfies LayoutContext} />
       </main>
     </div>
   );

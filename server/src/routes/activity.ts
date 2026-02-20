@@ -2,6 +2,7 @@ import { Hono } from 'hono';
 import { eq, and, desc } from 'drizzle-orm';
 import { db } from '../db/index.js';
 import { activity_log } from '../db/schema.js';
+import { sqlite } from '../db/index.js';
 
 export const activityRoutes = new Hono();
 
@@ -21,6 +22,26 @@ activityRoutes.get('/', (c) => {
     conditions.length > 0
       ? query.where(and(...conditions)).limit(limit).offset(offset).all()
       : query.limit(limit).offset(offset).all();
+
+  return c.json({ data, total: data.length, limit, offset });
+});
+
+// GET /communications - Agent communication logs
+activityRoutes.get('/communications', (c) => {
+  const limit = Math.min(parseInt(c.req.query('limit') ?? '50', 10), 200);
+  const offset = parseInt(c.req.query('offset') ?? '0', 10);
+  const activityType = c.req.query('activity_type');
+
+  let data;
+  if (activityType) {
+    data = sqlite.prepare(
+      'SELECT * FROM agent_communications WHERE activity_type = ? ORDER BY created_at DESC LIMIT ? OFFSET ?'
+    ).all(activityType, limit, offset);
+  } else {
+    data = sqlite.prepare(
+      'SELECT * FROM agent_communications ORDER BY created_at DESC LIMIT ? OFFSET ?'
+    ).all(limit, offset);
+  }
 
   return c.json({ data, total: data.length, limit, offset });
 });

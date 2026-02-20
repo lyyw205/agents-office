@@ -2,10 +2,12 @@ import { useEffect, useRef } from 'react';
 import Phaser from 'phaser';
 import { OfficeScene } from './OfficeScene';
 import type { Agent } from '../../types';
+import type { RealtimeComm } from '../../hooks/useSSE';
 
 interface PhaserOfficeProps {
   agents: Agent[];
   sceneConfig?: string | null;
+  communications?: RealtimeComm[];
 }
 
 import type { TilemapData } from '../../types/tilemap';
@@ -16,27 +18,22 @@ interface ParsedSceneConfig {
   tilemap?: TilemapData;
 }
 
-// New layout: 18 cols × 13 rows (864 × 624)
+// New layout: 18 cols x 13 rows (864 x 624)
 const GAME_W = 18 * 48;
 const GAME_H = 13 * 48;
 
 const DEFAULT_ZONES: ParsedSceneConfig['zones'] = [
-  { id: 'pm_office', label: 'PM Office', x: 1, y: 1, w: 4, h: 3, color: '#F97316' },
-  { id: 'meeting', label: 'Meeting Room', x: 10, y: 1, w: 7, h: 3, color: '#8B5CF6' },
-  { id: 'workspace', label: 'Workspace', x: 1, y: 5, w: 12, h: 8, color: '#3B82F6' },
-  { id: 'breakroom', label: 'Break Room', x: 13, y: 7, w: 4, h: 5, color: '#10B981' },
+  { id: 'workspace', label: 'Workspace', x: 1, y: 1, w: 16, h: 11, color: '#3B82F6' },
 ];
 
 const DEFAULT_DESK_MAP: NonNullable<ParsedSceneConfig['deskMap']> = {
   A1: { zone: 'workspace', x: 2, y: 7 },
-  B2: { zone: 'workspace', x: 5, y: 7 },
+  B1: { zone: 'workspace', x: 5, y: 7 },
   C1: { zone: 'workspace', x: 8, y: 7 },
-  D3: { zone: 'workspace', x: 2, y: 10 },
+  D1: { zone: 'workspace', x: 2, y: 10 },
   E1: { zone: 'workspace', x: 5, y: 10 },
   F2: { zone: 'workspace', x: 8, y: 10 },
   G1: { zone: 'workspace', x: 2, y: 12 },
-  H3: { zone: 'workspace', x: 5, y: 12 },
-  I1: { zone: 'workspace', x: 8, y: 12 },
 };
 
 function parseSceneConfig(sceneConfig?: string | null): ParsedSceneConfig {
@@ -58,10 +55,11 @@ function agentDesk(agent: Agent): string | undefined {
   }
 }
 
-export function PhaserOffice({ agents, sceneConfig }: PhaserOfficeProps) {
+export function PhaserOffice({ agents, sceneConfig, communications }: PhaserOfficeProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<Phaser.Game | null>(null);
   const sceneRef = useRef<OfficeScene | null>(null);
+  const lastCommSeqRef = useRef(0);
 
   const parsed = parseSceneConfig(sceneConfig);
   const zones = parsed.zones ?? DEFAULT_ZONES;
@@ -116,6 +114,7 @@ export function PhaserOffice({ agents, sceneConfig }: PhaserOfficeProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Forward agent updates to scene
   useEffect(() => {
     if (sceneRef.current) {
       try {
@@ -126,6 +125,27 @@ export function PhaserOffice({ agents, sceneConfig }: PhaserOfficeProps) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [agents]);
+
+  // Forward new communications to scene for visualization
+  useEffect(() => {
+    if (!sceneRef.current || !communications?.length) return;
+
+    for (const comm of communications) {
+      if (comm._seq <= lastCommSeqRef.current) continue;
+      lastCommSeqRef.current = comm._seq;
+
+      try {
+        sceneRef.current.showCommunication(
+          comm.sender_agent_id,
+          comm.recipient_agent_id,
+          comm.summary,
+          comm.activity_type,
+        );
+      } catch {
+        // Scene not ready
+      }
+    }
+  }, [communications]);
 
   return (
     <div className="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden">

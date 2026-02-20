@@ -2,12 +2,20 @@ import type { Database as DatabaseType } from 'better-sqlite3';
 
 let shuttingDown = false;
 
+const intervals: ReturnType<typeof setInterval>[] = [];
+
+export function registerInterval(interval: ReturnType<typeof setInterval>): void {
+  intervals.push(interval);
+}
+
 export function setupGracefulShutdown(sqlite: DatabaseType): void {
   const shutdown = (signal: string) => {
     if (shuttingDown) return;
     shuttingDown = true;
 
     console.log(`[server] Received ${signal}. Starting graceful shutdown...`);
+
+    for (const interval of intervals) clearInterval(interval);
 
     const finalize = () => {
       try {

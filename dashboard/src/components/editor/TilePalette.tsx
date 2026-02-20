@@ -92,7 +92,7 @@ function TilesetGrid({ tileset }: { tileset: TilesetMeta }) {
       <p className="text-xs text-gray-400 mb-1 px-1">{tileset.label}</p>
       <div
         className="grid gap-0.5"
-        style={{ gridTemplateColumns: `repeat(${Math.min(tileset.cols, 6)}, ${TILE}px)` }}
+        style={{ gridTemplateColumns: `repeat(auto-fill, ${TILE}px)` }}
       >
         {Array.from({ length: totalFrames }, (_, i) => {
           if (!visibility[i]) return null;
@@ -163,7 +163,7 @@ export function TilePalette() {
       </div>
 
       {/* Tile grids */}
-      <div className="flex-1 overflow-y-auto p-2">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden p-2">
         {tilesets.length === 0 ? (
           <p className="text-xs text-gray-500 p-2">No tilesets available</p>
         ) : (

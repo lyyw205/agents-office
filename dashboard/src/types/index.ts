@@ -17,27 +17,6 @@ export interface Project {
   task_count?: number;
 }
 
-export interface DiscoveredProject {
-  path: string;
-  project_name: string;
-  has_team_config: boolean;
-  has_persona: boolean;
-}
-
-export interface SyncResult {
-  project_id: string;
-  name: string;
-  agents_count: number;
-  workflows_count: number;
-  status: 'created' | 'updated' | 'unchanged';
-}
-
-export interface SyncStatus {
-  last_run: string | null;
-  synced_projects: number;
-  scan_paths: string[];
-}
-
 export interface ProjectDetail extends Project {
   agents: Agent[];
   recent_tasks: Task[];
@@ -133,6 +112,21 @@ export interface SavedConfig {
   skills_json: string | null;
   config_json: string | null;
   source_agent_id: string | null;
+  created_at: string;
+}
+
+export interface AgentCommunication {
+  id: string;
+  project_id: string | null;
+  session_id: string;
+  activity_type: 'agent_message' | 'agent_spawn' | 'task_create' | 'task_update';
+  sender_raw_name: string | null;
+  recipient_raw_name: string | null;
+  sender_agent_id: string | null;
+  recipient_agent_id: string | null;
+  summary: string;
+  details_json: string | null;
+  tool_name: string | null;
   created_at: string;
 }
 

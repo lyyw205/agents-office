@@ -57,6 +57,13 @@ const DEPARTMENT_TINTS: Record<string, number> = {
   'Management': 0xff9944,
 };
 
+const ACTIVITY_COLORS: Record<string, number> = {
+  agent_message: 0x38bdf8,
+  agent_spawn: 0x4ade80,
+  task_create: 0xfbbf24,
+  task_update: 0xa78bfa,
+};
+
 interface SheetConfig {
   key: string;
   file: string;
@@ -98,7 +105,6 @@ export class OfficeScene extends Phaser.Scene {
     this.tilemapData = initData?.tilemap;
 
     if (this.tilemapData) {
-      // Load referenced tilesets
       for (const tsKey of this.tilemapData.tilesets) {
         const meta = TILESET_MAP.get(tsKey);
         if (meta) {
@@ -122,7 +128,6 @@ export class OfficeScene extends Phaser.Scene {
   }
 
   create() {
-    // Make black pixels transparent on A4 wall tilesets (RPG Maker convention)
     processAlphaBlackTextures(this.textures, TILE);
 
     this.createAnimations();
@@ -138,15 +143,14 @@ export class OfficeScene extends Phaser.Scene {
     const initialAgents = initData?.agents;
 
     if (this.tilemapData) {
-      // Render tilemap layers
       this.renderTilemap(this.tilemapData);
     } else {
-      // Fallback: static background image
       this.add.image(0, 0, 'office_bg').setOrigin(0, 0).setDepth(0);
     }
 
-    // Zone labels
+    // Zone labels (skip workspace-only default)
     for (const zone of this.zones) {
+      if (zone.id === 'workspace') continue;
       this.add.text(zone.x * TILE + 6, zone.y * TILE + 6, zone.label, {
         fontSize: '12px',
         color: '#ffffff',
@@ -156,7 +160,6 @@ export class OfficeScene extends Phaser.Scene {
       }).setAlpha(0.9).setDepth(1);
     }
 
-    // Render initial agents
     if (initialAgents) {
       this.updateAgents(initialAgents);
     }
@@ -266,6 +269,129 @@ export class OfficeScene extends Phaser.Scene {
     if (!department) return undefined;
     return DEPARTMENT_TINTS[department];
   }
+
+  // ---------------------------------------------------------------------------
+  // Communication visualization
+  // ---------------------------------------------------------------------------
+
+  showCommunication(
+    senderId: string | null,
+    recipientId: string | null,
+    summary: string,
+    activityType: string,
+  ) {
+    const color = ACTIVITY_COLORS[activityType] ?? 0x38bdf8;
+    const senderSprite = senderId ? this.agentSprites.get(senderId) : null;
+    const recipientSprite = recipientId ? this.agentSprites.get(recipientId) : null;
+
+    // Need at least one sprite to show anything
+    const anchor = senderSprite ?? recipientSprite;
+    if (!anchor) return;
+
+    // Glow on both endpoints
+    if (senderSprite) this.showGlow(senderSprite.sprite, color);
+    if (recipientSprite) this.showGlow(recipientSprite.sprite, color);
+
+    // Connection line between sender and recipient
+    if (senderSprite && recipientSprite) {
+      this.showConnectionLine(
+        senderSprite.sprite.x, senderSprite.sprite.y,
+        recipientSprite.sprite.x, recipientSprite.sprite.y,
+        color,
+      );
+    }
+
+    // Speech bubble on the anchor (sender if available, otherwise recipient)
+    this.showBubble(anchor.sprite.x, anchor.sprite.y, summary, color);
+  }
+
+  private showGlow(sprite: Phaser.GameObjects.Sprite, color: number) {
+    const glow = this.add.circle(sprite.x, sprite.y, 28, color, 0.3).setDepth(9);
+
+    this.tweens.add({
+      targets: glow,
+      scaleX: 1.6,
+      scaleY: 1.6,
+      alpha: 0,
+      duration: 1200,
+      ease: 'Sine.easeOut',
+      onComplete: () => glow.destroy(),
+    });
+  }
+
+  private showConnectionLine(x1: number, y1: number, x2: number, y2: number, color: number) {
+    const gfx = this.add.graphics().setDepth(8);
+    gfx.lineStyle(2, color, 0.7);
+    gfx.beginPath();
+    gfx.moveTo(x1, y1);
+    gfx.lineTo(x2, y2);
+    gfx.strokePath();
+
+    // Arrow head at recipient
+    const angle = Math.atan2(y2 - y1, x2 - x1);
+    const arrowLen = 8;
+    const arrowAngle = Math.PI / 6;
+    gfx.beginPath();
+    gfx.moveTo(x2, y2);
+    gfx.lineTo(
+      x2 - arrowLen * Math.cos(angle - arrowAngle),
+      y2 - arrowLen * Math.sin(angle - arrowAngle),
+    );
+    gfx.moveTo(x2, y2);
+    gfx.lineTo(
+      x2 - arrowLen * Math.cos(angle + arrowAngle),
+      y2 - arrowLen * Math.sin(angle + arrowAngle),
+    );
+    gfx.strokePath();
+
+    this.tweens.add({
+      targets: gfx,
+      alpha: 0,
+      duration: 2500,
+      delay: 500,
+      ease: 'Sine.easeIn',
+      onComplete: () => gfx.destroy(),
+    });
+  }
+
+  private showBubble(x: number, y: number, text: string, color: number) {
+    const truncated = text.length > 40 ? text.slice(0, 38) + '..' : text;
+    const bubbleY = y - 48;
+
+    const label = this.add.text(x, bubbleY, truncated, {
+      fontSize: '10px',
+      color: '#ffffff',
+      fontFamily: 'system-ui, -apple-system, sans-serif',
+      backgroundColor: `#${color.toString(16).padStart(6, '0')}cc`,
+      padding: { x: 6, y: 3 },
+      maxLines: 1,
+      wordWrap: { width: 180 },
+    }).setOrigin(0.5).setDepth(20).setAlpha(0);
+
+    // Fade in, hold, float up + fade out
+    this.tweens.add({
+      targets: label,
+      alpha: 1,
+      y: bubbleY - 4,
+      duration: 300,
+      ease: 'Sine.easeOut',
+      onComplete: () => {
+        this.tweens.add({
+          targets: label,
+          alpha: 0,
+          y: bubbleY - 20,
+          duration: 1500,
+          delay: 2000,
+          ease: 'Sine.easeIn',
+          onComplete: () => label.destroy(),
+        });
+      },
+    });
+  }
+
+  // ---------------------------------------------------------------------------
+  // Agent management
+  // ---------------------------------------------------------------------------
 
   updateAgents(agents: AgentData[]) {
     const currentIds = new Set(agents.map(a => a.id));
