@@ -124,6 +124,40 @@ function AgentCard({ agent, selected, onClick }: { agent: Agent; selected: boole
 // Agent Detail Panel (sidebar with edit)
 // ---------------------------------------------------------------------------
 
+const ROLE_SKILLS: Record<string, string[]> = {
+  architect: ['System Design', 'API Design', 'Trade-off Analysis', 'Code Review'],
+  executor: ['Implementation', 'Refactoring', 'Feature Development'],
+  'deep-executor': ['Complex Implementation', 'Autonomous Execution', 'Multi-file Refactoring'],
+  planner: ['Task Decomposition', 'Risk Assessment', 'Prioritization'],
+  analyst: ['Requirements Analysis', 'Acceptance Criteria', 'Constraint Discovery'],
+  debugger: ['Root Cause Analysis', 'Regression Isolation', 'Stack Trace Analysis'],
+  explorer: ['Codebase Discovery', 'Symbol Mapping', 'File Search'],
+  explore: ['Codebase Discovery', 'Symbol Mapping', 'File Search'],
+  verifier: ['Completion Verification', 'Test Adequacy', 'Evidence Collection'],
+  'test-engineer': ['Test Strategy', 'Coverage Analysis', 'TDD', 'Flaky Test Hardening'],
+  'build-fixer': ['Build Errors', 'Type Errors', 'Toolchain Fix'],
+  'code-reviewer': ['Code Review', 'Anti-patterns', 'SOLID Principles'],
+  'quality-reviewer': ['Logic Defects', 'Maintainability', 'Anti-patterns'],
+  'style-reviewer': ['Formatting', 'Naming Conventions', 'Lint Rules'],
+  'api-reviewer': ['API Contracts', 'Backward Compatibility', 'Versioning'],
+  'security-reviewer': ['OWASP Top 10', 'Auth/Authz', 'Trust Boundaries'],
+  'performance-reviewer': ['Hotspot Analysis', 'Complexity', 'Memory Optimization'],
+  designer: ['UI/UX Design', 'Component Architecture', 'Interaction Design'],
+  writer: ['Documentation', 'API Docs', 'Migration Notes'],
+  'product-manager': ['Problem Framing', 'PRD', 'Personas/JTBD'],
+  'ux-researcher': ['Heuristic Audit', 'Usability', 'Accessibility'],
+  'information-architect': ['Taxonomy', 'Navigation', 'Naming Consistency'],
+  'product-analyst': ['Metrics', 'Funnel Analysis', 'A/B Testing'],
+  'dependency-expert': ['Package Evaluation', 'SDK Review', 'API Compatibility'],
+  'quality-strategist': ['Release Readiness', 'Risk Assessment', 'Quality Gates'],
+  'git-master': ['Commit Strategy', 'Rebasing', 'History Management'],
+  scientist: ['Data Analysis', 'Statistical Analysis', 'Research'],
+  'qa-tester': ['CLI Testing', 'Session Management', 'Runtime Validation'],
+  critic: ['Plan Critique', 'Design Challenge', 'Risk Identification'],
+  vision: ['Image Analysis', 'Screenshot Review', 'Diagram Interpretation'],
+  'document-specialist': ['Documentation Lookup', 'Reference Search', 'External Docs'],
+};
+
 interface AgentConfig {
   original_id?: string;
   responsibilities?: string[];
@@ -151,6 +185,7 @@ function AgentDetailPanel({ agentId, onClose }: { agentId: string; onClose: () =
   const [editDept, setEditDept] = useState('');
   const [editEmoji, setEditEmoji] = useState('');
   const [editAlias, setEditAlias] = useState('');
+  const [editDesk, setEditDesk] = useState('');
 
   const { data: agent, isLoading } = useQuery({
     queryKey: ['agents', agentId],
@@ -161,8 +196,9 @@ function AgentDetailPanel({ agentId, onClose }: { agentId: string; onClose: () =
   const persona = useMemo(() => parseJson<AgentPersona>(agent?.persona_json ?? null) ?? {}, [agent?.persona_json]);
   const skills = useMemo(() => {
     const raw = parseJson<Array<{ name: string }>>(agent?.skills_json ?? null);
-    return raw?.map((s) => s.name) ?? [];
-  }, [agent?.skills_json]);
+    if (raw && raw.length > 0) return raw.map((s) => s.name);
+    return ROLE_SKILLS[agent?.role ?? ''] ?? [];
+  }, [agent?.skills_json, agent?.role]);
 
   // Sync edit fields when entering edit mode or agent changes
   useEffect(() => {
@@ -172,8 +208,9 @@ function AgentDetailPanel({ agentId, onClose }: { agentId: string; onClose: () =
       setEditDept(agent.department ?? '');
       setEditEmoji(agent.emoji ?? '');
       setEditAlias(config.display_alias ?? '');
+      setEditDesk(persona.office?.desk ?? '');
     }
-  }, [agent, config.display_alias]);
+  }, [agent, config.display_alias, persona.office?.desk]);
 
   async function handleSave() {
     if (!agent) return;
@@ -186,12 +223,20 @@ function AgentDetailPanel({ agentId, onClose }: { agentId: string; onClose: () =
         delete updatedConfig.display_alias;
       }
 
+      const updatedPersona = { ...persona };
+      if (editDesk.trim()) {
+        updatedPersona.office = { ...updatedPersona.office, desk: editDesk.trim() };
+      } else {
+        if (updatedPersona.office) delete updatedPersona.office.desk;
+      }
+
       await api.updateAgent(agent.id, {
         name: editName.trim() || agent.name,
         role: editRole.trim() || agent.role,
         department: editDept.trim() || null,
         emoji: editEmoji.trim() || null,
         config_json: JSON.stringify(updatedConfig),
+        persona_json: JSON.stringify(updatedPersona),
       });
 
       await queryClient.invalidateQueries({ queryKey: ['agents'] });
@@ -255,6 +300,19 @@ function AgentDetailPanel({ agentId, onClose }: { agentId: string; onClose: () =
               <FieldInput label="Role" value={editRole} onChange={setEditRole} />
               <FieldInput label="Department" value={editDept} onChange={setEditDept} />
               <FieldInput label="Emoji" value={editEmoji} onChange={setEditEmoji} />
+              <div>
+                <label className="text-[10px] font-medium text-gray-500 uppercase tracking-wider">Desk</label>
+                <select
+                  value={editDesk}
+                  onChange={(e) => setEditDesk(e.target.value)}
+                  className="w-full mt-0.5 px-2 py-1.5 text-xs bg-gray-800 border border-gray-700 rounded text-gray-200 focus:outline-none focus:border-blue-500/50"
+                >
+                  <option value="">None (auto-assign)</option>
+                  {['A1', 'B1', 'C1', 'D1', 'E1', 'F2', 'G1'].map((d) => (
+                    <option key={d} value={d}>{d}</option>
+                  ))}
+                </select>
+              </div>
               <button
                 onClick={handleSave}
                 disabled={saving}
@@ -270,6 +328,7 @@ function AgentDetailPanel({ agentId, onClose }: { agentId: string; onClose: () =
               )}
               <FieldDisplay label="Role" value={agent.role} />
               {agent.department && <FieldDisplay label="Department" value={agent.department} />}
+              {persona.office?.desk && <FieldDisplay label="Desk" value={persona.office.desk} />}
             </>
           )}
         </div>
@@ -306,13 +365,33 @@ function AgentDetailPanel({ agentId, onClose }: { agentId: string; onClose: () =
         {persona.personality && (
           <div className="px-4 py-3 border-b border-gray-800/50">
             <span className="text-[10px] font-medium text-gray-500 uppercase tracking-wider">Personality</span>
-            <p className="text-xs text-gray-400 mt-1">{persona.personality}</p>
+            {typeof persona.personality === 'string' ? (
+              <p className="text-xs text-gray-400 mt-1">{persona.personality}</p>
+            ) : (
+              <div className="mt-1 space-y-1">
+                {Object.entries(persona.personality as Record<string, unknown>).map(([key, val]) => (
+                  <p key={key} className="text-xs text-gray-400">
+                    <span className="text-gray-500">{key}:</span> {String(val)}
+                  </p>
+                ))}
+              </div>
+            )}
           </div>
         )}
         {persona.backstory && (
           <div className="px-4 py-3 border-b border-gray-800/50">
             <span className="text-[10px] font-medium text-gray-500 uppercase tracking-wider">Backstory</span>
-            <p className="text-xs text-gray-400 mt-1">{persona.backstory}</p>
+            {typeof persona.backstory === 'string' ? (
+              <p className="text-xs text-gray-400 mt-1">{persona.backstory}</p>
+            ) : (
+              <div className="mt-1 space-y-1">
+                {Object.entries(persona.backstory as Record<string, unknown>).map(([key, val]) => (
+                  <p key={key} className="text-xs text-gray-400">
+                    <span className="text-gray-500">{key}:</span> {String(val)}
+                  </p>
+                ))}
+              </div>
+            )}
           </div>
         )}
         {persona.specialties && persona.specialties.length > 0 && (

@@ -65,15 +65,30 @@ export function PhaserOffice({ agents, sceneConfig, communications }: PhaserOffi
   const zones = parsed.zones ?? DEFAULT_ZONES;
   const deskMap = parsed.deskMap ?? DEFAULT_DESK_MAP;
 
-  const agentData = agents.map((a) => ({
-    id: a.id,
-    name: a.name,
-    emoji: a.emoji,
-    status: a.status,
-    desk: agentDesk(a),
-    role: a.role,
-    department: a.department,
-  }));
+  // Auto-assign desks to agents that don't have one
+  const agentData = (() => {
+    const deskKeys = Object.keys(deskMap);
+    const assigned = new Set<string>();
+
+    // First pass: collect explicitly assigned desks
+    const mapped = agents.map((a) => {
+      const desk = agentDesk(a);
+      if (desk && deskKeys.includes(desk)) assigned.add(desk);
+      return { id: a.id, name: a.name, emoji: a.emoji, status: a.status, desk, role: a.role, department: a.department };
+    });
+
+    // Second pass: auto-assign unassigned agents to available desks
+    const available = deskKeys.filter((k) => !assigned.has(k));
+    let nextIdx = 0;
+    return mapped.map((a) => {
+      if (!a.desk || !deskKeys.includes(a.desk)) {
+        if (nextIdx < available.length) {
+          a.desk = available[nextIdx++];
+        }
+      }
+      return a;
+    });
+  })();
 
   useEffect(() => {
     if (!containerRef.current || gameRef.current) return;

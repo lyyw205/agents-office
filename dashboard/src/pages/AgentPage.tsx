@@ -35,8 +35,24 @@ export function AgentPage() {
       {persona && (
         <div className="bg-gray-900 rounded-xl p-5 border border-gray-800 mb-6">
           <h3 className="font-semibold mb-3">Persona</h3>
-          {persona.backstory && <p className="text-sm text-gray-300 mb-2">{persona.backstory}</p>}
-          {persona.personality && <p className="text-sm text-gray-400">{persona.personality}</p>}
+          {persona.backstory && (
+            typeof persona.backstory === 'string'
+              ? <p className="text-sm text-gray-300 mb-2">{persona.backstory}</p>
+              : <div className="text-sm text-gray-300 mb-2 space-y-1">
+                  {Object.entries(persona.backstory as Record<string, unknown>).map(([k, v]) => (
+                    <p key={k}><span className="text-gray-500">{k}:</span> {String(v)}</p>
+                  ))}
+                </div>
+          )}
+          {persona.personality && (
+            typeof persona.personality === 'string'
+              ? <p className="text-sm text-gray-400">{persona.personality}</p>
+              : <div className="text-sm text-gray-400 space-y-1">
+                  {Object.entries(persona.personality as Record<string, unknown>).map(([k, v]) => (
+                    <p key={k}><span className="text-gray-500">{k}:</span> {String(v)}</p>
+                  ))}
+                </div>
+          )}
         </div>
       )}
 

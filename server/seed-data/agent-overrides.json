@@ -1,0 +1,47 @@
+{
+  "auto-details": {
+    "auto-details-pm": {
+      "name": "auto-details 프로젝트 매니저",
+      "role": "auto-details 프로젝트 총괄",
+      "department": "Management",
+      "emoji": "📋",
+      "desk": "desk_LGfD"
+    },
+    "validator": {
+      "name": "검증기 박 (Validator Park)",
+      "role": "파이프라인 전 단계 품질 게이트",
+      "department": "Quality Assurance",
+      "emoji": "🛡️",
+      "desk": "desk_a8Dt"
+    },
+    "analyzer": {
+      "name": "분석가 서 (Analyzer Seo)",
+      "role": "레퍼런스 분석 전문가",
+      "department": "R&D",
+      "emoji": "🔬",
+      "desk": "desk_mISn"
+    },
+    "builder": {
+      "name": "빌더 김 (Builder Kim)",
+      "role": "JSON 위젯 생성/등록",
+      "department": "Engineering",
+      "emoji": "🧱",
+      "desk": "desk_aSKB"
+    },
+    "planner": {
+      "name": "설계자 최 (Planner Choi)",
+      "role": "섹션 설계 및 위젯 선택",
+      "department": "Architecture",
+      "emoji": "📐",
+      "display_alias": "최설계",
+      "desk": "desk_n291"
+    },
+    "composer": {
+      "name": "조합기 이 (Composer Lee)",
+      "role": "JSON 조합 → HTML/Figma 출력",
+      "department": "Engineering",
+      "emoji": "🎼",
+      "desk": "desk_sdJB"
+    }
+  }
+}

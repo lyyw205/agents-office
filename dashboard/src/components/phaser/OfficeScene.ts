@@ -427,21 +427,17 @@ export class OfficeScene extends Phaser.Scene {
 
         const status = this.add.circle(cx + 16, cy - 16, 4, STATUS_COLORS[agent.status] ?? 0x6b7280).setDepth(11);
 
-        const nameLabel = this.add.text(cx, cy + 28, '', {
+        const nameLabel = this.add.text(cx, cy + 18, agent.name, {
           fontSize: '11px',
           color: '#ffffff',
-          fontFamily: 'system-ui, -apple-system, sans-serif',
-          backgroundColor: '#00000099',
-          padding: { x: 4, y: 2 },
-        }).setOrigin(0.5).setDepth(12).setVisible(false);
-
-        sprite.on('pointerover', () => {
-          nameLabel.setText(agent.name.length > 14 ? agent.name.slice(0, 14) + '..' : agent.name);
-          nameLabel.setVisible(true);
-        });
-        sprite.on('pointerout', () => {
-          nameLabel.setVisible(false);
-        });
+          fontFamily: '"Pretendard", "Inter", system-ui, sans-serif',
+          fontStyle: 'bold',
+          backgroundColor: '#0f172ae6',
+          padding: { x: 5, y: 3 },
+          align: 'center',
+          wordWrap: { width: 80 },
+          shadow: { offsetX: 0, offsetY: 1, color: '#000000', blur: 3, fill: true },
+        }).setOrigin(0.5, 0).setDepth(12);
 
         sprite.play(targetAnim);
 

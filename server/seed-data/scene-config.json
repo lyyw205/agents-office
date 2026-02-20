@@ -1,6 +1,37 @@
 {
   "auto-details": {
-    "deskMap": {},
+    "deskMap": {
+      "desk_LGfD": {
+        "zone": "workspace",
+        "x": 2,
+        "y": 8
+      },
+      "desk_a8Dt": {
+        "zone": "workspace",
+        "x": 7,
+        "y": 8
+      },
+      "desk_mISn": {
+        "zone": "workspace",
+        "x": 11,
+        "y": 8
+      },
+      "desk_aSKB": {
+        "zone": "workspace",
+        "x": 2,
+        "y": 11
+      },
+      "desk_n291": {
+        "zone": "workspace",
+        "x": 6,
+        "y": 11
+      },
+      "desk_sdJB": {
+        "zone": "workspace",
+        "x": 9,
+        "y": 11
+      }
+    },
     "tilemap": {
       "version": 1,
       "width": 18,
@@ -9,7 +40,10 @@
       "tilesets": [
         "floor_carpet_custom",
         "wall_gray_custom",
-        "furn_office"
+        "furn_office",
+        "furn_living",
+        "furn_kitchen",
+        "deco_items"
       ],
       "layers": {
         "floor": {
@@ -1975,92 +2009,10 @@
           ]
         },
         "walls": {
-          "0,5": [
-            {
-              "ts": "wall_gray_custom",
-              "f": 0
-            },
-            {
-              "ts": "wall_gray_custom",
-              "f": 27
-            }
-          ],
           "1,5": [
             {
               "ts": "wall_gray_custom",
               "f": 28
-            }
-          ],
-          "3,5": [
-            {
-              "ts": "wall_gray_custom",
-              "f": 28
-            }
-          ],
-          "4,5": [
-            {
-              "ts": "wall_gray_custom",
-              "f": 28
-            }
-          ],
-          "5,5": [
-            {
-              "ts": "wall_gray_custom",
-              "f": 28
-            }
-          ],
-          "6,5": [
-            {
-              "ts": "wall_gray_custom",
-              "f": 28
-            }
-          ],
-          "7,5": [
-            {
-              "ts": "wall_gray_custom",
-              "f": 28
-            }
-          ],
-          "10,5": [
-            {
-              "ts": "wall_gray_custom",
-              "f": 28
-            }
-          ],
-          "11,5": [
-            {
-              "ts": "wall_gray_custom",
-              "f": 28
-            }
-          ],
-          "12,5": [
-            {
-              "ts": "wall_gray_custom",
-              "f": 28
-            }
-          ],
-          "13,5": [
-            {
-              "ts": "wall_gray_custom",
-              "f": 28
-            }
-          ],
-          "14,5": [
-            {
-              "ts": "wall_gray_custom",
-              "f": 28
-            }
-          ],
-          "16,5": [
-            {
-              "ts": "wall_gray_custom",
-              "f": 28
-            }
-          ],
-          "17,5": [
-            {
-              "ts": "wall_gray_custom",
-              "f": 29
             }
           ],
           "0,6": [
@@ -2183,16 +2135,6 @@
               "f": 34
             }
           ],
-          "14,12": [
-            {
-              "ts": "wall_gray_custom",
-              "f": 34
-            },
-            {
-              "ts": "wall_gray_custom",
-              "f": 30
-            }
-          ],
           "15,12": [
             {
               "ts": "wall_gray_custom",
@@ -2217,16 +2159,6 @@
               "f": 32
             }
           ],
-          "17,8": [
-            {
-              "ts": "wall_gray_custom",
-              "f": 32
-            },
-            {
-              "ts": "wall_gray_custom",
-              "f": 29
-            }
-          ],
           "17,9": [
             {
               "ts": "wall_gray_custom",
@@ -2249,30 +2181,6 @@
             {
               "ts": "wall_gray_custom",
               "f": 34
-            }
-          ],
-          "14,9": [
-            {
-              "ts": "wall_gray_custom",
-              "f": 30
-            }
-          ],
-          "14,10": [
-            {
-              "ts": "wall_gray_custom",
-              "f": 30
-            }
-          ],
-          "14,11": [
-            {
-              "ts": "wall_gray_custom",
-              "f": 30
-            }
-          ],
-          "14,8": [
-            {
-              "ts": "wall_gray_custom",
-              "f": 27
             }
           ],
           "17,0": [
@@ -2343,12 +2251,6 @@
               "f": 28
             }
           ],
-          "12,0": [
-            {
-              "ts": "wall_gray_custom",
-              "f": 28
-            }
-          ],
           "13,0": [
             {
               "ts": "wall_gray_custom",
@@ -2396,24 +2298,6 @@
             }
           ],
           "11,3": [
-            {
-              "ts": "wall_gray_custom",
-              "f": 34
-            }
-          ],
-          "12,3": [
-            {
-              "ts": "wall_gray_custom",
-              "f": 34
-            }
-          ],
-          "13,3": [
-            {
-              "ts": "wall_gray_custom",
-              "f": 34
-            }
-          ],
-          "14,3": [
             {
               "ts": "wall_gray_custom",
               "f": 34
@@ -2473,12 +2357,6 @@
               "f": 33
             }
           ],
-          "10,3": [
-            {
-              "ts": "wall_gray_custom",
-              "f": 34
-            }
-          ],
           "7,2": [
             {
               "ts": "wall_gray_custom",
@@ -2515,18 +2393,6 @@
               "f": 34
             }
           ],
-          "8,5": [
-            {
-              "ts": "wall_gray_custom",
-              "f": 28
-            }
-          ],
-          "8,3": [
-            {
-              "ts": "wall_gray_custom",
-              "f": 34
-            }
-          ],
           "5,1": [
             {
               "ts": "wall_gray_custom",
@@ -2537,6 +2403,168 @@
             {
               "ts": "wall_gray_custom",
               "f": 30
+            }
+          ],
+          "1,4": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "2,4": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "3,4": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "4,4": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "5,4": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "6,4": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "7,4": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "0,4": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "0,5": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 30
+            }
+          ],
+          "10,4": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "11,4": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "12,4": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "13,4": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "14,4": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "15,4": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "16,4": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "17,4": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "17,5": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 32
+            }
+          ],
+          "17,8": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 32
+            }
+          ],
+          "14,12": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "10,3": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "9,3": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
+            }
+          ],
+          "12,3": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 35
+            }
+          ],
+          "12,2": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 32
+            }
+          ],
+          "12,1": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 32
+            }
+          ],
+          "12,0": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 29
+            }
+          ],
+          "13,3": [
+            {
+              "ts": "wall_gray_custom",
+              "f": 34
             }
           ]
         },
@@ -2624,11 +2652,671 @@
               "ts": "furn_office",
               "f": 144
             }
+          ],
+          "1,7": [
+            {
+              "ts": "furn_office",
+              "f": 228
+            }
+          ],
+          "2,7": [
+            {
+              "ts": "furn_office",
+              "f": 229
+            }
+          ],
+          "3,7": [
+            {
+              "ts": "furn_office",
+              "f": 230
+            }
+          ],
+          "1,8": [
+            {
+              "ts": "furn_office",
+              "f": 244
+            },
+            {
+              "ts": "furn_office",
+              "f": 128
+            }
+          ],
+          "2,8": [
+            {
+              "ts": "furn_office",
+              "f": 245
+            }
+          ],
+          "3,8": [
+            {
+              "ts": "furn_office",
+              "f": 246
+            }
+          ],
+          "1,10": [
+            {
+              "ts": "furn_office",
+              "f": 228
+            }
+          ],
+          "2,10": [
+            {
+              "ts": "furn_office",
+              "f": 229
+            }
+          ],
+          "3,10": [
+            {
+              "ts": "furn_office",
+              "f": 230
+            }
+          ],
+          "5,7": [
+            {
+              "ts": "furn_office",
+              "f": 228
+            }
+          ],
+          "6,7": [
+            {
+              "ts": "furn_office",
+              "f": 229
+            }
+          ],
+          "7,7": [
+            {
+              "ts": "furn_office",
+              "f": 230
+            }
+          ],
+          "5,10": [
+            {
+              "ts": "furn_office",
+              "f": 228
+            }
+          ],
+          "6,10": [
+            {
+              "ts": "furn_office",
+              "f": 229
+            }
+          ],
+          "7,10": [
+            {
+              "ts": "furn_office",
+              "f": 230
+            }
+          ],
+          "9,7": [
+            {
+              "ts": "furn_office",
+              "f": 228
+            }
+          ],
+          "9,10": [
+            {
+              "ts": "furn_office",
+              "f": 228
+            }
+          ],
+          "10,7": [
+            {
+              "ts": "furn_office",
+              "f": 229
+            }
+          ],
+          "10,10": [
+            {
+              "ts": "furn_office",
+              "f": 229
+            }
+          ],
+          "11,7": [
+            {
+              "ts": "furn_office",
+              "f": 230
+            }
+          ],
+          "11,10": [
+            {
+              "ts": "furn_office",
+              "f": 230
+            }
+          ],
+          "5,8": [
+            {
+              "ts": "furn_office",
+              "f": 244
+            }
+          ],
+          "5,11": [
+            {
+              "ts": "furn_office",
+              "f": 244
+            },
+            {
+              "ts": "furn_office",
+              "f": 128
+            }
+          ],
+          "1,11": [
+            {
+              "ts": "furn_office",
+              "f": 244
+            }
+          ],
+          "9,11": [
+            {
+              "ts": "furn_office",
+              "f": 244
+            }
+          ],
+          "9,8": [
+            {
+              "ts": "furn_office",
+              "f": 244
+            }
+          ],
+          "6,8": [
+            {
+              "ts": "furn_office",
+              "f": 245
+            },
+            {
+              "ts": "furn_office",
+              "f": 96
+            }
+          ],
+          "10,8": [
+            {
+              "ts": "furn_office",
+              "f": 245
+            },
+            {
+              "ts": "furn_office",
+              "f": 96
+            }
+          ],
+          "10,11": [
+            {
+              "ts": "furn_office",
+              "f": 245
+            },
+            {
+              "ts": "furn_office",
+              "f": 96
+            }
+          ],
+          "6,11": [
+            {
+              "ts": "furn_office",
+              "f": 245
+            }
+          ],
+          "2,11": [
+            {
+              "ts": "furn_office",
+              "f": 245
+            }
+          ],
+          "3,11": [
+            {
+              "ts": "furn_office",
+              "f": 246
+            },
+            {
+              "ts": "furn_office",
+              "f": 112
+            }
+          ],
+          "7,11": [
+            {
+              "ts": "furn_office",
+              "f": 246
+            }
+          ],
+          "7,8": [
+            {
+              "ts": "furn_office",
+              "f": 246
+            }
+          ],
+          "11,8": [
+            {
+              "ts": "furn_office",
+              "f": 246
+            }
+          ],
+          "0,6": [
+            {
+              "ts": "furn_office",
+              "f": 250
+            }
+          ],
+          "1,6": [
+            {
+              "ts": "furn_office",
+              "f": 251
+            }
+          ],
+          "2,6": [
+            {
+              "ts": "furn_office",
+              "f": 252
+            }
+          ],
+          "0,5": [
+            {
+              "ts": "furn_office",
+              "f": 234
+            }
+          ],
+          "1,5": [
+            {
+              "ts": "furn_office",
+              "f": 235
+            }
+          ],
+          "2,5": [
+            {
+              "ts": "furn_office",
+              "f": 236
+            }
+          ],
+          "1,4": [
+            {
+              "ts": "furn_office",
+              "f": 219
+            }
+          ],
+          "2,4": [
+            {
+              "ts": "furn_office",
+              "f": 220
+            }
+          ],
+          "13,7": [
+            {
+              "ts": "furn_office",
+              "f": 228
+            }
+          ],
+          "13,10": [
+            {
+              "ts": "furn_office",
+              "f": 228
+            }
+          ],
+          "14,7": [
+            {
+              "ts": "furn_office",
+              "f": 229
+            }
+          ],
+          "14,10": [
+            {
+              "ts": "furn_office",
+              "f": 229
+            }
+          ],
+          "15,7": [
+            {
+              "ts": "furn_office",
+              "f": 230
+            }
+          ],
+          "15,10": [
+            {
+              "ts": "furn_office",
+              "f": 230
+            }
+          ],
+          "13,8": [
+            {
+              "ts": "furn_office",
+              "f": 244
+            }
+          ],
+          "13,11": [
+            {
+              "ts": "furn_office",
+              "f": 244
+            },
+            {
+              "ts": "furn_office",
+              "f": 128
+            }
+          ],
+          "14,8": [
+            {
+              "ts": "furn_office",
+              "f": 245
+            }
+          ],
+          "14,11": [
+            {
+              "ts": "furn_office",
+              "f": 245
+            }
+          ],
+          "15,11": [
+            {
+              "ts": "furn_office",
+              "f": 246
+            }
+          ],
+          "15,8": [
+            {
+              "ts": "furn_office",
+              "f": 246
+            }
+          ],
+          "17,10": [
+            {
+              "ts": "furn_office",
+              "f": 37
+            }
+          ],
+          "17,11": [
+            {
+              "ts": "furn_office",
+              "f": 53
+            }
+          ],
+          "3,5": [
+            {
+              "ts": "furn_office",
+              "f": 237
+            }
+          ],
+          "4,5": [
+            {
+              "ts": "furn_office",
+              "f": 238
+            }
+          ],
+          "3,6": [
+            {
+              "ts": "furn_office",
+              "f": 253
+            }
+          ],
+          "4,6": [
+            {
+              "ts": "furn_office",
+              "f": 254
+            }
+          ],
+          "4,4": [
+            {
+              "ts": "furn_office",
+              "f": 222
+            }
+          ],
+          "3,4": [
+            {
+              "ts": "furn_office",
+              "f": 223
+            }
+          ],
+          "5,5": [
+            {
+              "ts": "furn_office",
+              "f": 189
+            }
+          ],
+          "6,5": [
+            {
+              "ts": "furn_office",
+              "f": 190
+            }
+          ],
+          "5,6": [
+            {
+              "ts": "furn_office",
+              "f": 205
+            }
+          ],
+          "6,6": [
+            {
+              "ts": "furn_office",
+              "f": 206
+            }
+          ],
+          "8,0": [
+            {
+              "ts": "furn_living",
+              "f": 221
+            }
+          ],
+          "9,0": [
+            {
+              "ts": "furn_living",
+              "f": 222
+            }
+          ],
+          "10,0": [
+            {
+              "ts": "furn_living",
+              "f": 223
+            }
+          ],
+          "8,1": [
+            {
+              "ts": "furn_living",
+              "f": 237
+            }
+          ],
+          "9,1": [
+            {
+              "ts": "furn_living",
+              "f": 238
+            }
+          ],
+          "10,1": [
+            {
+              "ts": "furn_living",
+              "f": 239
+            }
+          ],
+          "8,2": [
+            {
+              "ts": "furn_living",
+              "f": 253
+            }
+          ],
+          "9,2": [
+            {
+              "ts": "furn_living",
+              "f": 254
+            }
+          ],
+          "10,2": [
+            {
+              "ts": "furn_living",
+              "f": 255
+            }
+          ],
+          "16,0": [
+            {
+              "ts": "furn_kitchen",
+              "f": 84
+            },
+            {
+              "ts": "furn_kitchen",
+              "f": 177
+            }
+          ],
+          "17,0": [
+            {
+              "ts": "furn_kitchen",
+              "f": 83
+            }
+          ],
+          "17,3": [
+            {
+              "ts": "furn_living",
+              "f": 63
+            },
+            {
+              "ts": "furn_living",
+              "f": 95
+            }
+          ],
+          "17,2": [
+            {
+              "ts": "furn_living",
+              "f": 47
+            },
+            {
+              "ts": "furn_living",
+              "f": 79
+            }
+          ],
+          "17,1": [
+            {
+              "ts": "furn_kitchen",
+              "f": 99
+            },
+            {
+              "ts": "furn_living",
+              "f": 31
+            }
+          ],
+          "16,1": [
+            {
+              "ts": "furn_kitchen",
+              "f": 99
+            }
+          ],
+          "15,1": [
+            {
+              "ts": "furn_kitchen",
+              "f": 97
+            }
+          ],
+          "14,1": [
+            {
+              "ts": "furn_kitchen",
+              "f": 96
+            }
+          ],
+          "15,0": [
+            {
+              "ts": "furn_kitchen",
+              "f": 81
+            },
+            {
+              "ts": "furn_kitchen",
+              "f": 162
+            }
+          ],
+          "14,0": [
+            {
+              "ts": "furn_kitchen",
+              "f": 80
+            },
+            {
+              "ts": "furn_kitchen",
+              "f": 204
+            }
+          ],
+          "13,0": [
+            {
+              "ts": "furn_kitchen",
+              "f": 198
+            }
+          ],
+          "13,1": [
+            {
+              "ts": "furn_kitchen",
+              "f": 214
+            }
+          ],
+          "16,3": [
+            {
+              "ts": "furn_living",
+              "f": 94
+            }
+          ],
+          "16,2": [
+            {
+              "ts": "furn_living",
+              "f": 78
+            },
+            {
+              "ts": "furn_kitchen",
+              "f": 194
+            }
+          ],
+          "15,3": [
+            {
+              "ts": "furn_living",
+              "f": 88
+            },
+            {
+              "ts": "furn_living",
+              "f": 93
+            }
+          ],
+          "15,2": [
+            {
+              "ts": "furn_living",
+              "f": 72
+            },
+            {
+              "ts": "furn_living",
+              "f": 77
+            }
           ]
         },
-        "decoration": {}
+        "decoration": {
+          "7,1": [
+            {
+              "ts": "deco_items",
+              "f": 190
+            }
+          ],
+          "7,0": [
+            {
+              "ts": "deco_items",
+              "f": 172
+            }
+          ]
+        }
       },
-      "agentDesks": []
+      "agentDesks": [
+        {
+          "agentId": "LGfD_v2q0lPwEY25dMNFc",
+          "x": 2,
+          "y": 8
+        },
+        {
+          "agentId": "a8DtMHKopx8oNzVMHKcbR",
+          "x": 7,
+          "y": 8
+        },
+        {
+          "agentId": "mISnqh7IP4lnr468uiIbX",
+          "x": 11,
+          "y": 8
+        },
+        {
+          "agentId": "aSKBwfIhB7tjlt_aAeM9a",
+          "x": 2,
+          "y": 11
+        },
+        {
+          "agentId": "n291p5xn8PViOHmo5ZSG2",
+          "x": 6,
+          "y": 11
+        },
+        {
+          "agentId": "sdJBUImkXZc_mzc9I-Wgs",
+          "x": 9,
+          "y": 11
+        }
+      ]
     }
   }
 }
